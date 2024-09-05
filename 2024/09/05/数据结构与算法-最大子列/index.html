@@ -5,14 +5,19 @@
   
 
   
-  <title>金岩的博客</title>
+  <title>数据结构与算法-最大子列 | 金岩的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="金岩的博客">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="数据结构与算法-最大子列原题：有一数列 A_1,A_2,A_3…A_n,其中可能有负数，假设其子列A_i ,…,A_j(i&lt;&#x3D;j)，使得$\sum_{i&#x3D;i}^{j}x_i$取到最大值，请设计函数求该最大值。 分析：首先我们很自然地想到使用穷举法来实现，从此出发，先将这种简单的思路实现。 代码一： 12345678910111213141516int Max(const">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构与算法-最大子列">
+<meta property="og:url" content="http://example.com/2024/09/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E6%9C%80%E5%A4%A7%E5%AD%90%E5%88%97/index.html">
 <meta property="og:site_name" content="金岩的博客">
+<meta property="og:description" content="数据结构与算法-最大子列原题：有一数列 A_1,A_2,A_3…A_n,其中可能有负数，假设其子列A_i ,…,A_j(i&lt;&#x3D;j)，使得$\sum_{i&#x3D;i}^{j}x_i$取到最大值，请设计函数求该最大值。 分析：首先我们很自然地想到使用穷举法来实现，从此出发，先将这种简单的思路实现。 代码一： 12345678910111213141516int Max(const">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-09-05T07:49:08.000Z">
+<meta property="article:modified_time" content="2024-09-05T08:15:51.576Z">
 <meta property="article:author" content="臧金岩">
+<meta property="article:tag" content="数据结构与算法">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="金岩的博客" type="application/atom+xml">
@@ -50,9 +55,7 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-数据结构与算法-最大子列" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-数据结构与算法-最大子列" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     
   </div>
@@ -62,19 +65,16 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/09/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E6%9C%80%E5%A4%A7%E5%AD%90%E5%88%97/">数据结构与算法-最大子列</a>
+    <h1 class="article-title" itemprop="name">
+      数据结构与算法-最大子列
     </h1>
   
 
-        <a href="/2024/09/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E6%9C%80%E5%A4%A7%E5%AD%90%E5%88%97/" class="article-date">
-  <time datetime="2024-09-05T07:49:08.000Z" itemprop="datePublished">2024-09-05</time>
-</a>
       </header>
     
-    <div class="article-entry-abstract" itemprop="articleBody">
+    <div class="article-entry" itemprop="articleBody">
       
-        <!--<h1 id="数据结构与算法-最大子列"><a href="#数据结构与算法-最大子列" class="headerlink" title="数据结构与算法-最大子列"></a>数据结构与算法-最大子列</h1><p>原题：有一数列 A_1,A_2,A_3…A_n,其中可能有负数，假设其子列A_i ,…,A_j(i&lt;&#x3D;j)，使得$\sum_{i&#x3D;i}^{j}x_i$取到最大值，请设计函数求该最大值。</p>
+        <h1 id="数据结构与算法-最大子列"><a href="#数据结构与算法-最大子列" class="headerlink" title="数据结构与算法-最大子列"></a>数据结构与算法-最大子列</h1><p>原题：有一数列 A_1,A_2,A_3…A_n,其中可能有负数，假设其子列A_i ,…,A_j(i&lt;&#x3D;j)，使得$\sum_{i&#x3D;i}^{j}x_i$取到最大值，请设计函数求该最大值。</p>
 <p>分析：首先我们很自然地想到使用穷举法来实现，从此出发，先将这种简单的思路实现。</p>
 <p><strong>代码一：</strong></p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">Max</span><span class="params">(<span class="type">const</span> <span class="type">int</span> A[],<span class="type">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> tsum=msum=A[<span class="number">0</span>];<span class="comment">//tsum记录代码运行中得到的下标从i到j的子列求和值，msum记录最大值</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=i;j&lt;n;j++)</span><br><span class="line">		&#123;</span><br><span class="line">			tsum = <span class="number">0</span>;</span><br><span class="line">			<span class="keyword">for</span>(<span class="type">int</span> k-i;k&lt;=j;k++)</span><br><span class="line">				tsum+=A[i];</span><br><span class="line">			<span class="keyword">if</span>(tsum&gt;msum)</span><br><span class="line">				msum = tsum;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> msum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -90,11 +90,11 @@
 
 <p>分析这段代码，我们得到这段代码的时间复杂度时O(n)，运算效率很高，对比前面两段代码，这段代码将i优化掉了，实际上，我们将i的初始值交给了<u>else if(tsum &lt; 0)</u>这段语句，这条语句第一次生效前，i可以理解为0，tsum为从数列下标0到j的元素求和，如果tsum小于0，则说明我们接下来要求的子列和的结果为一个负数剩下的子列求和相加，为了求最大值，我们要将负数去掉，也就是更新i的值，使得我们能得到尽可能大的tsum值，而<u>if(tsum&gt;msum)</u>确保了我们不会因为更新i而错过最大值。</p>
 <h4 id="总结："><a href="#总结：" class="headerlink" title="总结："></a><strong>总结：</strong></h4><p>我们从最简单粗暴的思路出发，不断将算法优化，最终得到了比较完美的算法。</p>
--->
+
       
     </div>
     <footer class="article-footer">
-      <!--<a data-url="http://example.com/2024/09/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E6%9C%80%E5%A4%A7%E5%AD%90%E5%88%97/" data-id="cm0p1qit00000y4tjar4nflf6" class="article-share-link">Share</a>-->
+      <a data-url="http://example.com/2024/09/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E6%9C%80%E5%A4%A7%E5%AD%90%E5%88%97/" data-id="cm0p1qit00000y4tjar4nflf6" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" rel="tag">数据结构与算法</a></li></ul>
@@ -102,60 +102,19 @@
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/06/13/hello-world/">Hello World</a>
-    </h1>
+    <a href="/2024/06/13/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-caption">Older</span>
+      <div class="article-nav-title">Hello World</div>
+    </a>
   
+</nav>
 
-        <a href="/2024/06/13/hello-world/" class="article-date">
-  <time datetime="2024-06-13T14:31:45.512Z" itemprop="datePublished">2024-06-13</time>
-</a>
-      </header>
-    
-    <div class="article-entry-abstract" itemprop="articleBody">
-      
-        <!--<p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
--->
-      
-    </div>
-    <footer class="article-footer">
-      <!--<a data-url="http://example.com/2024/06/13/hello-world/" data-id="cm0p1n5c2000020tj46xpcgkm" class="article-share-link">Share</a>-->
-      
-      
-    </footer>
-  </div>
   
 </article>
-
-
-  
-
 
 </section>
       </div>
