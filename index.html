@@ -84,7 +84,7 @@
       
     </div>
     <footer class="article-footer">
-      <!--<a data-url="http://example.com/2024/10/09/%E5%88%86%E6%B2%BB%E6%80%9D%E6%83%B3/" data-id="cm21xfdi0000068tjezaw1tmy" class="article-share-link">Share</a>-->
+      <!--<a data-url="http://example.com/2024/10/09/%E5%88%86%E6%B2%BB%E6%80%9D%E6%83%B3/" data-id="cm2228ii60008m8tjgxys6uwi" class="article-share-link">Share</a>-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" rel="tag">数据结构与算法</a></li></ul>
@@ -123,7 +123,7 @@
 
 <p>对其复杂度分析得到其复杂度为O(mn)（m，n分别为子串与查找串的长度）。</p>
 <p>接下来以查找串T&#x3D;”aaabbaaaba”，子串P&#x3D;”aaaba”为例分析其改进方法。</p>
-<p><img src="F:/Picture/image-20241009194912582.png" alt="image-20241009194912582"></p>
+<p><img src="/../imgs/KMP%E7%AE%97%E6%B3%95/image-20241009194912582.png"></p>
 <p>首先以我们的思维来讲，通过观察第一次匹配，我们一般会直接跳到最后一步，但这个算法却只能一步步进行匹配，我们可以从这里改进：①改变两次相邻匹配之间跳过的“<strong>步长</strong>”；②下一次匹配从子串第几个字符开始，即<strong>开始匹配位置</strong>。同时保证不出错。而KMP算法能帮我们解决这个问题。下面来详细讲讲这个算法：设s为子串，str为查找串</p>
 <p>我们通过构建next[]数组来确定步长及下一次匹配的开始位置，开始介绍next[]数组之前，我们先讲一下其功能及原理：当子串匹配到第i位时字串与查找串不再匹配（隐含条件：前i-1位都匹配，可以做化简算法的突破口），此时我们通过使用next数组能够得到我们下一次匹配跳len(s)-next[i]位，并且下一次匹配从s[next[i]]开始，虽然这里查找串是未知的，但子串是给定已知的，而前i-1位都匹配的条件并不会影响子串，所以我们可以通过子串来构建next数组。</p>
 <p>我们为了方便理解，先给出一个不准确的描述：先来一个next[]数组中next[i]记录的是由子串s的前i-1位字符所成字符串（记为si）的最长相同前缀后缀的长度，（si的前缀&#x2F;后缀均是其真子串）举个例子s&#x3D;”aadgaadc”:(注意！这里next[i]的值并不完全正确，仅为方便理解，后面会讲为什么)</p>
@@ -280,7 +280,7 @@
       
     </div>
     <footer class="article-footer">
-      <!--<a data-url="http://example.com/2024/10/09/KMP%E7%AE%97%E6%B3%95/" data-id="cm21xzfki0000jgtjaycndhh3" class="article-share-link">Share</a>-->
+      <!--<a data-url="http://example.com/2024/10/09/KMP%E7%AE%97%E6%B3%95/" data-id="cm2228ihw0000m8tj91tuankl" class="article-share-link">Share</a>-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" rel="tag">数据结构与算法</a></li></ul>
@@ -315,8 +315,8 @@
     <div class="article-entry-abstract" itemprop="articleBody">
       
         <!--<h1 id="排序1"><a href="#排序1" class="headerlink" title="排序1"></a>排序1</h1><p>注：这篇文章偏笔记性质，所以解释较少。同时，本文分时间复杂度，最好情况时间复杂度，最坏情况时间复杂度，空间复杂度及应用几个方面分析算法好坏。</p>
-<h2 id="1-插入排序"><a href="#1-插入排序" class="headerlink" title="1 插入排序"></a>1 插入排序</h2><h3 id="1-1-直接插入排序"><a href="#1-1-直接插入排序" class="headerlink" title="1.1 直接插入排序"></a>1.1 直接插入排序</h3><p>直接插入排序是一种最简单的排序方法（思路简单），整个排序过程为先将第一个元素视为有序数列，然后从第二个元素开始插入，直到将最后一个元素插入前面的有序列中。其最好情况时间复杂度为O(n)，即数组已经顺序排好，最坏情况时间复杂度为O(n^2)，逆序，平均为O(n^2)，其优点是可以用来排打乱了少数数据，大部分数据仍然有序的数据组。其基本过程如下图：</p>
-<p><img src="/../../../Picture/image-20241008200428256.png" alt="image-20241008200428256"></p>
+<h2 id="1-插入排序"><a href="#1-插入排序" class="headerlink" title="1 插入排序"></a>1 插入排序</h2><h3 id="1-1-直接插入排序"><a href="#1-1-直接插入排序" class="headerlink" title="1.1 直接插入排序"></a>1.1 直接插入排序</h3><p>直接插入排序是一种最简单的排序方法（思路简单），整个排序过程为先将第一个元素视为有序数列，然后从第二个元素开始插入，直到将最后一个元素插入前面的有序列中。其最好情况时间复杂度为O(n)，即数组已经顺序排好，最坏情况时间复杂度为O(n^2^)，逆序，平均为O(n^2^)，其优点是可以用来排打乱了少数数据，大部分数据仍然有序的数据组。其基本过程如下图：</p>
+<p><img src="/imgs/%E6%8E%92%E5%BA%8F%E4%B8%80/image-20241008200428256.png"></p>
 <p><strong>代码：</strong></p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
 
@@ -326,7 +326,7 @@
       
     </div>
     <footer class="article-footer">
-      <!--<a data-url="http://example.com/2024/10/09/%E6%8E%92%E5%BA%8F%E4%B8%80/" data-id="cm21xzfkn0001jgtjbo2sa29t" class="article-share-link">Share</a>-->
+      <!--<a data-url="http://example.com/2024/10/09/%E6%8E%92%E5%BA%8F%E4%B8%80/" data-id="cm2228ihz0001m8tj0zf72fb8" class="article-share-link">Share</a>-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" rel="tag">数据结构与算法</a></li></ul>
@@ -380,7 +380,7 @@
       
     </div>
     <footer class="article-footer">
-      <!--<a data-url="http://example.com/2024/09/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E6%9C%80%E5%A4%A7%E5%AD%90%E5%88%97/" data-id="cm0p1qit00000y4tjar4nflf6" class="article-share-link">Share</a>-->
+      <!--<a data-url="http://example.com/2024/09/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E6%9C%80%E5%A4%A7%E5%AD%90%E5%88%97/" data-id="cm2228ii50007m8tj71gpckdf" class="article-share-link">Share</a>-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" rel="tag">数据结构与算法</a></li></ul>
@@ -431,7 +431,7 @@
       
     </div>
     <footer class="article-footer">
-      <!--<a data-url="http://example.com/2024/06/13/hello-world/" data-id="cm0p1n5c2000020tj46xpcgkm" class="article-share-link">Share</a>-->
+      <!--<a data-url="http://example.com/2024/06/13/hello-world/" data-id="cm2228ii10003m8tj12rfcxgw" class="article-share-link">Share</a>-->
       
       
     </footer>
