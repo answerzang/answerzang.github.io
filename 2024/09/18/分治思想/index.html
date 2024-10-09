@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>金岩的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="分治思想分治思想即将复杂问题分解成一个个规模较小的子问题，最后得到可以直接求解的子问题，从而自底向上求解，两个重点：子问题规模更小，可以得到能直接求解的子问题。 题目：给定一个数n，将其分解成若干个正整数之和，以6为例，6&#x3D;6，6&#x3D;5+1，6&#x3D;4+2，6&#x3D;4+1+1，6&#x3D;3+3，6&#x3D;3+2+1，6&#x3D;3+1+1+1，6&#x3D;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="金岩的博客">
+<meta property="og:url" content="http://example.com/2024/09/18/%E5%88%86%E6%B2%BB%E6%80%9D%E6%83%B3/index.html">
+<meta property="og:site_name" content="金岩的博客">
+<meta property="og:description" content="分治思想分治思想即将复杂问题分解成一个个规模较小的子问题，最后得到可以直接求解的子问题，从而自底向上求解，两个重点：子问题规模更小，可以得到能直接求解的子问题。 题目：给定一个数n，将其分解成若干个正整数之和，以6为例，6&#x3D;6，6&#x3D;5+1，6&#x3D;4+2，6&#x3D;4+1+1，6&#x3D;3+3，6&#x3D;3+2+1，6&#x3D;3+1+1+1，6&#x3D;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-09-18T13:18:32.886Z">
+<meta property="article:modified_time" content="2024-10-08T11:47:05.023Z">
+<meta property="article:author" content="臧金岩">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="金岩的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:100,300,400,700&amp;subset=korean" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <!--<div id="banner"></div>-->
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        <a href="/" id="main-nav-title" class="main-nav-link">金岩的博客</a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives/">Archives</a>
+        
+          <a class="main-nav-link" href="/about/">about</a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-分治思想" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="分治思想"><a href="#分治思想" class="headerlink" title="分治思想"></a>分治思想</h1><p>分治思想即将复杂问题分解成一个个规模较小的子问题，最后得到可以直接求解的子问题，从而自底向上求解，两个重点：子问题规模更小，可以得到能直接求解的子问题。</p>
+<p><strong>题目：</strong>给定一个数n，将其分解成若干个正整数之和，以6为例，6&#x3D;6，6&#x3D;5+1，6&#x3D;4+2，6&#x3D;4+1+1，6&#x3D;3+3，6&#x3D;3+2+1，6&#x3D;3+1+1+1，6&#x3D;2+2+2，6&#x3D;2+2+1+1，6&#x3D;2+1+1+1+1，6&#x3D;1+1+1+1+1+1，共11种，请设计函数，求数n分解方法有多少种；</p>
+<p><strong>思路：</strong>根据题目，自然地联想到用递归解决，递归的核心是将问题分解成规模更小的子问题而求解，先假设函数为Q(n)，现在我们思考Q(n)与Q(n-1)之间的关系，但经过探究，我们可以发现，这种关系难以寻找，于是我们加入变量m，函数Q(n,m)表示n分解成若干个不大于m的数之和方法种数，对函数Q(n,m)，其可以分解为Q(n,m-1)与n分解成不若干个包含m的数之和方法种数之和，注意到m与n都为定值，所以n分解成不若干个包含m的数之和方法种数之和等于将（n-m）分解成若干个不大于m的数之和方法种数，即Q(n-m,m)，**于是得到Q(n,m)&#x3D;Q(n,m-1)+Q(n-m,m)<strong>，此即为递推式，之后我们讨论终止条件与限定条件，如下，不赘述。（思考：若n分解成的加数不允许有重复，那么怎么写递推式？Q(n,m)&#x3D;Q(n,m-1)+Q(n-m,m-1)）<br>$$<br>Q(n,m)&#x3D;<br>\begin{equation}<br>    \left{<br>        \begin{array}{lr}<br>        1 &amp; m &#x3D; 1 &amp;or&amp; n&#x3D;1\<br>        Q(n,n) &amp; n&lt;m\<br>        1+Q(n,n-1) &amp; n&#x3D;m\<br>        Q(n,m-1)+Q(n-m,m) &amp; n&gt;m&gt;1<br>        \end{array}<br>    \right.<br>\end{equation}<br>$$<br><strong>题目变式1：</strong>若将题目加入限制条件：将n分解为k个数之和，递推式又该怎么写？令函数为Q(n,k)，做如下操作：将n分解成的k个数都减去1，则有两种情况：1、n分解成的k个数都大于1，这种情况的分解方法数等于Q(n-k,k)；2、n分解成的k个数至少一个等于1，把等于1的数单独拿出来（相当于这个已经固定了），这种情况的种数为Q(n-1,k-1)。于是我们得到：</strong>Q(n,k)&#x3D;Q(n-k,k)+Q(n-1,k-1)**，再设定终止情况就OK了。</p>
+<p><strong>题目变式2：</strong>如果n只能分解成k个奇数或者k个偶数，递推式又该如何写？这里我们假设奇数的函数为f(n,k)，偶数为g(n,k)，我们故技重施，对奇数有f(n,k)&#x3D;g(n-k,k)+f(n-1,k-1)，对偶数有g(n,k)&#x3D;f(n-k,k)（符合条件的最小的偶数为2，大于1）。</p>
+<p><strong>题目变式3：</strong>如果将n分解成k个不同的数，又该怎么写？答案是<strong>Q(n,k)&#x3D;Q(n-k,k)+Q(n-k,k-1)</strong></p>
+<p><strong>解释：</strong>如果有且仅有一个1，那么剩下的数必然全大于等于1，所以将剩下的所有组成数都减去1，结果不变的同时还可以减小问题规模，这是表达式为Q(n-1-(k-1),k-1)&#x3D;Q(n-k,k-1),如果没有1，将所有数都减去1，得到Q(n-k,k)，于是我们得到了这个式子。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/09/18/%E5%88%86%E6%B2%BB%E6%80%9D%E6%83%B3/" data-id="cm21xfdi0000068tjezaw1tmy" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2024/09/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E6%9C%80%E5%A4%A7%E5%AD%90%E5%88%97/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-caption">Older</span>
+      <div class="article-nav-title">数据结构与算法-最大子列</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2024 臧金岩<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> with 
+      theme_by <a href="http://hexo.io/" target="_blank">mango</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives/" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about/" class="mobile-nav-link">about</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
