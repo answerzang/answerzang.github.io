@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"answerzang.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.21.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="参考文章 1 2 首先让我们来看一组字符：（规范名称，待匹配的字符串称文本串，用于匹配的子串称为模式串）     文本串 I t  w o u l d  b e  . . .     模式串    w o r d           模式串      w o r d          我们发现，当’r’与’u’不匹配时，KMP算法会将’w’移到原先’r’的位置上，’w’与’u’对齐，但通过我们观察">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BM算法">
+<meta property="og:url" content="http://answerzang.github.io/2024/10/10/BM%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="金岩的博客">
+<meta property="og:description" content="参考文章 1 2 首先让我们来看一组字符：（规范名称，待匹配的字符串称文本串，用于匹配的子串称为模式串）     文本串 I t  w o u l d  b e  . . .     模式串    w o r d           模式串      w o r d          我们发现，当’r’与’u’不匹配时，KMP算法会将’w’移到原先’r’的位置上，’w’与’u’对齐，但通过我们观察">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-10-10T07:45:42.000Z">
+<meta property="article:modified_time" content="2024-10-10T10:56:59.929Z">
+<meta property="article:author" content="臧金岩">
+<meta property="article:tag" content="数据结构与算法">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://answerzang.github.io/2024/10/10/BM%E7%AE%97%E6%B3%95/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://answerzang.github.io/2024/10/10/BM%E7%AE%97%E6%B3%95/","path":"2024/10/10/BM算法/","title":"BM算法"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>BM算法 | 金岩的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">金岩的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">大学学习随记</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">6</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="臧金岩"
+      src="/images/head_image.jpg">
+  <p class="site-author-name" itemprop="name">臧金岩</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://answerzang.github.io/2024/10/10/BM%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head_image.jpg">
+      <meta itemprop="name" content="臧金岩">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="金岩的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="BM算法 | 金岩的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          BM算法
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-10-10 15:45:42 / 修改时间：18:56:59" itemprop="dateCreated datePublished" datetime="2024-10-10T15:45:42+08:00">2024-10-10</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>参考文章</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zniahfag/article/details/51338264?ops_request_misc=&amp;request_id=&amp;biz_id=102&amp;utm_term=BM&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-2-51338264.142^v100^pc_search_result_base6&amp;spm=1018.2226.3001.4187">1</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/EQUINOX1/article/details/133256159?ops_request_misc=&amp;request_id=&amp;biz_id=102&amp;utm_term=BM&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-6-133256159.142^v100^pc_search_result_base6&amp;spm=1018.2226.3001.4187">2</a></p>
+<p>首先让我们来看一组字符：（规范名称，待匹配的字符串称文本串，用于匹配的子串称为模式串）</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>文本串</th>
+<th>I</th>
+<th>t</th>
+<th></th>
+<th>w</th>
+<th>o</th>
+<th>u</th>
+<th>l</th>
+<th>d</th>
+<th></th>
+<th>b</th>
+<th>e</th>
+<th></th>
+<th>.</th>
+<th>.</th>
+<th>.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>模式串</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td>w</td>
+<td>o</td>
+<td><strong>r</strong></td>
+<td>d</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>模式串</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>w</td>
+<td>o</td>
+<td>r</td>
+<td>d</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>我们发现，当’r’与’u’不匹配时，KMP算法会将’w’移到原先’r’的位置上，’w’与’u’对齐，但通过我们观察，”word”字符中没有’u’，所以”woul”与”word”不会再匹配，应该将模式串后移4位（匹配位置还没有到would的d上），这里可以作为我们算法优化的突破点。</p>
+<p>进行深入分析，我们发现：KMP算法并未充分利用文本串的已知信息（即文本串与模式串不匹配的位置的信息），如果充分利用此信息，我们可以将模式串移动更多，使算法效率更高，于是便有了我们今天介绍的算法——BM算法，事实上，现在大部分情况下的字符匹配都是用的BM算法而非KMP算法。</p>
+<p>BM算法实质上是令模式串移动的距离尽可能地大，而为了实现这个目标，BM算法包含了两个算法：</p>
+<ul>
+<li>坏字符算法</li>
+<li>好后缀算法</li>
+</ul>
+<p>首先介绍坏字符算法：</p>
+<p>如下表</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>文本串</th>
+<th>a</th>
+<th>b</th>
+<th>a</th>
+<th>c</th>
+<th>a</th>
+<th>b</th>
+<th>b</th>
+<th>a</th>
+<th>b</th>
+<th>a</th>
+<th>b</th>
+<th>s</th>
+<th>c</th>
+<th>a</th>
+<th>b</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>模式串</strong></td>
+<td>a</td>
+<td>b</td>
+<td>b</td>
+<td>a</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>模式串</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>a</td>
+<td>b</td>
+<td>b</td>
+<td>a</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>我们根据这个表来模拟匹配并讲解过程：</p>
+<p>首先将模式串从后向前与文本串匹配，模式串第一次匹配的字符a与c显然不匹配，并且模式串中不含c字符，于是直接将其右移4（模式串长度）位，文本串中的aba均未参与匹配，很显然的效率提升。</p>
+<p>这种直接后移整个匹配串的情况比较少见，很有可能模式串与文本串不匹配的字符在模式串中存在，于是有<strong>第二种情况</strong>：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>文本串</th>
+<th>a</th>
+<th>a</th>
+<th>b</th>
+<th>b</th>
+<th>c</th>
+<th>c</th>
+<th>a</th>
+<th>a</th>
+<th>c</th>
+<th>c</th>
+<th>b</th>
+<th>a</th>
+<th>c</th>
+<th>d</th>
+<th>a</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>模式串</strong></td>
+<td>b</td>
+<td>c</td>
+<td><strong>c</strong></td>
+<td>a</td>
+<td>a</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>模式串</strong></td>
+<td></td>
+<td></td>
+<td>b</td>
+<td>c</td>
+<td><strong>c</strong></td>
+<td>a</td>
+<td>a</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>模式串</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td>b</td>
+<td>c</td>
+<td><strong>c</strong></td>
+<td>a</td>
+<td>a</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>第一次匹配时，模式串的a与文本串的c不匹配，于是从模式串当前匹配位置（a）向前找最近的c字符（向前查找由其从后往前的匹配顺序决定），将查找到的最近的c字符与文本串的c字符对齐，进行下次匹配，又发现第二个模式串a与文本串的c不匹配，再次查找最近的c并对齐，匹配成功。</p>
+<p>思路就是这样，现在我们其中的细节问题——如何判断字符是否在模式串中，如何获得距模式串当前匹配位置最近的某字符。</p>
+<p>我们通过构建数组来解决这些问题，以模式串P=”at_that”为例讲解数组构建过程：</p>
+<p>将这个数组命名为delta1[]，其长度为7，该数组记录模式串中每个字符相对于最右端<strong>最近</strong>的距离，如下表：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>P:</th>
+<th>*</th>
+<th>a</th>
+<th>t</th>
+<th>_</th>
+<th>t</th>
+<th>h</th>
+<th>a</th>
+<th>t</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>delta1</strong></td>
+<td>7</td>
+<td>1</td>
+<td>0</td>
+<td>4</td>
+<td>0</td>
+<td>2</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>其代码实现如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> ASIZE 256</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">get_delta1</span><span class="params">(<span class="type">char</span> *P, <span class="type">int</span> m, <span class="type">int</span> delta1[])</span> </span><br><span class="line">&#123;</span><br><span class="line">     <span class="type">int</span> i;</span><br><span class="line">     <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; ASIZE; ++i)</span><br><span class="line">        delta1[i] = m;</span><br><span class="line">     <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; m - <span class="number">1</span>; ++i)</span><br><span class="line">     	delta1[P[i]] = m - i - <span class="number">1</span>;</span><br><span class="line">&#125;	<span class="comment">//从参考网站copy的</span></span><br><span class="line"><span class="comment">/*解释</span></span><br><span class="line"><span class="comment">字符的范围是0~255(字符值和int值的转换)，所以我们开一个大小位256的delta1数组用</span></span><br><span class="line"><span class="comment">于存储，m就是P的长度，第一个for循环将所有字符的距离都设为最大距离，第二个for循环</span></span><br><span class="line"><span class="comment">针对P的，将P中字符从前向后遍历，更新P中字符的delta1值</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>那么这个数组如何使用呢？使用方法比较简单，假设P[i]匹配失败，且此时文本串对应位置字符为s，则查找delta1[s]，右移delta[s]+i-strlen(P)位，当然此时可能会出现小于0的情况。</p>
+<p>举个例子：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>模式串</th>
+<th>t</th>
+<th>c</th>
+<th>c</th>
+<th>c</th>
+<th>b</th>
+<th>c</th>
+<th>d</th>
+<th>a</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>文本串</td>
+<td>t</td>
+<td>c</td>
+<td>d</td>
+<td>c</td>
+<td>b</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>delta1</td>
+<td>4</td>
+<td>1</td>
+<td>2</td>
+<td>1</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>右移2+2-5=-1位，出错。所以需要好后缀算法来解决这个问题，这里有个细节，就是储存每一位字符距右端的距离也可以解决这个问题，但是经过实践，加入好后缀算法更快。</p>
+<p>先对好后缀做个说明：</p>
+<p>假设模式串为：P=”xxxx<strong>abcd</strong>ffff<strong>abcd</strong>“假设匹配过程中移动到其右数第一个f时不匹配（abcd都匹配），那我们就将xxxx后的abcd移到原先abcd的位置，再继续比较，这里与P最后与文本串相匹配的abcd子串记为好后缀。</p>
+<p>将记载数组好后缀信息的数组记为suffix[]，记载移动位数的数组gs[]，通过suffix的辅助来构建gs表，先做四点说明：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>a</th>
+<th>b</th>
+<th>c</th>
+<th>d</th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th>a</th>
+<th>b</th>
+<th>c</th>
+<th>d</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>gs[i] = 9;</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th>a</th>
+<th>b</th>
+<th>c</th>
+<th>d</th>
+<th></th>
+<th></th>
+<th>a</th>
+<th>b</th>
+<th>c</th>
+<th>d</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>gs[i] = 6;</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th>a</th>
+<th>b</th>
+<th>c</th>
+<th>d</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>gs[i] = 13;</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>a</th>
+<th>b</th>
+<th>c</th>
+<th></th>
+<th></th>
+<th>a</th>
+<th>b</th>
+<th>c</th>
+<th></th>
+<th></th>
+<th>a</th>
+<th>b</th>
+<th>c</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>gs[i] = 6;</p>
+<p><strong>代码</strong>：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">suffixes</span><span class="params">(<span class="type">char</span> *pattern, <span class="type">int</span> pattern_len, <span class="type">int</span> suffix[])</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> j;</span><br><span class="line">    [m<span class="number">-1</span>] = m;</span><br><span class="line">    <span class="keyword">for</span> (i = pattern_len<span class="number">-2</span>; i&gt;=<span class="number">0</span>; --i)</span><br><span class="line">    &#123;</span><br><span class="line">        j = i;</span><br><span class="line">        <span class="keyword">while</span>(j &gt;= <span class="number">0</span>&amp;&amp;pattern[j] == p[m<span class="number">-1</span> - (i - j)])</span><br><span class="line">        &#123;</span><br><span class="line">            --j;</span><br><span class="line">        &#125;</span><br><span class="line">        suffix[i] = i - j;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">preBmGs</span><span class="params">(<span class="type">char</span> *pattern, <span class="type">int</span> pattern_len, <span class="type">int</span> bmGs[])</span> &#123;</span><br><span class="line">     <span class="type">int</span> i, j, suffix[XSIZE];</span><br><span class="line">     suffixes(pattern, pattern_len, suffix);</span><br><span class="line">     <span class="comment">//都初始化为找不子串匹配到好后缀的</span></span><br><span class="line">     <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; pattern_len; ++i)</span><br><span class="line">        bmGs[i] = pattern_len; </span><br><span class="line">     j = <span class="number">0</span>;</span><br><span class="line">     <span class="comment">//最大前缀</span></span><br><span class="line">     <span class="keyword">for</span> (i = pattern_len - <span class="number">1</span>; i &gt;= <span class="number">0</span>; --i)</span><br><span class="line">        <span class="keyword">if</span> (suff[i] == i + <span class="number">1</span>)</span><br><span class="line">           <span class="keyword">for</span> (; j &lt; pattern_len - <span class="number">1</span> - i; ++j)</span><br><span class="line">             <span class="keyword">if</span> (bmGs[j] == pattern_len)</span><br><span class="line">                bmGs[j] = pattern_len - <span class="number">1</span> - i;</span><br><span class="line">    <span class="comment">//模式串中有子串匹配上好后缀</span></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt;= pattern_len - <span class="number">2</span>; ++i)</span><br><span class="line">       bmGs[pattern_len - <span class="number">1</span> - suff[i]] = pattern_len - <span class="number">1</span> - i;</span><br><span class="line">&#125;				<span class="comment">//复制的</span></span><br></pre></td></tr></table></figure>
+<p>这里本人时间原因，就不解释了。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" rel="tag"><i class="fa fa-tag"></i> 数据结构与算法</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/10/10/%E6%A0%88%E5%AE%9E%E7%8E%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%BF%90%E7%AE%97/" rel="prev" title="栈实现表达式运算">
+                  <i class="fa fa-angle-left"></i> 栈实现表达式运算
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">金岩</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
