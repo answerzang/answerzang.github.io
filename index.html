@@ -48,7 +48,11 @@
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
@@ -301,7 +305,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-10-10 09:03:54" itemprop="dateModified" datetime="2024-10-10T09:03:54+08:00">2024-10-10</time>
+      <time title="修改时间：2024-10-10 14:37:54" itemprop="dateModified" datetime="2024-10-10T14:37:54+08:00">2024-10-10</time>
     </span>
 
   
@@ -319,6 +323,7 @@
 
 <p>对其复杂度分析得到其复杂度为O(mn)（m，n分别为子串与查找串的长度）。</p>
 <p>接下来以查找串T&#x3D;”aaabbaaaba”，子串P&#x3D;”aaaba”为例分析其改进方法。</p>
+<p><img src="/../imgs/KMP%E7%AE%97%E6%B3%95/image-20241009194912582-17285422622071.png"></p>
 <p>首先以我们的思维来讲，通过观察第一次匹配，我们一般会直接跳到最后一步，但这个算法却只能一步步进行匹配，我们可以从这里改进：①改变两次相邻匹配之间跳过的“<strong>步长</strong>”；②下一次匹配从子串第几个字符开始，即<strong>开始匹配位置</strong>。同时保证不出错。而KMP算法能帮我们解决这个问题。下面来详细讲讲这个算法：设s为子串，str为查找串</p>
 <p>我们通过构建next[]数组来确定步长及下一次匹配的开始位置，开始介绍next[]数组之前，我们先讲一下其功能及原理：当子串匹配到第i位时字串与查找串不再匹配（隐含条件：前i-1位都匹配，可以做化简算法的突破口），此时我们通过使用next数组能够得到我们下一次匹配跳len(s)-next[i]位，并且下一次匹配从s[next[i]]开始，虽然这里查找串是未知的，但子串是给定已知的，而前i-1位都匹配的条件并不会影响子串，所以我们可以通过子串来构建next数组。</p>
 <p>我们为了方便理解，先给出一个不准确的描述：先来一个next[]数组中next[i]记录的是由子串s的前i-1位字符所成字符串（记为si）的最长相同前缀后缀的长度，（si的前缀&#x2F;后缀均是其真子串）举个例子s&#x3D;”aadgaadc”:(注意！这里next[i]的值并不完全正确，仅为方便理解，后面会讲为什么)</p>
