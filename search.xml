@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>KMP算法</title>
+    <url>/blog/2024/10/09/KMP%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<h1 id="KMP算法"><a href="#KMP算法" class="headerlink" title="KMP算法"></a>KMP算法</h1><p>在介绍KMP算法前我们先介绍BP算法，暴力匹配算法，先上代码：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">BP</span><span class="params">(<span class="type">char</span>* str,<span class="type">char</span>* s)</span><span class="comment">//s为给定子串，str为带查找字符串，查找到则返回s在str中首次出现的位置，否则返回-1</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="built_in">strlen</span>(str)-<span class="built_in">strlen</span>(s);i++)&#123;	<span class="comment">//从str第一个字符开始其后字符依次与s匹配，注意边界</span></span><br><span class="line">        <span class="type">int</span> flag = <span class="number">1</span>;							<span class="comment">//判断条件</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;<span class="built_in">strlen</span>(s);j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(str[i+j]!=s[j])&#123;</span><br><span class="line">                flag = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">break</span>;							<span class="comment">//若出现不匹配字符，停止本次操作，进行下一次匹配</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(flag)</span><br><span class="line">            <span class="keyword">return</span> i+<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对其复杂度分析得到其复杂度为O(mn)（m，n分别为子串与查找串的长度）。</p>
+<p>接下来以查找串T&#x3D;”aaabbaaaba”，子串P&#x3D;”aaaba”为例分析其改进方法。</p>
+<p><img src="/../imgs/KMP%E7%AE%97%E6%B3%95/image-20241009194912582.png"></p>
+<p>首先以我们的思维来讲，通过观察第一次匹配，我们一般会直接跳到最后一步，但这个算法却只能一步步进行匹配，我们可以从这里改进：①改变两次相邻匹配之间跳过的“<strong>步长</strong>”；②下一次匹配从子串第几个字符开始，即<strong>开始匹配位置</strong>。同时保证不出错。而KMP算法能帮我们解决这个问题。下面来详细讲讲这个算法：设s为子串，str为查找串</p>
+<p>我们通过构建next[]数组来确定步长及下一次匹配的开始位置，开始介绍next[]数组之前，我们先讲一下其功能及原理：当子串匹配到第i位时字串与查找串不再匹配（隐含条件：前i-1位都匹配，可以做化简算法的突破口），此时我们通过使用next数组能够得到我们下一次匹配跳len(s)-next[i]位，并且下一次匹配从s[next[i]]开始，虽然这里查找串是未知的，但子串是给定已知的，而前i-1位都匹配的条件并不会影响子串，所以我们可以通过子串来构建next数组。</p>
+<p>我们为了方便理解，先给出一个不准确的描述：先来一个next[]数组中next[i]记录的是由子串s的前i-1位字符所成字符串（记为si）的最长相同前缀后缀的长度，（si的前缀&#x2F;后缀均是其真子串）举个例子s&#x3D;”aadgaadc”:(注意！这里next[i]的值并不完全正确，仅为方便理解，后面会讲为什么)</p>
+<table>
+<thead>
+<tr>
+<th>i的值</th>
+<th>前缀</th>
+<th>后缀</th>
+<th>next[i]</th>
+<th>si</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>-</td>
+<td>-</td>
+<td>-1</td>
+<td>-</td>
+</tr>
+<tr>
+<td>1</td>
+<td>-</td>
+<td>-</td>
+<td>0</td>
+<td>a</td>
+</tr>
+<tr>
+<td>2</td>
+<td>a</td>
+<td>a</td>
+<td>1</td>
+<td>aa</td>
+</tr>
+<tr>
+<td>3</td>
+<td>a,aa</td>
+<td>d,ad</td>
+<td>0</td>
+<td>aad</td>
+</tr>
+<tr>
+<td>4</td>
+<td>a,aa,aad</td>
+<td>g,dg,adg</td>
+<td>0</td>
+<td>aadg</td>
+</tr>
+<tr>
+<td>5</td>
+<td>a,aa,aad,aadg</td>
+<td>a,ga,dga,adga</td>
+<td>1</td>
+<td>aadga</td>
+</tr>
+<tr>
+<td>6</td>
+<td>a,aa,aad,aadg,aadga</td>
+<td>a,aa,gaa,dgaa,adgaa</td>
+<td>2</td>
+<td>aadgaa</td>
+</tr>
+<tr>
+<td>7</td>
+<td>a,aa,aad,aadg,aadga,aadgaa</td>
+<td>d,ad,aad,gaad,dgaad,adgaad</td>
+<td>3</td>
+<td>aadgaad</td>
+</tr>
+</tbody></table>
+<p>现在我们再讲一遍其原理：子串第i位不匹配，但是其前i-1位子串都匹配，（拿上表i&#x3D;7举例）查找串此时对应的位置就是aadgaad，我们就可以把它移到前后缀相匹配的位置</p>
+<table>
+<thead>
+<tr>
+<th>匹配串</th>
+<th>a</th>
+<th>a</th>
+<th>d</th>
+<th>g</th>
+<th>a</th>
+<th>a</th>
+<th>d</th>
+<th>a</th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>这次子串</td>
+<td>a</td>
+<td>a</td>
+<td>d</td>
+<td>g</td>
+<td>a</td>
+<td>a</td>
+<td>d</td>
+<td>(c)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>下次子串</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>a</td>
+<td>a</td>
+<td>d(相同，移动)</td>
+<td>g</td>
+<td>a</td>
+<td>a</td>
+<td>d</td>
+</tr>
+</tbody></table>
+<p>此时，我们可以发现，移动了i-next[i]（7-3&#x3D;4）位，这是有普遍性的，为了这个普遍性，我们特地规定了next[0]&#x3D;-1,否则无法移动，next[1]&#x3D;0也是同样的道理，同时移动后从子串的next[i]位开始比较，于是我们可以把（假设）已经得到next数组之后的代码写出来：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">KMP</span><span class="params">(<span class="type">char</span> *str, <span class="type">char</span> *s)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//事实上，我们只需要两个变量，一个变量记录查找串当前比较位置，一个变量记录子串当前比较位置，比较结果相同则二者均自增，不同则查找出按当前位置不变，子串通过next数组来改变，再利用strlen(s)与该变量的大小比较判断是否完全匹配，若是，则返回第一次完全匹配的开始位置</span></span><br><span class="line">    <span class="type">int</span> *next = (<span class="type">int</span> *)<span class="built_in">malloc</span>(m * <span class="built_in">sizeof</span>(<span class="type">int</span>)); <span class="comment">// 动态分配next数组的空间</span></span><br><span class="line">    <span class="built_in">get_next</span>(s, next); <span class="comment">// 计算next数组</span></span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>; <span class="comment">// 初始化i和j，分别用于匹配串和子串的索引</span></span><br><span class="line">    <span class="comment">// 遍历匹配串S</span></span><br><span class="line">    <span class="keyword">while</span> (i &lt; <span class="built_in">strlen</span>(str)) &#123;</span><br><span class="line">        <span class="comment">// 如果j为-1或当前字符匹配，则继续匹配下一个字符</span></span><br><span class="line">        <span class="keyword">if</span> (j == <span class="number">-1</span> || str[i] == s[j]) &#123;</span><br><span class="line">            i++;</span><br><span class="line">            j++;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 如果字符不匹配，则根据PMT数组回退j的位置</span></span><br><span class="line">            j = next[j];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 如果j等于模式串的长度，则找到了匹配</span></span><br><span class="line">        <span class="keyword">if</span> (j == <span class="built_in">strlen</span>(S)) &#123;</span><br><span class="line">            <span class="keyword">return</span> i - j; <span class="comment">// 返回匹配的起始索引</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>; <span class="comment">// 如果没有找到匹配，则返回-1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在我们开始优化next数组：</p>
+<p>1.上文已经提到的next[0]&#x3D;-1,next[1]&#x3D;0;</p>
+<p>2.有一种可能的情况：s[i]&#x3D;&#x3D;s[next[i]]；在上面我们已经知道了s[i]与匹配串不匹配，那么下一次操作时我们会再次比较s[next[i]]与匹配串同一位置的字符，显然会匹配失败，为提高效率，我们应该避免，于是我们通过分析该过程来改进next数组：假设这种情况会发生，我们仅需要计算两次操作后总共移动多少位，从哪一位开始比较即可：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>移动几位</th>
+<th>从哪一位比较</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>第一次</td>
+<td>i-next[i]</td>
+<td>next[i]（这一位不匹配）</td>
+</tr>
+<tr>
+<td>第二次</td>
+<td>next[i]-next[next[i]]</td>
+<td>next[next[i]]</td>
+</tr>
+</tbody></table>
+<p>两次综合，移动了i-next[i]+next[i]-next[next[i]] &#x3D; next[next[i]]位，从第next[next[i]]位开始比较。</p>
+<p>于是，为了延续前面的规律，我们这样改进next数组：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>(s[i]==s[next[i]])&#123;</span><br><span class="line">    next[i] = next[next[i]];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个方法将两步乃至多部化简成了一步，使效率更高。</p>
+<p><strong>代码</strong>如下：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">get_next</span><span class="params">(<span class="type">char</span> *s, <span class="type">int</span> *next)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> m = <span class="built_in">strlen</span>(s); <span class="comment">// 子串的长度</span></span><br><span class="line">    next[<span class="number">0</span>] = <span class="number">-1</span>; <span class="comment">// next数组的第一个元素设为-1</span></span><br><span class="line">    next[<span class="number">1</span>] = <span class="number">0</span>; <span class="comment">// next数组的第二个元素设为0，初始化</span></span><br><span class="line">    <span class="type">int</span> k = <span class="number">0</span>; <span class="comment">// 初始化k为0，用于next的计算</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 计算next数组</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">2</span>; i &lt; m; i++) &#123;</span><br><span class="line">        <span class="comment">//i指向后缀末尾，k指向前缀末尾</span></span><br><span class="line">        <span class="comment">// 如果当前字符不匹配，并且k不为0，则回退k的位置</span></span><br><span class="line">        <span class="keyword">while</span> (k &gt; <span class="number">0</span> &amp;&amp; s[k] != s[i - <span class="number">1</span>]) &#123;</span><br><span class="line">            k = next[k];			<span class="comment">//前后缀不相同，去找k前面子串的最长前后缀</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 如果当前字符匹配，则k增加1</span></span><br><span class="line">        <span class="keyword">if</span> (s[k] == s[i - <span class="number">1</span>]) &#123;</span><br><span class="line">            k++;		<span class="comment">//前后缀相同，后移</span></span><br><span class="line">        &#125;</span><br><span class="line">        next[i] = k;	<span class="comment">//更新next数组</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个算法的时间复杂度是O(m+n),m,n分别为子串与查找串的长度。</p>
+<p>总之，主要的代码和思维就这些，代码可能有些晦涩难懂，建议自己写几个子串和查找串，然后根据代码手推几次，就理解了。</p>
+]]></content>
+      <tags>
+        <tag>数据结构与算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>排序一</title>
+    <url>/blog/2024/10/09/%E6%8E%92%E5%BA%8F%E4%B8%80/</url>
+    <content><![CDATA[<h1 id="排序1"><a href="#排序1" class="headerlink" title="排序1"></a>排序1</h1><p>注：这篇文章偏笔记性质，所以解释较少。同时，本文分时间复杂度，最好情况时间复杂度，最坏情况时间复杂度，空间复杂度及应用几个方面分析算法好坏。</p>
+<h2 id="1-插入排序"><a href="#1-插入排序" class="headerlink" title="1 插入排序"></a>1 插入排序</h2><h3 id="1-1-直接插入排序"><a href="#1-1-直接插入排序" class="headerlink" title="1.1 直接插入排序"></a>1.1 直接插入排序</h3><p>直接插入排序是一种最简单的排序方法（思路简单），整个排序过程为先将第一个元素视为有序数列，然后从第二个元素开始插入，直到将最后一个元素插入前面的有序列中。其最好情况时间复杂度为O(n)，即数组已经顺序排好，最坏情况时间复杂度为O(n^2^)，逆序，平均为O(n^2^)，其优点是可以用来排打乱了少数数据，大部分数据仍然有序的数据组。其基本过程如下图：</p>
+<p><img src="/imgs/%E6%8E%92%E5%BA%8F%E4%B8%80/image-20241008200428256.png"></p>
+<p><strong>代码：</strong></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="1-2-折半插入排序"><a href="#1-2-折半插入排序" class="headerlink" title="1.2 折半插入排序"></a>1.2 折半插入排序</h3><h3 id="1-3-Shell排序"><a href="#1-3-Shell排序" class="headerlink" title="1.3 Shell排序"></a>1.3 Shell排序</h3><h2 id="2-选择排序"><a href="#2-选择排序" class="headerlink" title="2 选择排序"></a>2 选择排序</h2><h3 id="2-1-直接选择排序"><a href="#2-1-直接选择排序" class="headerlink" title="2.1 直接选择排序"></a>2.1 直接选择排序</h3><h3 id="2-2-树形选择排序"><a href="#2-2-树形选择排序" class="headerlink" title="2.2 树形选择排序"></a>2.2 树形选择排序</h3>]]></content>
+      <tags>
+        <tag>数据结构与算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/blog/2024/06/13/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>数据结构与算法-最大子列</title>
+    <url>/blog/2024/09/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E6%9C%80%E5%A4%A7%E5%AD%90%E5%88%97/</url>
+    <content><![CDATA[<h1 id="数据结构与算法-最大子列"><a href="#数据结构与算法-最大子列" class="headerlink" title="数据结构与算法-最大子列"></a>数据结构与算法-最大子列</h1><p>原题：有一数列 A_1,A_2,A_3…A_n,其中可能有负数，假设其子列A_i ,…,A_j(i&lt;&#x3D;j)，使得$\sum_{i&#x3D;i}^{j}x_i$取到最大值，请设计函数求该最大值。</p>
+<p>分析：首先我们很自然地想到使用穷举法来实现，从此出发，先将这种简单的思路实现。</p>
+<p><strong>代码一：</strong></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">Max</span><span class="params">(<span class="type">const</span> <span class="type">int</span> A[],<span class="type">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> tsum=msum=A[<span class="number">0</span>];<span class="comment">//tsum记录代码运行中得到的下标从i到j的子列求和值，msum记录最大值</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=i;j&lt;n;j++)</span><br><span class="line">		&#123;</span><br><span class="line">			tsum = <span class="number">0</span>;</span><br><span class="line">			<span class="keyword">for</span>(<span class="type">int</span> k-i;k&lt;=j;k++)</span><br><span class="line">				tsum+=A[i];</span><br><span class="line">			<span class="keyword">if</span>(tsum&gt;msum)</span><br><span class="line">				msum = tsum;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> msum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>下面我们分析这段代码，其时间复杂度为O(n^3)，好像并不慢，但如果数据很多，似乎就有些慢了，所以我们在这里将其优化：</p>
+<p><strong>代码二</strong>：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">Max</span><span class="params">(<span class="type">const</span> <span class="type">int</span> A[],<span class="type">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> tsum=msum=A[<span class="number">0</span>];</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		tsum = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=i;j&lt;n;j++)</span><br><span class="line">		&#123;</span><br><span class="line">			tsum+=A[i];</span><br><span class="line">			<span class="keyword">if</span>(tsum&gt;msum)</span><br><span class="line">				msum = tsum;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过观察，我们发现代码二优化了代码一中从A_i到A_j的相加过程，即当i不变，j++时，tsum不需要从i一直加到j，只需要在原结果上加上A_j，其时间复杂度为O(n^2)大大提高了运算效率。</p>
+<p>但是，算法能否再次优化使得效率<strong>再次提高</strong>呢？答案是肯定的，我们先观察代码再做分析。</p>
+<p><strong>代码三：</strong></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">Max</span><span class="params">(<span class="type">const</span> <span class="type">int</span> A[],<span class="type">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> tsum=msum=A[<span class="number">0</span>];</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;n;j++)</span><br><span class="line">	&#123;</span><br><span class="line">		tsum+=A[j];</span><br><span class="line">		<span class="keyword">if</span>(tsum&gt;msum)</span><br><span class="line">			msum = tsum;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(tsum &lt; <span class="number">0</span>)</span><br><span class="line">			tsum = <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> msum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>分析这段代码，我们得到这段代码的时间复杂度时O(n)，运算效率很高，对比前面两段代码，这段代码将i优化掉了，实际上，我们将i的初始值交给了<u>else if(tsum &lt; 0)</u>这段语句，这条语句第一次生效前，i可以理解为0，tsum为从数列下标0到j的元素求和，如果tsum小于0，则说明我们接下来要求的子列和的结果为一个负数剩下的子列求和相加，为了求最大值，我们要将负数去掉，也就是更新i的值，使得我们能得到尽可能大的tsum值，而<u>if(tsum&gt;msum)</u>确保了我们不会因为更新i而错过最大值。</p>
+<h4 id="总结："><a href="#总结：" class="headerlink" title="总结："></a><strong>总结：</strong></h4><p>我们从最简单粗暴的思路出发，不断将算法优化，最终得到了比较完美的算法。</p>
+]]></content>
+      <tags>
+        <tag>数据结构与算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>分治思想</title>
+    <url>/blog/2024/10/09/%E5%88%86%E6%B2%BB%E6%80%9D%E6%83%B3/</url>
+    <content><![CDATA[<h1 id="分治思想"><a href="#分治思想" class="headerlink" title="分治思想"></a>分治思想</h1><p>分治思想即将复杂问题分解成一个个规模较小的子问题，最后得到可以直接求解的子问题，从而自底向上求解，两个重点：子问题规模更小，可以得到能直接求解的子问题。</p>
+<p><strong>题目：</strong>给定一个数n，将其分解成若干个正整数之和，以6为例，6&#x3D;6，6&#x3D;5+1，6&#x3D;4+2，6&#x3D;4+1+1，6&#x3D;3+3，6&#x3D;3+2+1，6&#x3D;3+1+1+1，6&#x3D;2+2+2，6&#x3D;2+2+1+1，6&#x3D;2+1+1+1+1，6&#x3D;1+1+1+1+1+1，共11种，请设计函数，求数n分解方法有多少种；</p>
+<p><strong>思路：</strong>根据题目，自然地联想到用递归解决，递归的核心是将问题分解成规模更小的子问题而求解，先假设函数为Q(n)，现在我们思考Q(n)与Q(n-1)之间的关系，但经过探究，我们可以发现，这种关系难以寻找，于是我们加入变量m，函数Q(n,m)表示n分解成若干个不大于m的数之和方法种数，对函数Q(n,m)，其可以分解为Q(n,m-1)与n分解成不若干个包含m的数之和方法种数之和，注意到m与n都为定值，所以n分解成不若干个包含m的数之和方法种数之和等于将（n-m）分解成若干个不大于m的数之和方法种数，即Q(n-m,m)，**于是得到Q(n,m)&#x3D;Q(n,m-1)+Q(n-m,m)<strong>，此即为递推式，之后我们讨论终止条件与限定条件，如下，不赘述。（思考：若n分解成的加数不允许有重复，那么怎么写递推式？Q(n,m)&#x3D;Q(n,m-1)+Q(n-m,m-1)）<br>$$<br>Q(n,m)&#x3D;<br>\begin{equation}<br>    \left{<br>        \begin{array}{lr}<br>        1 &amp; m &#x3D; 1 &amp;or&amp; n&#x3D;1\<br>        Q(n,n) &amp; n&lt;m\<br>        1+Q(n,n-1) &amp; n&#x3D;m\<br>        Q(n,m-1)+Q(n-m,m) &amp; n&gt;m&gt;1<br>        \end{array}<br>    \right.<br>\end{equation}<br>$$<br><strong>题目变式1：</strong>若将题目加入限制条件：将n分解为k个数之和，递推式又该怎么写？令函数为Q(n,k)，做如下操作：将n分解成的k个数都减去1，则有两种情况：1、n分解成的k个数都大于1，这种情况的分解方法数等于Q(n-k,k)；2、n分解成的k个数至少一个等于1，把等于1的数单独拿出来（相当于这个已经固定了），这种情况的种数为Q(n-1,k-1)。于是我们得到：</strong>Q(n,k)&#x3D;Q(n-k,k)+Q(n-1,k-1)**，再设定终止情况就OK了。</p>
+<p><strong>题目变式2：</strong>如果n只能分解成k个奇数或者k个偶数，递推式又该如何写？这里我们假设奇数的函数为f(n,k)，偶数为g(n,k)，我们故技重施，对奇数有f(n,k)&#x3D;g(n-k,k)+f(n-1,k-1)，对偶数有g(n,k)&#x3D;f(n-k,k)（符合条件的最小的偶数为2，大于1）。</p>
+<p><strong>题目变式3：</strong>如果将n分解成k个不同的数，又该怎么写？答案是<strong>Q(n,k)&#x3D;Q(n-k,k)+Q(n-k,k-1)</strong></p>
+<p><strong>解释：</strong>如果有且仅有一个1，那么剩下的数必然全大于等于1，所以将剩下的所有组成数都减去1，结果不变的同时还可以减小问题规模，这是表达式为Q(n-1-(k-1),k-1)&#x3D;Q(n-k,k-1),如果没有1，将所有数都减去1，得到Q(n-k,k)，于是我们得到了这个式子。</p>
+]]></content>
+      <tags>
+        <tag>数据结构与算法</tag>
+      </tags>
+  </entry>
+</search>
