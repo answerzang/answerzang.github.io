@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.2.0">
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next1.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
 <link rel="stylesheet" href="/css/main.css">
@@ -145,7 +145,7 @@
         <div class="site-overview-wrap sidebar-panel">
           <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="臧金岩"
-      src="/images/head_image.jpg">
+      src="/images/head_portrait.jpg">
   <p class="site-author-name" itemprop="name">臧金岩</p>
   <div class="site-description" itemprop="description"></div>
 </div>
@@ -191,7 +191,7 @@
     <link itemprop="mainEntityOfPage" href="http://answerzang.github.io/2024/10/10/BM%E7%AE%97%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head_image.jpg">
+      <meta itemprop="image" content="/images/head_portrait.jpg">
       <meta itemprop="name" content="臧金岩">
     </span>
 
@@ -216,9 +216,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2024-10-10 15:45:42 / 修改时间：18:56:59" itemprop="dateCreated datePublished" datetime="2024-10-10T15:45:42+08:00">2024-10-10</time>
+      <time title="创建时间：2024-10-10 15:45:42" itemprop="dateCreated datePublished" datetime="2024-10-10T15:45:42+08:00">2024-10-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-10-11 19:21:55" itemprop="dateModified" datetime="2024-10-11T19:21:55+08:00">2024-10-11</time>
     </span>
 
   
@@ -234,413 +240,14 @@
           <p>参考文章</p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zniahfag/article/details/51338264?ops_request_misc=&amp;request_id=&amp;biz_id=102&amp;utm_term=BM&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-2-51338264.142^v100^pc_search_result_base6&amp;spm=1018.2226.3001.4187">1</a></p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/EQUINOX1/article/details/133256159?ops_request_misc=&amp;request_id=&amp;biz_id=102&amp;utm_term=BM&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-6-133256159.142^v100^pc_search_result_base6&amp;spm=1018.2226.3001.4187">2</a></p>
-<p>首先让我们来看一组字符：（规范名称，待匹配的字符串称文本串，用于匹配的子串称为模式串）</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>文本串</th>
-<th>I</th>
-<th>t</th>
-<th></th>
-<th>w</th>
-<th>o</th>
-<th>u</th>
-<th>l</th>
-<th>d</th>
-<th></th>
-<th>b</th>
-<th>e</th>
-<th></th>
-<th>.</th>
-<th>.</th>
-<th>.</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>模式串</strong></td>
-<td></td>
-<td></td>
-<td></td>
-<td>w</td>
-<td>o</td>
-<td><strong>r</strong></td>
-<td>d</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td><strong>模式串</strong></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>w</td>
-<td>o</td>
-<td>r</td>
-<td>d</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>我们发现，当’r’与’u’不匹配时，KMP算法会将’w’移到原先’r’的位置上，’w’与’u’对齐，但通过我们观察，”word”字符中没有’u’，所以”woul”与”word”不会再匹配，应该将模式串后移4位（匹配位置还没有到would的d上），这里可以作为我们算法优化的突破点。</p>
-<p>进行深入分析，我们发现：KMP算法并未充分利用文本串的已知信息（即文本串与模式串不匹配的位置的信息），如果充分利用此信息，我们可以将模式串移动更多，使算法效率更高，于是便有了我们今天介绍的算法——BM算法，事实上，现在大部分情况下的字符匹配都是用的BM算法而非KMP算法。</p>
-<p>BM算法实质上是令模式串移动的距离尽可能地大，而为了实现这个目标，BM算法包含了两个算法：</p>
-<ul>
-<li>坏字符算法</li>
-<li>好后缀算法</li>
-</ul>
-<p>首先介绍坏字符算法：</p>
-<p>如下表</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>文本串</th>
-<th>a</th>
-<th>b</th>
-<th>a</th>
-<th>c</th>
-<th>a</th>
-<th>b</th>
-<th>b</th>
-<th>a</th>
-<th>b</th>
-<th>a</th>
-<th>b</th>
-<th>s</th>
-<th>c</th>
-<th>a</th>
-<th>b</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>模式串</strong></td>
-<td>a</td>
-<td>b</td>
-<td>b</td>
-<td>a</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td><strong>模式串</strong></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>a</td>
-<td>b</td>
-<td>b</td>
-<td>a</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>我们根据这个表来模拟匹配并讲解过程：</p>
-<p>首先将模式串从后向前与文本串匹配，模式串第一次匹配的字符a与c显然不匹配，并且模式串中不含c字符，于是直接将其右移4（模式串长度）位，文本串中的aba均未参与匹配，很显然的效率提升。</p>
-<p>这种直接后移整个匹配串的情况比较少见，很有可能模式串与文本串不匹配的字符在模式串中存在，于是有<strong>第二种情况</strong>：</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>文本串</th>
-<th>a</th>
-<th>a</th>
-<th>b</th>
-<th>b</th>
-<th>c</th>
-<th>c</th>
-<th>a</th>
-<th>a</th>
-<th>c</th>
-<th>c</th>
-<th>b</th>
-<th>a</th>
-<th>c</th>
-<th>d</th>
-<th>a</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>模式串</strong></td>
-<td>b</td>
-<td>c</td>
-<td><strong>c</strong></td>
-<td>a</td>
-<td>a</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td><strong>模式串</strong></td>
-<td></td>
-<td></td>
-<td>b</td>
-<td>c</td>
-<td><strong>c</strong></td>
-<td>a</td>
-<td>a</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td><strong>模式串</strong></td>
-<td></td>
-<td></td>
-<td></td>
-<td>b</td>
-<td>c</td>
-<td><strong>c</strong></td>
-<td>a</td>
-<td>a</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>第一次匹配时，模式串的a与文本串的c不匹配，于是从模式串当前匹配位置（a）向前找最近的c字符（向前查找由其从后往前的匹配顺序决定），将查找到的最近的c字符与文本串的c字符对齐，进行下次匹配，又发现第二个模式串a与文本串的c不匹配，再次查找最近的c并对齐，匹配成功。</p>
-<p>思路就是这样，现在我们其中的细节问题——如何判断字符是否在模式串中，如何获得距模式串当前匹配位置最近的某字符。</p>
-<p>我们通过构建数组来解决这些问题，以模式串P=”at_that”为例讲解数组构建过程：</p>
-<p>将这个数组命名为delta1[]，其长度为7，该数组记录模式串中每个字符相对于最右端<strong>最近</strong>的距离，如下表：</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>P:</th>
-<th>*</th>
-<th>a</th>
-<th>t</th>
-<th>_</th>
-<th>t</th>
-<th>h</th>
-<th>a</th>
-<th>t</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>delta1</strong></td>
-<td>7</td>
-<td>1</td>
-<td>0</td>
-<td>4</td>
-<td>0</td>
-<td>2</td>
-<td>1</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>其代码实现如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> ASIZE 256</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">get_delta1</span><span class="params">(<span class="type">char</span> *P, <span class="type">int</span> m, <span class="type">int</span> delta1[])</span> </span><br><span class="line">&#123;</span><br><span class="line">     <span class="type">int</span> i;</span><br><span class="line">     <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; ASIZE; ++i)</span><br><span class="line">        delta1[i] = m;</span><br><span class="line">     <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; m - <span class="number">1</span>; ++i)</span><br><span class="line">     	delta1[P[i]] = m - i - <span class="number">1</span>;</span><br><span class="line">&#125;	<span class="comment">//从参考网站copy的</span></span><br><span class="line"><span class="comment">/*解释</span></span><br><span class="line"><span class="comment">字符的范围是0~255(字符值和int值的转换)，所以我们开一个大小位256的delta1数组用</span></span><br><span class="line"><span class="comment">于存储，m就是P的长度，第一个for循环将所有字符的距离都设为最大距离，第二个for循环</span></span><br><span class="line"><span class="comment">针对P的，将P中字符从前向后遍历，更新P中字符的delta1值</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
-<p>那么这个数组如何使用呢？使用方法比较简单，假设P[i]匹配失败，且此时文本串对应位置字符为s，则查找delta1[s]，右移delta[s]+i-strlen(P)位，当然此时可能会出现小于0的情况。</p>
-<p>举个例子：</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>模式串</th>
-<th>t</th>
-<th>c</th>
-<th>c</th>
-<th>c</th>
-<th>b</th>
-<th>c</th>
-<th>d</th>
-<th>a</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>文本串</td>
-<td>t</td>
-<td>c</td>
-<td>d</td>
-<td>c</td>
-<td>b</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>delta1</td>
-<td>4</td>
-<td>1</td>
-<td>2</td>
-<td>1</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>右移2+2-5=-1位，出错。所以需要好后缀算法来解决这个问题，这里有个细节，就是储存每一位字符距右端的距离也可以解决这个问题，但是经过实践，加入好后缀算法更快。</p>
-<p>先对好后缀做个说明：</p>
-<p>假设模式串为：P=”xxxx<strong>abcd</strong>ffff<strong>abcd</strong>“假设匹配过程中移动到其右数第一个f时不匹配（abcd都匹配），那我们就将xxxx后的abcd移到原先abcd的位置，再继续比较，这里与P最后与文本串相匹配的abcd子串记为好后缀。</p>
-<p>将记载数组好后缀信息的数组记为suffix[]，记载移动位数的数组gs[]，通过suffix的辅助来构建gs表，先做四点说明：</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>a</th>
-<th>b</th>
-<th>c</th>
-<th>d</th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th>a</th>
-<th>b</th>
-<th>c</th>
-<th>d</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>gs[i] = 9;</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-<th>a</th>
-<th>b</th>
-<th>c</th>
-<th>d</th>
-<th></th>
-<th></th>
-<th>a</th>
-<th>b</th>
-<th>c</th>
-<th>d</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>gs[i] = 6;</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th>a</th>
-<th>b</th>
-<th>c</th>
-<th>d</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>gs[i] = 13;</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>a</th>
-<th>b</th>
-<th>c</th>
-<th></th>
-<th></th>
-<th>a</th>
-<th>b</th>
-<th>c</th>
-<th></th>
-<th></th>
-<th>a</th>
-<th>b</th>
-<th>c</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>gs[i] = 6;</p>
-<p><strong>代码</strong>：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">suffixes</span><span class="params">(<span class="type">char</span> *pattern, <span class="type">int</span> pattern_len, <span class="type">int</span> suffix[])</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> j;</span><br><span class="line">    [m<span class="number">-1</span>] = m;</span><br><span class="line">    <span class="keyword">for</span> (i = pattern_len<span class="number">-2</span>; i&gt;=<span class="number">0</span>; --i)</span><br><span class="line">    &#123;</span><br><span class="line">        j = i;</span><br><span class="line">        <span class="keyword">while</span>(j &gt;= <span class="number">0</span>&amp;&amp;pattern[j] == p[m<span class="number">-1</span> - (i - j)])</span><br><span class="line">        &#123;</span><br><span class="line">            --j;</span><br><span class="line">        &#125;</span><br><span class="line">        suffix[i] = i - j;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">preBmGs</span><span class="params">(<span class="type">char</span> *pattern, <span class="type">int</span> pattern_len, <span class="type">int</span> bmGs[])</span> &#123;</span><br><span class="line">     <span class="type">int</span> i, j, suffix[XSIZE];</span><br><span class="line">     suffixes(pattern, pattern_len, suffix);</span><br><span class="line">     <span class="comment">//都初始化为找不子串匹配到好后缀的</span></span><br><span class="line">     <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; pattern_len; ++i)</span><br><span class="line">        bmGs[i] = pattern_len; </span><br><span class="line">     j = <span class="number">0</span>;</span><br><span class="line">     <span class="comment">//最大前缀</span></span><br><span class="line">     <span class="keyword">for</span> (i = pattern_len - <span class="number">1</span>; i &gt;= <span class="number">0</span>; --i)</span><br><span class="line">        <span class="keyword">if</span> (suff[i] == i + <span class="number">1</span>)</span><br><span class="line">           <span class="keyword">for</span> (; j &lt; pattern_len - <span class="number">1</span> - i; ++j)</span><br><span class="line">             <span class="keyword">if</span> (bmGs[j] == pattern_len)</span><br><span class="line">                bmGs[j] = pattern_len - <span class="number">1</span> - i;</span><br><span class="line">    <span class="comment">//模式串中有子串匹配上好后缀</span></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt;= pattern_len - <span class="number">2</span>; ++i)</span><br><span class="line">       bmGs[pattern_len - <span class="number">1</span> - suff[i]] = pattern_len - <span class="number">1</span> - i;</span><br><span class="line">&#125;				<span class="comment">//复制的</span></span><br></pre></td></tr></table></figure>
-<p>这里本人时间原因，就不解释了。</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/10/10/BM%E7%AE%97%E6%B3%95/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -669,7 +276,7 @@
     <link itemprop="mainEntityOfPage" href="http://answerzang.github.io/2024/10/10/%E6%A0%88%E5%AE%9E%E7%8E%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%BF%90%E7%AE%97/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head_image.jpg">
+      <meta itemprop="image" content="/images/head_portrait.jpg">
       <meta itemprop="name" content="臧金岩">
     </span>
 
@@ -702,7 +309,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-10-11 00:35:27" itemprop="dateModified" datetime="2024-10-11T00:35:27+08:00">2024-10-11</time>
+      <time title="修改时间：2024-10-11 19:22:56" itemprop="dateModified" datetime="2024-10-11T19:22:56+08:00">2024-10-11</time>
     </span>
 
   
@@ -717,13 +324,14 @@
     <div class="post-body" itemprop="articleBody">
           <p>[TOC]</p>
 <p>说明：这篇博客以代码为主</p>
-<h2 id="1-栈的实现"><a href="#1-栈的实现" class="headerlink" title="1.栈的实现"></a>1.栈的实现</h2><h3 id="1-1基本函数"><a href="#1-1基本函数" class="headerlink" title="1.1基本函数"></a>1.1基本函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">int</span> ElemType;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Node</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	ElemType data;<span class="comment">//存储栈的元素值（1个） </span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Node</span> *<span class="title">next</span>;</span><span class="comment">//存储下一个元素（朝栈底方向）节点的地址 </span></span><br><span class="line">&#125;LinkStack;</span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">1.初始化 </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">LinkStack *<span class="title function_">InitStack</span><span class="params">()</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">2.销毁</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">DestroyStack</span><span class="params">(LinkStack *s)</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">3.判断栈是否为空</span></span><br><span class="line"><span class="comment">若为空，返回1；</span></span><br><span class="line"><span class="comment">否则，返回0 </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">StackEmpty</span><span class="params">(LinkStack *s)</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">4.进栈</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="type">void</span> *<span class="title function_">Push</span><span class="params">(LinkStack *s,ElemType e)</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">5.出栈 </span></span><br><span class="line"><span class="comment">若栈不空，进行相关操作，并返回1；</span></span><br><span class="line"><span class="comment">否则，提示，返回0 </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">Pop</span><span class="params">(LinkStack *s,ElemType *e)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">6.取栈顶元素 </span></span><br><span class="line"><span class="comment">若栈不空，进行相关操作，并返回1；</span></span><br><span class="line"><span class="comment">否则，提示，返回0 </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">GetTop</span><span class="params">(LinkStack *s,ElemType *e)</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">7.输出</span></span><br><span class="line"><span class="comment">从栈顶 至 栈底 全部输出</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">display</span><span class="params">(LinkStack *s)</span></span><br></pre></td></tr></table></figure>
-<h3 id="1-2代码实现"><a href="#1-2代码实现" class="headerlink" title="1.2代码实现"></a>1.2代码实现</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">typedef</span> <span class="type">int</span> ElemType;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Node</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	ElemType data;<span class="comment">//存储栈的元素值（1个） </span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Node</span> *<span class="title">next</span>;</span><span class="comment">//存储下一个元素（朝栈底方向）节点的地址 </span></span><br><span class="line">&#125;LinkStack;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">空：s-&gt;next==NULL </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">1.初始化 </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">LinkStack *<span class="title function_">InitStack</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	LinkStack *s;</span><br><span class="line">	s=(LinkStack *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(LinkStack));</span><br><span class="line">	s-&gt;next=<span class="literal">NULL</span>;</span><br><span class="line">	<span class="keyword">return</span> s;</span><br><span class="line">&#125; </span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">2.销毁</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">DestroyStack</span><span class="params">(LinkStack *s)</span></span><br><span class="line">&#123;</span><br><span class="line">	ElemType m;</span><br><span class="line">	<span class="type">int</span> <span class="title function_">Pop</span><span class="params">(LinkStack *s,ElemType *e)</span>;</span><br><span class="line">	<span class="keyword">while</span>(s-&gt;next!=<span class="literal">NULL</span>)<span class="comment">//不空</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//出栈</span></span><br><span class="line">		Pop(s,&amp;m); </span><br><span class="line">	&#125; </span><br><span class="line">	<span class="built_in">free</span>(s); </span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">3.判断栈是否为空</span></span><br><span class="line"><span class="comment">若为空，返回1；</span></span><br><span class="line"><span class="comment">否则，返回0 </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">StackEmpty</span><span class="params">(LinkStack *s)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(s-&gt;next==<span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">4.进栈</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="type">void</span> *<span class="title function_">Push</span><span class="params">(LinkStack *s,ElemType e)</span></span><br><span class="line">&#123;</span><br><span class="line">	LinkStack *t;</span><br><span class="line">	<span class="comment">//1.构造一个节点t，存储元素值e </span></span><br><span class="line">	t=(LinkStack *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(LinkStack));</span><br><span class="line">	t-&gt;data=e;</span><br><span class="line">	<span class="comment">//2.把t节点添加到头节点的后面 </span></span><br><span class="line">	t-&gt;next=s-&gt;next;</span><br><span class="line">	s-&gt;next=t;</span><br><span class="line">&#125; </span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">5.出栈 </span></span><br><span class="line"><span class="comment">若栈不空，进行相关操作，并返回1；</span></span><br><span class="line"><span class="comment">否则，提示，返回0 </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">Pop</span><span class="params">(LinkStack *s,ElemType *e)</span></span><br><span class="line">&#123;</span><br><span class="line">	LinkStack *t; </span><br><span class="line">	<span class="keyword">if</span>(s-&gt;next!=<span class="literal">NULL</span>)<span class="comment">//不空</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//1.让t指向栈顶元素节点</span></span><br><span class="line">		t=s-&gt;next;</span><br><span class="line">		<span class="comment">//2.把栈顶元素值存储到*e中</span></span><br><span class="line">		*e=t-&gt;data;</span><br><span class="line">		<span class="comment">//3.删除</span></span><br><span class="line">		s-&gt;next=t-&gt;next;</span><br><span class="line">		<span class="comment">//4.释放存储空间</span></span><br><span class="line">		<span class="built_in">free</span>(t); </span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	&#125; </span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;栈空，不能出栈！\n&quot;</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125; </span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">6.取栈顶元素 </span></span><br><span class="line"><span class="comment">若栈不空，进行相关操作，并返回1；</span></span><br><span class="line"><span class="comment">否则，提示，返回0 </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">GetTop</span><span class="params">(LinkStack *s,ElemType *e)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(s-&gt;next!=<span class="literal">NULL</span>)<span class="comment">//不空</span></span><br><span class="line">	&#123;</span><br><span class="line">		*e=s-&gt;next-&gt;data;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	&#125; </span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;栈空，不能取栈顶元素！\n&quot;</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">7.输出</span></span><br><span class="line"><span class="comment">从栈顶 至 栈底</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">display</span><span class="params">(LinkStack *s)</span></span><br><span class="line">&#123;</span><br><span class="line"> </span><br><span class="line">	<span class="keyword">while</span>(s-&gt;next != <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,s-&gt;next-&gt;data);</span><br><span class="line">		s = s-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	LinkStack s;</span><br><span class="line">	s = *InitStack();</span><br><span class="line">    Push(&amp;s,<span class="number">1</span>);</span><br><span class="line">	Push(&amp;s,<span class="number">2</span>);</span><br><span class="line">	Push(&amp;s,<span class="number">3</span>);</span><br><span class="line">	Push(&amp;s,<span class="number">4</span>);</span><br><span class="line">	Push(&amp;s,<span class="number">5</span>);</span><br><span class="line">	Push(&amp;s,<span class="number">6</span>);</span><br><span class="line">	Push(&amp;s,<span class="number">7</span>);</span><br><span class="line">	</span><br><span class="line">	ElemType *e;</span><br><span class="line">	e = (ElemType *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(ElemType));</span><br><span class="line">	    </span><br><span class="line">	GetTop(&amp;s,e);</span><br><span class="line"> 	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,*e);</span><br><span class="line"> 	Pop(&amp;s,e);</span><br><span class="line"> </span><br><span class="line"> 	GetTop(&amp;s,e);</span><br><span class="line"> 	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,*e);	</span><br><span class="line"> 	</span><br><span class="line"> 	display(&amp;s);</span><br><span class="line"> 	<span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line"> 	</span><br><span class="line"> 	GetTop(&amp;s,e);</span><br><span class="line"> 	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,*e); </span><br><span class="line">	<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-<h2 id="2-中缀以及后缀表达式"><a href="#2-中缀以及后缀表达式" class="headerlink" title="2.中缀以及后缀表达式"></a>2.中缀以及后缀表达式</h2><h3 id="2-1中缀表达式"><a href="#2-1中缀表达式" class="headerlink" title="2.1中缀表达式"></a>2.1中缀表达式</h3><p><strong>例：2*(3+4)-8/2</strong></p>
-<p>说明：</p>
-<h3 id="2-2后缀表达式"><a href="#2-2后缀表达式" class="headerlink" title="2.2后缀表达式"></a>2.2后缀表达式</h3><h3 id="2-3中后缀表达式转换"><a href="#2-3中后缀表达式转换" class="headerlink" title="2.3中后缀表达式转换"></a>2.3中后缀表达式转换</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## <span class="number">3.</span>用栈实现表达式求值</span><br><span class="line"></span><br><span class="line">### <span class="number">3.1</span>中缀表达式求值</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">|      | 当前 | 运算符 | 栈顶  | 元素        | T           |</span><br><span class="line">| ---- | ---- | ------ | ----- | ----------- | ----------- |</span><br><span class="line">| 当前 |      | 空     | （    | +或-        | *或/        |</span><br><span class="line">| 获取 | （   | W进栈  | W进栈 | W进栈       | W进栈       |</span><br><span class="line">| 的运 | ）   | Error  | T出栈 | T出栈并计算 | T出栈并计算 |</span><br><span class="line">| 算符 | *或/ | W进栈  | W进栈 | T出栈并计算 | W进栈       |</span><br><span class="line">| W    | +或- | W进栈  | W进栈 | T出栈并计算 | T出栈并计算 |</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">```c</span><br></pre></td></tr></table></figure>
-<h3 id="3-2后缀表达式求值"><a href="#3-2后缀表达式求值" class="headerlink" title="3.2后缀表达式求值"></a>3.2后缀表达式求值</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="4-补充——错误表达式的判断及处理"><a href="#4-补充——错误表达式的判断及处理" class="headerlink" title="4.补充——错误表达式的判断及处理"></a>4.补充——错误表达式的判断及处理</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/10/10/%E6%A0%88%E5%AE%9E%E7%8E%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%BF%90%E7%AE%97/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -752,7 +360,7 @@
     <link itemprop="mainEntityOfPage" href="http://answerzang.github.io/2024/10/10/%E6%8E%92%E5%BA%8F1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head_image.jpg">
+      <meta itemprop="image" content="/images/head_portrait.jpg">
       <meta itemprop="name" content="臧金岩">
     </span>
 
@@ -785,7 +393,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-10-11 19:11:12" itemprop="dateModified" datetime="2024-10-11T19:11:12+08:00">2024-10-11</time>
+      <time title="修改时间：2024-10-11 19:22:36" itemprop="dateModified" datetime="2024-10-11T19:22:36+08:00">2024-10-11</time>
     </span>
 
   
@@ -798,12 +406,16 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1><span id="排序1">排序1</span></h1><p>注：这篇文章偏笔记性质，所以解释较少。同时，本文分时间复杂度，最好情况时间复杂度，最坏情况时间复杂度，空间复杂度及应用几个方面分析算法好坏。</p>
+          <h1 id="排序1"><a href="#排序1" class="headerlink" title="排序1"></a>排序1</h1><p>注：这篇文章偏笔记性质，所以解释较少。同时，本文分时间复杂度，最好情况时间复杂度，最坏情况时间复杂度，空间复杂度及应用几个方面分析算法好坏。</p>
 <p>[TOC]</p>
-<h2><span id="1-插入排序">1 插入排序</span></h2><h3><span id="11-直接插入排序">1.1 直接插入排序</span></h3><p>直接插入排序是一种最简单的排序方法（思路简单），整个排序过程为先将第一个元素视为有序数列，然后从第二个元素开始插入，直到将最后一个元素插入前面的有序列中。其最好情况时间复杂度为O(n)，即数组已经顺序排好，最坏情况时间复杂度为O(n^2^)，逆序，平均为O(n^2^)，其优点是可以用来排打乱了少数数据，大部分数据仍然有序的数据组。其基本过程如下图：<img src="../imgs/%E6%8E%92%E5%BA%8F1/image-20241008200428256-17285765494311.png" alt></p>
-<p><strong>代码：</strong></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-<h3><span id="12-折半插入排序">1.2 折半插入排序</span></h3><h3><span id="13-shell排序">1.3 Shell排序</span></h3><h2><span id="2-选择排序">2 选择排序</span></h2><h3><span id="21-直接选择排序">2.1 直接选择排序</span></h3><h3><span id="22-树形选择排序">2.2 树形选择排序</span></h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/10/10/%E6%8E%92%E5%BA%8F1/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -832,7 +444,7 @@
     <link itemprop="mainEntityOfPage" href="http://answerzang.github.io/2024/10/09/%E5%88%86%E6%B2%BB%E6%80%9D%E6%83%B3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head_image.jpg">
+      <meta itemprop="image" content="/images/head_portrait.jpg">
       <meta itemprop="name" content="臧金岩">
     </span>
 
@@ -865,7 +477,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-10-10 23:59:10" itemprop="dateModified" datetime="2024-10-10T23:59:10+08:00">2024-10-10</time>
+      <time title="修改时间：2024-10-11 19:22:27" itemprop="dateModified" datetime="2024-10-11T19:22:27+08:00">2024-10-11</time>
     </span>
 
   
@@ -880,24 +492,14 @@
     <div class="post-body" itemprop="articleBody">
           <h1 id="分治思想"><a href="#分治思想" class="headerlink" title="分治思想"></a>分治思想</h1><p>分治思想即将复杂问题分解成一个个规模较小的子问题，最后得到可以直接求解的子问题，从而自底向上求解，两个重点：子问题规模更小，可以得到能直接求解的子问题。</p>
 <p><strong>题目：</strong>给定一个数n，将其分解成若干个正整数之和，以6为例，6=6，6=5+1，6=4+2，6=4+1+1，6=3+3，6=3+2+1，6=3+1+1+1，6=2+2+2，6=2+2+1+1，6=2+1+1+1+1，6=1+1+1+1+1+1，共11种，请设计函数，求数n分解方法有多少种；</p>
-<p><strong>思路：</strong>根据题目，自然地联想到用递归解决，递归的核心是将问题分解成规模更小的子问题而求解，先假设函数为Q(n)，现在我们思考Q(n)与Q(n-1)之间的关系，但经过探究，我们可以发现，这种关系难以寻找，于是我们加入变量m，函数Q(n,m)表示n分解成若干个不大于m的数之和方法种数，对函数Q(n,m)，其可以分解为Q(n,m-1)与n分解成不若干个包含m的数之和方法种数之和，注意到m与n都为定值，所以n分解成不若干个包含m的数之和方法种数之和等于将（n-m）分解成若干个不大于m的数之和方法种数，即Q(n-m,m)，<strong>于是得到Q(n,m)=Q(n,m-1)+Q(n-m,m)</strong>，此即为递推式，之后我们讨论终止条件与限定条件，如下，不赘述。（思考：若n分解成的加数不允许有重复，那么怎么写递推式？Q(n,m)=Q(n,m-1)+Q(n-m,m-1)）</p>
-<script type="math/tex; mode=display">
-Q(n,m)=
-\begin{equation}
-    \left\{
-        \begin{array}{lr}
-        1 & m = 1 &or& n=1\\\\
-        Q(n,n) & n<m\\\\
-        1+Q(n,n-1) & n=m\\\\
-        Q(n,m-1)+Q(n-m,m) & n>m>1\\
-        \end{array}
-    \right. 
-\end{equation}</script><p><img src="../imgs/%E5%88%86%E6%B2%BB%E6%80%9D%E6%83%B3/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202024-10-10%20235758.png" alt=""></p>
-<p><strong>题目变式1：</strong>若将题目加入限制条件：将n分解为k个数之和，递推式又该怎么写？令函数为Q(n,k)，做如下操作：将n分解成的k个数都减去1，则有两种情况：1、n分解成的k个数都大于1，这种情况的分解方法数等于Q(n-k,k)；2、n分解成的k个数至少一个等于1，把等于1的数单独拿出来（相当于这个已经固定了），这种情况的种数为Q(n-1,k-1)。于是我们得到：<strong>Q(n,k)=Q(n-k,k)+Q(n-1,k-1)</strong>，再设定终止情况就OK了。</p>
-<p><strong>题目变式2：</strong>如果n只能分解成k个奇数或者k个偶数，递推式又该如何写？这里我们假设奇数的函数为f(n,k)，偶数为g(n,k)，我们故技重施，对奇数有f(n,k)=g(n-k,k)+f(n-1,k-1)，对偶数有g(n,k)=f(n-k,k)（符合条件的最小的偶数为2，大于1）。</p>
-<p><strong>题目变式3：</strong>如果将n分解成k个不同的数，又该怎么写？答案是<strong>Q(n,k)=Q(n-k,k)+Q(n-k,k-1)</strong></p>
-<p><strong>解释：</strong>如果有且仅有一个1，那么剩下的数必然全大于等于1，所以将剩下的所有组成数都减去1，结果不变的同时还可以减小问题规模，这是表达式为Q(n-1-(k-1),k-1)=Q(n-k,k-1),如果没有1，将所有数都减去1，得到Q(n-k,k)，于是我们得到了这个式子。</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/10/09/%E5%88%86%E6%B2%BB%E6%80%9D%E6%83%B3/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -926,7 +528,7 @@ Q(n,m)=
     <link itemprop="mainEntityOfPage" href="http://answerzang.github.io/2024/10/09/KMP%E7%AE%97%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head_image.jpg">
+      <meta itemprop="image" content="/images/head_portrait.jpg">
       <meta itemprop="name" content="臧金岩">
     </span>
 
@@ -959,7 +561,7 @@ Q(n,m)=
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-10-10 23:37:52" itemprop="dateModified" datetime="2024-10-10T23:37:52+08:00">2024-10-10</time>
+      <time title="修改时间：2024-10-11 19:22:08" itemprop="dateModified" datetime="2024-10-11T19:22:08+08:00">2024-10-11</time>
     </span>
 
   
@@ -972,176 +574,15 @@ Q(n,m)=
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="KMP算法"><a href="#KMP算法" class="headerlink" title="KMP算法"></a>KMP算法</h1><p>在介绍KMP算法前我们先介绍BP算法，暴力匹配算法，先上代码：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">BP</span><span class="params">(<span class="type">char</span>* str,<span class="type">char</span>* s)</span><span class="comment">//s为给定子串，str为带查找字符串，查找到则返回s在str中首次出现的位置，否则返回-1</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="built_in">strlen</span>(str)-<span class="built_in">strlen</span>(s);i++)&#123;	<span class="comment">//从str第一个字符开始其后字符依次与s匹配，注意边界</span></span><br><span class="line">        <span class="type">int</span> flag = <span class="number">1</span>;							<span class="comment">//判断条件</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;<span class="built_in">strlen</span>(s);j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(str[i+j]!=s[j])&#123;</span><br><span class="line">                flag = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">break</span>;							<span class="comment">//若出现不匹配字符，停止本次操作，进行下一次匹配</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(flag)</span><br><span class="line">            <span class="keyword">return</span> i+<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>对其复杂度分析得到其复杂度为O(mn)（m，n分别为子串与查找串的长度）。</p>
-<p>接下来以查找串T=”aaabbaaaba”，子串P=”aaaba”为例分析其改进方法。</p>
-<p><img src="../imgs/KMP%E7%AE%97%E6%B3%95/image-20241009194912582-17285422622071.png" alt=""></p>
-<p>首先以我们的思维来讲，通过观察第一次匹配，我们一般会直接跳到最后一步，但这个算法却只能一步步进行匹配，我们可以从这里改进：①改变两次相邻匹配之间跳过的“<strong>步长</strong>”；②下一次匹配从子串第几个字符开始，即<strong>开始匹配位置</strong>。同时保证不出错。而KMP算法能帮我们解决这个问题。下面来详细讲讲这个算法：设s为子串，str为查找串</p>
-<p>我们通过构建next[]数组来确定步长及下一次匹配的开始位置，开始介绍next[]数组之前，我们先讲一下其功能及原理：当子串匹配到第i位时字串与查找串不再匹配（隐含条件：前i-1位都匹配，可以做化简算法的突破口），此时我们通过使用next数组能够得到我们下一次匹配跳len(s)-next[i]位，并且下一次匹配从s[next[i]]开始，虽然这里查找串是未知的，但子串是给定已知的，而前i-1位都匹配的条件并不会影响子串，所以我们可以通过子串来构建next数组。</p>
-<p>我们为了方便理解，先给出一个不准确的描述：先来一个next[]数组中next[i]记录的是由子串s的前i-1位字符所成字符串（记为si）的最长相同前缀后缀的长度，（si的前缀/后缀均是其真子串）举个例子s=”aadgaadc”:(注意！这里next[i]的值并不完全正确，仅为方便理解，后面会讲为什么)</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>i的值</th>
-<th>前缀</th>
-<th>后缀</th>
-<th>next[i]</th>
-<th>si</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>0</td>
-<td>-</td>
-<td>-</td>
-<td>-1</td>
-<td>-</td>
-</tr>
-<tr>
-<td>1</td>
-<td>-</td>
-<td>-</td>
-<td>0</td>
-<td>a</td>
-</tr>
-<tr>
-<td>2</td>
-<td>a</td>
-<td>a</td>
-<td>1</td>
-<td>aa</td>
-</tr>
-<tr>
-<td>3</td>
-<td>a,aa</td>
-<td>d,ad</td>
-<td>0</td>
-<td>aad</td>
-</tr>
-<tr>
-<td>4</td>
-<td>a,aa,aad</td>
-<td>g,dg,adg</td>
-<td>0</td>
-<td>aadg</td>
-</tr>
-<tr>
-<td>5</td>
-<td>a,aa,aad,aadg</td>
-<td>a,ga,dga,adga</td>
-<td>1</td>
-<td>aadga</td>
-</tr>
-<tr>
-<td>6</td>
-<td>a,aa,aad,aadg,aadga</td>
-<td>a,aa,gaa,dgaa,adgaa</td>
-<td>2</td>
-<td>aadgaa</td>
-</tr>
-<tr>
-<td>7</td>
-<td>a,aa,aad,aadg,aadga,aadgaa</td>
-<td>d,ad,aad,gaad,dgaad,adgaad</td>
-<td>3</td>
-<td>aadgaad</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>现在我们再讲一遍其原理：子串第i位不匹配，但是其前i-1位子串都匹配，（拿上表i=7举例）查找串此时对应的位置就是aadgaad，我们就可以把它移到前后缀相匹配的位置</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>匹配串</th>
-<th>a</th>
-<th>a</th>
-<th>d</th>
-<th>g</th>
-<th>a</th>
-<th>a</th>
-<th>d</th>
-<th>a</th>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>这次子串</td>
-<td>a</td>
-<td>a</td>
-<td>d</td>
-<td>g</td>
-<td>a</td>
-<td>a</td>
-<td>d</td>
-<td>(c)</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>下次子串</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>a</td>
-<td>a</td>
-<td>d(相同，移动)</td>
-<td>g</td>
-<td>a</td>
-<td>a</td>
-<td>d</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>此时，我们可以发现，移动了i-next[i]（7-3=4）位，这是有普遍性的，为了这个普遍性，我们特地规定了next[0]=-1,否则无法移动，next[1]=0也是同样的道理，同时移动后从子串的next[i]位开始比较，于是我们可以把（假设）已经得到next数组之后的代码写出来：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">KMP</span><span class="params">(<span class="type">char</span> *str, <span class="type">char</span> *s)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//事实上，我们只需要两个变量，一个变量记录查找串当前比较位置，一个变量记录子串当前比较位置，比较结果相同则二者均自增，不同则查找出按当前位置不变，子串通过next数组来改变，再利用strlen(s)与该变量的大小比较判断是否完全匹配，若是，则返回第一次完全匹配的开始位置</span></span><br><span class="line">    <span class="type">int</span> *next = (<span class="type">int</span> *)<span class="built_in">malloc</span>(m * <span class="built_in">sizeof</span>(<span class="type">int</span>)); <span class="comment">// 动态分配next数组的空间</span></span><br><span class="line">    <span class="built_in">get_next</span>(s, next); <span class="comment">// 计算next数组</span></span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>; <span class="comment">// 初始化i和j，分别用于匹配串和子串的索引</span></span><br><span class="line">    <span class="comment">// 遍历匹配串S</span></span><br><span class="line">    <span class="keyword">while</span> (i &lt; <span class="built_in">strlen</span>(str)) &#123;</span><br><span class="line">        <span class="comment">// 如果j为-1或当前字符匹配，则继续匹配下一个字符</span></span><br><span class="line">        <span class="keyword">if</span> (j == <span class="number">-1</span> || str[i] == s[j]) &#123;</span><br><span class="line">            i++;</span><br><span class="line">            j++;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 如果字符不匹配，则根据PMT数组回退j的位置</span></span><br><span class="line">            j = next[j];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 如果j等于模式串的长度，则找到了匹配</span></span><br><span class="line">        <span class="keyword">if</span> (j == <span class="built_in">strlen</span>(S)) &#123;</span><br><span class="line">            <span class="keyword">return</span> i - j; <span class="comment">// 返回匹配的起始索引</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>; <span class="comment">// 如果没有找到匹配，则返回-1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>现在我们开始优化next数组：</p>
-<p>1.上文已经提到的next[0]=-1,next[1]=0或-1（如aaa，next数组全是-1）;</p>
-<p>2.有一种可能的情况：s[i]==s[next[i]]；在上面我们已经知道了s[i]与匹配串不匹配，那么下一次操作时我们会再次比较s[next[i]]与匹配串同一位置的字符，显然会匹配失败，为提高效率，我们应该避免，于是我们通过分析该过程来改进next数组：假设这种情况会发生，我们仅需要计算两次操作后总共移动多少位，从哪一位开始比较即可：</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th></th>
-<th>移动几位</th>
-<th>从哪一位比较</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>第一次</td>
-<td>i-next[i]</td>
-<td>next[i]（这一位不匹配）</td>
-</tr>
-<tr>
-<td>第二次</td>
-<td>next[i]-next[next[i]]</td>
-<td>next[next[i]]</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>两次综合，移动了i-next[i]+next[i]-next[next[i]] = next[next[i]]位，从第next[next[i]]位开始比较。</p>
-<p>于是，为了延续前面的规律，我们这样改进next数组：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(s[i]==s[next[i]])&#123;</span><br><span class="line">    next[i] = next[next[i]];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这个方法将两步乃至多部化简成了一步，使效率更高。</p>
-<p><strong>代码</strong>如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">get_next</span><span class="params">(<span class="type">char</span> *s, <span class="type">int</span> *next)</span> </span>&#123;</span><br><span class="line">	<span class="type">int</span> i=<span class="number">0</span>,j=<span class="number">-1</span>;			<span class="comment">//i指向后缀结尾的后一位，j指向前缀结尾</span></span><br><span class="line">	next[<span class="number">0</span>] = <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">while</span>(i&lt;<span class="built_in">strlen</span>(s)<span class="number">-1</span>)&#123;	<span class="comment">//j记录最长相同前后缀的长度，要及时更新</span></span><br><span class="line">        <span class="keyword">while</span>(j&gt;=<span class="number">0</span> &amp;&amp; s[i]!=s[j])	<span class="comment">//当第i与j位不匹配时，j要向前找，而且一定</span></span><br><span class="line">            j = next[j];			<span class="comment">//要保证i前面的几位后缀要与开始的几位前缀匹配\，用j = next[j]可以快速利用前面的结果实现这个。终止条件里的j&gt;=0对应j=-1的情况，这\是由于next[0]=-1即一位都匹配不了，所以终止循环，向下走</span></span><br><span class="line">		i++;				</span><br><span class="line">        j++;</span><br><span class="line">        <span class="keyword">if</span>(s[i]==s[j])				<span class="comment">//如果出现相等的情况(上文提及)，这样操作</span></span><br><span class="line">            next[i] = next[j];		</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            next[i] = j;</span><br><span class="line">    &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这个算法的时间复杂度是O(m+n),m,n分别为子串与查找串的长度。</p>
-<p>总之，主要的代码和思维就这些，代码可能有些晦涩难懂，建议自己写几个子串和查找串，然后根据代码手推几次，就理解了。</p>
-<p>24/10/10 补充</p>
-<p>这几天做了道题，关于KMP算法的，题目给出的并不是简单的字符串，而是一种复合体：第一位记载”字符数组”的原本内容，虽然我误打误撞搞出来了正确结果，但next数组求错了，所以我对这种情况专门写了一段代码（第一位是干扰项，不处理），如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">get_next</span><span class="params">(<span class="type">const</span> <span class="type">char</span> s[],<span class="type">int</span> next[])</span>&#123;</span><br><span class="line"><span class="comment">////这是正常情况，用于对比</span></span><br><span class="line"><span class="comment">//	int i=0,j=-1;</span></span><br><span class="line"><span class="comment">//	next[0] = -1;</span></span><br><span class="line"><span class="comment">//    while(i&lt;strlen(s)-1)&#123;</span></span><br><span class="line"><span class="comment">//        while(j&gt;=0 &amp;&amp; s[i]!=s[j])</span></span><br><span class="line"><span class="comment">//            j = next[j];</span></span><br><span class="line"><span class="comment">//		i++;</span></span><br><span class="line"><span class="comment">//        j++;</span></span><br><span class="line"><span class="comment">//        if(s[i]==s[j])</span></span><br><span class="line"><span class="comment">//            next[i] = next[j];</span></span><br><span class="line"><span class="comment">//        else</span></span><br><span class="line"><span class="comment">//            next[i] = j;</span></span><br><span class="line"><span class="comment">//    &#125;</span></span><br><span class="line">	<span class="type">int</span> i=<span class="number">1</span>,j=<span class="number">0</span>;<span class="comment">//原理是将next数组的每个值都+1，方便跳过第一个数据</span></span><br><span class="line">	next[<span class="number">0</span>] = <span class="number">0</span>;<span class="comment">//不搞也行</span></span><br><span class="line">	next[<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(i&lt;s[<span class="number">0</span>])&#123;</span><br><span class="line">        <span class="keyword">while</span>(j&gt;=<span class="number">1</span> &amp;&amp; s[i]!=s[j])</span><br><span class="line">            j = next[j];</span><br><span class="line">		i++;</span><br><span class="line">        j++;</span><br><span class="line">        <span class="keyword">if</span>(s[i]==s[j])</span><br><span class="line">            next[i] = next[j];</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            next[i] = j;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=s[<span class="number">0</span>];i++)</span><br><span class="line">        next[i]--;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+          <h1 id="KMP算法"><a href="#KMP算法" class="headerlink" title="KMP算法"></a>KMP算法</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/10/09/KMP%E7%AE%97%E6%B3%95/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1170,7 +611,7 @@ Q(n,m)=
     <link itemprop="mainEntityOfPage" href="http://answerzang.github.io/2024/09/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E6%9C%80%E5%A4%A7%E5%AD%90%E5%88%97/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head_image.jpg">
+      <meta itemprop="image" content="/images/head_portrait.jpg">
       <meta itemprop="name" content="臧金岩">
     </span>
 
@@ -1203,7 +644,7 @@ Q(n,m)=
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-10-10 15:16:49" itemprop="dateModified" datetime="2024-10-10T15:16:49+08:00">2024-10-10</time>
+      <time title="修改时间：2024-10-11 19:22:48" itemprop="dateModified" datetime="2024-10-11T19:22:48+08:00">2024-10-11</time>
     </span>
 
   
@@ -1218,18 +659,14 @@ Q(n,m)=
     <div class="post-body" itemprop="articleBody">
           <h1 id="数据结构与算法-最大子列"><a href="#数据结构与算法-最大子列" class="headerlink" title="数据结构与算法-最大子列"></a>数据结构与算法-最大子列</h1><p>原题：有一数列 A~1~,A~2~,A~3~…A~n~,其中可能有负数，假设其子列A~1~,……A~j~(i&lt;=j)，使得$\sum_{i=i}^{j}x_i$取到最大值，请设计函数求该最大值。</p>
 <p>分析：首先我们很自然地想到使用穷举法来实现，从此出发，先将这种简单的思路实现。</p>
-<p><strong>代码一：</strong></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">Max</span><span class="params">(<span class="type">const</span> <span class="type">int</span> A[],<span class="type">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> tsum=msum=A[<span class="number">0</span>];<span class="comment">//tsum记录代码运行中得到的下标从i到j的子列求和值，msum记录最大值</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=i;j&lt;n;j++)</span><br><span class="line">		&#123;</span><br><span class="line">			tsum = <span class="number">0</span>;</span><br><span class="line">			<span class="keyword">for</span>(<span class="type">int</span> k-i;k&lt;=j;k++)</span><br><span class="line">				tsum+=A[i];</span><br><span class="line">			<span class="keyword">if</span>(tsum&gt;msum)</span><br><span class="line">				msum = tsum;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> msum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>下面我们分析这段代码，其时间复杂度为O(n^3^)，好像并不慢，但如果数据很多，似乎就有些慢了，所以我们在这里将其优化：</p>
-<p><strong>代码二</strong>：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">Max</span><span class="params">(<span class="type">const</span> <span class="type">int</span> A[],<span class="type">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> tsum=msum=A[<span class="number">0</span>];</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		tsum = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=i;j&lt;n;j++)</span><br><span class="line">		&#123;</span><br><span class="line">			tsum+=A[i];</span><br><span class="line">			<span class="keyword">if</span>(tsum&gt;msum)</span><br><span class="line">				msum = tsum;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>通过观察，我们发现代码二优化了代码一中从A~1~到A~j~的相加过程，即当i不变，j++时，tsum不需要从i一直加到j，只需要在原结果上加上A~j~，其时间复杂度为O(n^2^)大大提高了运算效率。</p>
-<p>但是，算法能否再次优化使得效率<strong>再次提高</strong>呢？答案是肯定的，我们先观察代码再做分析。</p>
-<p><strong>代码三：</strong></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">Max</span><span class="params">(<span class="type">const</span> <span class="type">int</span> A[],<span class="type">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> tsum=msum=A[<span class="number">0</span>];</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;n;j++)</span><br><span class="line">	&#123;</span><br><span class="line">		tsum+=A[j];</span><br><span class="line">		<span class="keyword">if</span>(tsum&gt;msum)</span><br><span class="line">			msum = tsum;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(tsum &lt; <span class="number">0</span>)</span><br><span class="line">			tsum = <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> msum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>分析这段代码，我们得到这段代码的时间复杂度时O(n)，运算效率很高，对比前面两段代码，这段代码将i优化掉了，实际上，我们将i的初始值交给了<u>else if(tsum &lt; 0)</u>这段语句，这条语句第一次生效前，i可以理解为0，tsum为从数列下标0到j的元素求和，如果tsum小于0，则说明我们接下来要求的子列和的结果为一个负数剩下的子列求和相加，为了求最大值，我们要将负数去掉，也就是更新i的值，使得我们能得到尽可能大的tsum值，而<u>if(tsum&gt;msum)</u>确保了我们不会因为更新i而错过最大值。</p>
-<h4 id="总结："><a href="#总结：" class="headerlink" title="总结："></a><strong>总结：</strong></h4><p>我们从最简单粗暴的思路出发，不断将算法优化，最终得到了比较完美的算法。</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/09/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E6%9C%80%E5%A4%A7%E5%AD%90%E5%88%97/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1258,7 +695,7 @@ Q(n,m)=
     <link itemprop="mainEntityOfPage" href="http://answerzang.github.io/2024/06/13/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head_image.jpg">
+      <meta itemprop="image" content="/images/head_portrait.jpg">
       <meta itemprop="name" content="臧金岩">
     </span>
 
@@ -1299,13 +736,13 @@ Q(n,m)=
     
     <div class="post-body" itemprop="articleBody">
           <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<h2><span id="quick-start">Quick Start</span></h2><h3><span id="create-a-new-post">Create a new post</span></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<h3><span id="run-server">Run server</span></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<h3><span id="generate-static-files">Generate static files</span></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<h3><span id="deploy-to-remote-sites">Deploy to remote sites</span></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 
       
