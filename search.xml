@@ -179,20 +179,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/2024/06/13/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2><span id="quick-start">Quick Start</span></h2><h3><span id="create-a-new-post">Create a new post</span></h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3><span id="run-server">Run server</span></h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3><span id="generate-static-files">Generate static files</span></h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3><span id="deploy-to-remote-sites">Deploy to remote sites</span></h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
     <title>BM算法</title>
     <url>/2024/10/10/BM%E7%AE%97%E6%B3%95/</url>
     <content><![CDATA[<p>参考文章</p>
@@ -611,6 +597,56 @@
       </tags>
   </entry>
   <entry>
+    <title>Hello World</title>
+    <url>/2024/06/13/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2><span id="quick-start">Quick Start</span></h2><h3><span id="create-a-new-post">Create a new post</span></h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3><span id="run-server">Run server</span></h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3><span id="generate-static-files">Generate static files</span></h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3><span id="deploy-to-remote-sites">Deploy to remote sites</span></h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>数据结构与算法-最大子列</title>
+    <url>/2024/09/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E6%9C%80%E5%A4%A7%E5%AD%90%E5%88%97/</url>
+    <content><![CDATA[<h1><span id="数据结构与算法-最大子列">数据结构与算法-最大子列</span></h1><p>原题：有一数列 A~1~,A~2~,A~3~…A~n~,其中可能有负数，假设其子列A~1~,……A~j~(i&lt;=j)，使得$\sum_{i=i}^{j}x_i$取到最大值，请设计函数求该最大值。</p>
+<p>分析：首先我们很自然地想到使用穷举法来实现，从此出发，先将这种简单的思路实现。</p>
+<span id="more"></span>
+<p><strong>代码一：</strong></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">Max</span><span class="params">(<span class="type">const</span> <span class="type">int</span> A[],<span class="type">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> tsum=msum=A[<span class="number">0</span>];<span class="comment">//tsum记录代码运行中得到的下标从i到j的子列求和值，msum记录最大值</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=i;j&lt;n;j++)</span><br><span class="line">		&#123;</span><br><span class="line">			tsum = <span class="number">0</span>;</span><br><span class="line">			<span class="keyword">for</span>(<span class="type">int</span> k-i;k&lt;=j;k++)</span><br><span class="line">				tsum+=A[i];</span><br><span class="line">			<span class="keyword">if</span>(tsum&gt;msum)</span><br><span class="line">				msum = tsum;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> msum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下面我们分析这段代码，其时间复杂度为O(n^3^)，好像并不慢，但如果数据很多，似乎就有些慢了，所以我们在这里将其优化：</p>
+<p><strong>代码二</strong>：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">Max</span><span class="params">(<span class="type">const</span> <span class="type">int</span> A[],<span class="type">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> tsum=msum=A[<span class="number">0</span>];</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		tsum = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=i;j&lt;n;j++)</span><br><span class="line">		&#123;</span><br><span class="line">			tsum+=A[i];</span><br><span class="line">			<span class="keyword">if</span>(tsum&gt;msum)</span><br><span class="line">				msum = tsum;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过观察，我们发现代码二优化了代码一中从A~1~到A~j~的相加过程，即当i不变，j++时，tsum不需要从i一直加到j，只需要在原结果上加上A~j~，其时间复杂度为O(n^2^)大大提高了运算效率。</p>
+<p>但是，算法能否再次优化使得效率<strong>再次提高</strong>呢？答案是肯定的，我们先观察代码再做分析。</p>
+<p><strong>代码三：</strong></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">Max</span><span class="params">(<span class="type">const</span> <span class="type">int</span> A[],<span class="type">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> tsum=msum=A[<span class="number">0</span>];</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;n;j++)</span><br><span class="line">	&#123;</span><br><span class="line">		tsum+=A[j];</span><br><span class="line">		<span class="keyword">if</span>(tsum&gt;msum)</span><br><span class="line">			msum = tsum;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(tsum &lt; <span class="number">0</span>)</span><br><span class="line">			tsum = <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> msum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>分析这段代码，我们得到这段代码的时间复杂度时O(n)，运算效率很高，对比前面两段代码，这段代码将i优化掉了，实际上，我们将i的初始值交给了<u>else if(tsum &lt; 0)</u>这段语句，这条语句第一次生效前，i可以理解为0，tsum为从数列下标0到j的元素求和，如果tsum小于0，则说明我们接下来要求的子列和的结果为一个负数剩下的子列求和相加，为了求最大值，我们要将负数去掉，也就是更新i的值，使得我们能得到尽可能大的tsum值，而<u>if(tsum&gt;msum)</u>确保了我们不会因为更新i而错过最大值。</p>
+<h4><span id="总结"><strong>总结：</strong></span></h4><p>我们从最简单粗暴的思路出发，不断将算法优化，最终得到了比较完美的算法。</p>
+]]></content>
+      <tags>
+        <tag>数据结构与算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>排序1</title>
+    <url>/2024/10/10/%E6%8E%92%E5%BA%8F1/</url>
+    <content><![CDATA[<h1><span id="排序1">排序1</span></h1><p>注：这篇文章偏笔记性质，所以解释较少。同时，本文分时间复杂度，最好情况时间复杂度，最坏情况时间复杂度，空间复杂度及应用几个方面分析算法好坏。</p>
+<p>[TOC]</p>
+<span id="more"></span>
+<h2><span id="1-插入排序">1 插入排序</span></h2><h3><span id="11-直接插入排序">1.1 直接插入排序</span></h3><p>直接插入排序是一种最简单的排序方法（思路简单），整个排序过程为先将第一个元素视为有序数列，然后从第二个元素开始插入，直到将最后一个元素插入前面的有序列中。其最好情况时间复杂度为O(n)，即数组已经顺序排好，最坏情况时间复杂度为O(n^2^)，逆序，平均为O(n^2^)，其优点是可以用来排打乱了少数数据，大部分数据仍然有序的数据组。其基本过程如下图：<img src="../imgs/%E6%8E%92%E5%BA%8F1/image-20241008200428256-17285765494311.png" alt></p>
+<p><strong>代码：</strong></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">DirectInsertionSort</span><span class="params">(<span class="type">int</span> A[],<span class="type">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> i,j;</span><br><span class="line">    <span class="type">int</span> temp;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;n;i++)&#123;</span><br><span class="line">        j = i;</span><br><span class="line">        temp = A[i];</span><br><span class="line">        <span class="keyword">while</span>(j&gt;<span class="number">0</span> &amp;&amp; temp&lt;A[j<span class="number">-1</span>])&#123;</span><br><span class="line">            A[j] = A[j<span class="number">-1</span>];</span><br><span class="line">            j--;</span><br><span class="line">        &#125;</span><br><span class="line">        A[j] = temp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3><span id="12-折半插入排序">1.2 折半插入排序</span></h3><h3><span id="13-shell排序">1.3 Shell排序</span></h3><h2><span id="2-选择排序">2 选择排序</span></h2><h3><span id="21-直接选择排序">2.1 直接选择排序</span></h3><h3><span id="22-树形选择排序">2.2 树形选择排序</span></h3>]]></content>
+      <tags>
+        <tag>数据结构与算法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>分治思想</title>
     <url>/2024/10/09/%E5%88%86%E6%B2%BB%E6%80%9D%E6%83%B3/</url>
     <content><![CDATA[<h1><span id="分治思想">分治思想</span></h1><p>分治思想即将复杂问题分解成一个个规模较小的子问题，最后得到可以直接求解的子问题，从而自底向上求解，两个重点：子问题规模更小，可以得到能直接求解的子问题。</p>
@@ -639,42 +675,6 @@ Q(n,m)=
       </tags>
   </entry>
   <entry>
-    <title>排序1</title>
-    <url>/2024/10/10/%E6%8E%92%E5%BA%8F1/</url>
-    <content><![CDATA[<h1><span id="排序1">排序1</span></h1><p>注：这篇文章偏笔记性质，所以解释较少。同时，本文分时间复杂度，最好情况时间复杂度，最坏情况时间复杂度，空间复杂度及应用几个方面分析算法好坏。</p>
-<p>[TOC]</p>
-<span id="more"></span>
-<h2><span id="1-插入排序">1 插入排序</span></h2><h3><span id="11-直接插入排序">1.1 直接插入排序</span></h3><p>直接插入排序是一种最简单的排序方法（思路简单），整个排序过程为先将第一个元素视为有序数列，然后从第二个元素开始插入，直到将最后一个元素插入前面的有序列中。其最好情况时间复杂度为O(n)，即数组已经顺序排好，最坏情况时间复杂度为O(n^2^)，逆序，平均为O(n^2^)，其优点是可以用来排打乱了少数数据，大部分数据仍然有序的数据组。其基本过程如下图：<img src="../imgs/%E6%8E%92%E5%BA%8F1/image-20241008200428256-17285765494311.png" alt></p>
-<p><strong>代码：</strong></p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-<h3><span id="12-折半插入排序">1.2 折半插入排序</span></h3><h3><span id="13-shell排序">1.3 Shell排序</span></h3><h2><span id="2-选择排序">2 选择排序</span></h2><h3><span id="21-直接选择排序">2.1 直接选择排序</span></h3><h3><span id="22-树形选择排序">2.2 树形选择排序</span></h3>]]></content>
-      <tags>
-        <tag>数据结构与算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>数据结构与算法-最大子列</title>
-    <url>/2024/09/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E6%9C%80%E5%A4%A7%E5%AD%90%E5%88%97/</url>
-    <content><![CDATA[<h1><span id="数据结构与算法-最大子列">数据结构与算法-最大子列</span></h1><p>原题：有一数列 A~1~,A~2~,A~3~…A~n~,其中可能有负数，假设其子列A~1~,……A~j~(i&lt;=j)，使得$\sum_{i=i}^{j}x_i$取到最大值，请设计函数求该最大值。</p>
-<p>分析：首先我们很自然地想到使用穷举法来实现，从此出发，先将这种简单的思路实现。</p>
-<span id="more"></span>
-<p><strong>代码一：</strong></p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">Max</span><span class="params">(<span class="type">const</span> <span class="type">int</span> A[],<span class="type">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> tsum=msum=A[<span class="number">0</span>];<span class="comment">//tsum记录代码运行中得到的下标从i到j的子列求和值，msum记录最大值</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=i;j&lt;n;j++)</span><br><span class="line">		&#123;</span><br><span class="line">			tsum = <span class="number">0</span>;</span><br><span class="line">			<span class="keyword">for</span>(<span class="type">int</span> k-i;k&lt;=j;k++)</span><br><span class="line">				tsum+=A[i];</span><br><span class="line">			<span class="keyword">if</span>(tsum&gt;msum)</span><br><span class="line">				msum = tsum;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> msum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>下面我们分析这段代码，其时间复杂度为O(n^3^)，好像并不慢，但如果数据很多，似乎就有些慢了，所以我们在这里将其优化：</p>
-<p><strong>代码二</strong>：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">Max</span><span class="params">(<span class="type">const</span> <span class="type">int</span> A[],<span class="type">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> tsum=msum=A[<span class="number">0</span>];</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		tsum = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=i;j&lt;n;j++)</span><br><span class="line">		&#123;</span><br><span class="line">			tsum+=A[i];</span><br><span class="line">			<span class="keyword">if</span>(tsum&gt;msum)</span><br><span class="line">				msum = tsum;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>通过观察，我们发现代码二优化了代码一中从A~1~到A~j~的相加过程，即当i不变，j++时，tsum不需要从i一直加到j，只需要在原结果上加上A~j~，其时间复杂度为O(n^2^)大大提高了运算效率。</p>
-<p>但是，算法能否再次优化使得效率<strong>再次提高</strong>呢？答案是肯定的，我们先观察代码再做分析。</p>
-<p><strong>代码三：</strong></p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">Max</span><span class="params">(<span class="type">const</span> <span class="type">int</span> A[],<span class="type">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> tsum=msum=A[<span class="number">0</span>];</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;n;j++)</span><br><span class="line">	&#123;</span><br><span class="line">		tsum+=A[j];</span><br><span class="line">		<span class="keyword">if</span>(tsum&gt;msum)</span><br><span class="line">			msum = tsum;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(tsum &lt; <span class="number">0</span>)</span><br><span class="line">			tsum = <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> msum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>分析这段代码，我们得到这段代码的时间复杂度时O(n)，运算效率很高，对比前面两段代码，这段代码将i优化掉了，实际上，我们将i的初始值交给了<u>else if(tsum &lt; 0)</u>这段语句，这条语句第一次生效前，i可以理解为0，tsum为从数列下标0到j的元素求和，如果tsum小于0，则说明我们接下来要求的子列和的结果为一个负数剩下的子列求和相加，为了求最大值，我们要将负数去掉，也就是更新i的值，使得我们能得到尽可能大的tsum值，而<u>if(tsum&gt;msum)</u>确保了我们不会因为更新i而错过最大值。</p>
-<h4><span id="总结"><strong>总结：</strong></span></h4><p>我们从最简单粗暴的思路出发，不断将算法优化，最终得到了比较完美的算法。</p>
-]]></content>
-      <tags>
-        <tag>数据结构与算法</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>栈实现表达式运算</title>
     <url>/2024/10/10/%E6%A0%88%E5%AE%9E%E7%8E%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%BF%90%E7%AE%97/</url>
     <content><![CDATA[<p>[TOC]</p>
@@ -683,9 +683,72 @@ Q(n,m)=
 <h2><span id="1栈的实现">1.栈的实现</span></h2><h3><span id="11基本函数">1.1基本函数</span></h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">int</span> ElemType;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Node</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	ElemType data;<span class="comment">//存储栈的元素值（1个） </span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Node</span> *<span class="title">next</span>;</span><span class="comment">//存储下一个元素（朝栈底方向）节点的地址 </span></span><br><span class="line">&#125;LinkStack;</span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">1.初始化 </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">LinkStack *<span class="title function_">InitStack</span><span class="params">()</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">2.销毁</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">DestroyStack</span><span class="params">(LinkStack *s)</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">3.判断栈是否为空</span></span><br><span class="line"><span class="comment">若为空，返回1；</span></span><br><span class="line"><span class="comment">否则，返回0 </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">StackEmpty</span><span class="params">(LinkStack *s)</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">4.进栈</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="type">void</span> *<span class="title function_">Push</span><span class="params">(LinkStack *s,ElemType e)</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">5.出栈 </span></span><br><span class="line"><span class="comment">若栈不空，进行相关操作，并返回1；</span></span><br><span class="line"><span class="comment">否则，提示，返回0 </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">Pop</span><span class="params">(LinkStack *s,ElemType *e)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">6.取栈顶元素 </span></span><br><span class="line"><span class="comment">若栈不空，进行相关操作，并返回1；</span></span><br><span class="line"><span class="comment">否则，提示，返回0 </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">GetTop</span><span class="params">(LinkStack *s,ElemType *e)</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">7.输出</span></span><br><span class="line"><span class="comment">从栈顶 至 栈底 全部输出</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">display</span><span class="params">(LinkStack *s)</span></span><br></pre></td></tr></table></figure>
 <h3><span id="12代码实现">1.2代码实现</span></h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">typedef</span> <span class="type">int</span> ElemType;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Node</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	ElemType data;<span class="comment">//存储栈的元素值（1个） </span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Node</span> *<span class="title">next</span>;</span><span class="comment">//存储下一个元素（朝栈底方向）节点的地址 </span></span><br><span class="line">&#125;LinkStack;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">空：s-&gt;next==NULL </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">1.初始化 </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">LinkStack *<span class="title function_">InitStack</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	LinkStack *s;</span><br><span class="line">	s=(LinkStack *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(LinkStack));</span><br><span class="line">	s-&gt;next=<span class="literal">NULL</span>;</span><br><span class="line">	<span class="keyword">return</span> s;</span><br><span class="line">&#125; </span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">2.销毁</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">DestroyStack</span><span class="params">(LinkStack *s)</span></span><br><span class="line">&#123;</span><br><span class="line">	ElemType m;</span><br><span class="line">	<span class="type">int</span> <span class="title function_">Pop</span><span class="params">(LinkStack *s,ElemType *e)</span>;</span><br><span class="line">	<span class="keyword">while</span>(s-&gt;next!=<span class="literal">NULL</span>)<span class="comment">//不空</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//出栈</span></span><br><span class="line">		Pop(s,&amp;m); </span><br><span class="line">	&#125; </span><br><span class="line">	<span class="built_in">free</span>(s); </span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">3.判断栈是否为空</span></span><br><span class="line"><span class="comment">若为空，返回1；</span></span><br><span class="line"><span class="comment">否则，返回0 </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">StackEmpty</span><span class="params">(LinkStack *s)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(s-&gt;next==<span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">4.进栈</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="type">void</span> *<span class="title function_">Push</span><span class="params">(LinkStack *s,ElemType e)</span></span><br><span class="line">&#123;</span><br><span class="line">	LinkStack *t;</span><br><span class="line">	<span class="comment">//1.构造一个节点t，存储元素值e </span></span><br><span class="line">	t=(LinkStack *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(LinkStack));</span><br><span class="line">	t-&gt;data=e;</span><br><span class="line">	<span class="comment">//2.把t节点添加到头节点的后面 </span></span><br><span class="line">	t-&gt;next=s-&gt;next;</span><br><span class="line">	s-&gt;next=t;</span><br><span class="line">&#125; </span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">5.出栈 </span></span><br><span class="line"><span class="comment">若栈不空，进行相关操作，并返回1；</span></span><br><span class="line"><span class="comment">否则，提示，返回0 </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">Pop</span><span class="params">(LinkStack *s,ElemType *e)</span></span><br><span class="line">&#123;</span><br><span class="line">	LinkStack *t; </span><br><span class="line">	<span class="keyword">if</span>(s-&gt;next!=<span class="literal">NULL</span>)<span class="comment">//不空</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//1.让t指向栈顶元素节点</span></span><br><span class="line">		t=s-&gt;next;</span><br><span class="line">		<span class="comment">//2.把栈顶元素值存储到*e中</span></span><br><span class="line">		*e=t-&gt;data;</span><br><span class="line">		<span class="comment">//3.删除</span></span><br><span class="line">		s-&gt;next=t-&gt;next;</span><br><span class="line">		<span class="comment">//4.释放存储空间</span></span><br><span class="line">		<span class="built_in">free</span>(t); </span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	&#125; </span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;栈空，不能出栈！\n&quot;</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125; </span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">6.取栈顶元素 </span></span><br><span class="line"><span class="comment">若栈不空，进行相关操作，并返回1；</span></span><br><span class="line"><span class="comment">否则，提示，返回0 </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">GetTop</span><span class="params">(LinkStack *s,ElemType *e)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(s-&gt;next!=<span class="literal">NULL</span>)<span class="comment">//不空</span></span><br><span class="line">	&#123;</span><br><span class="line">		*e=s-&gt;next-&gt;data;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	&#125; </span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;栈空，不能取栈顶元素！\n&quot;</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">7.输出</span></span><br><span class="line"><span class="comment">从栈顶 至 栈底</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">display</span><span class="params">(LinkStack *s)</span></span><br><span class="line">&#123;</span><br><span class="line"> </span><br><span class="line">	<span class="keyword">while</span>(s-&gt;next != <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,s-&gt;next-&gt;data);</span><br><span class="line">		s = s-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	LinkStack s;</span><br><span class="line">	s = *InitStack();</span><br><span class="line">    Push(&amp;s,<span class="number">1</span>);</span><br><span class="line">	Push(&amp;s,<span class="number">2</span>);</span><br><span class="line">	Push(&amp;s,<span class="number">3</span>);</span><br><span class="line">	Push(&amp;s,<span class="number">4</span>);</span><br><span class="line">	Push(&amp;s,<span class="number">5</span>);</span><br><span class="line">	Push(&amp;s,<span class="number">6</span>);</span><br><span class="line">	Push(&amp;s,<span class="number">7</span>);</span><br><span class="line">	</span><br><span class="line">	ElemType *e;</span><br><span class="line">	e = (ElemType *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(ElemType));</span><br><span class="line">	    </span><br><span class="line">	GetTop(&amp;s,e);</span><br><span class="line"> 	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,*e);</span><br><span class="line"> 	Pop(&amp;s,e);</span><br><span class="line"> </span><br><span class="line"> 	GetTop(&amp;s,e);</span><br><span class="line"> 	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,*e);	</span><br><span class="line"> 	</span><br><span class="line"> 	display(&amp;s);</span><br><span class="line"> 	<span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line"> 	</span><br><span class="line"> 	GetTop(&amp;s,e);</span><br><span class="line"> 	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,*e); </span><br><span class="line">	<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
 <h2><span id="2中缀以及后缀表达式">2.中缀以及后缀表达式</span></h2><h3><span id="21中缀表达式">2.1中缀表达式</span></h3><p><strong>例：2*(3+4)-8/2</strong></p>
-<p>说明：</p>
-<h3><span id="22后缀表达式">2.2后缀表达式</span></h3><h3><span id="23中后缀表达式转换">2.3中后缀表达式转换</span></h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line">```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## <span class="number">3.</span>用栈实现表达式求值</span><br><span class="line"></span><br><span class="line">### <span class="number">3.1</span>中缀表达式求值</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">|      | 当前 | 运算符 | 栈顶  | 元素        | T           |</span><br><span class="line">| ---- | ---- | ------ | ----- | ----------- | ----------- |</span><br><span class="line">| 当前 |      | 空     | （    | +或-        | *或/        |</span><br><span class="line">| 获取 | （   | W进栈  | W进栈 | W进栈       | W进栈       |</span><br><span class="line">| 的运 | ）   | Error  | T出栈 | T出栈并计算 | T出栈并计算 |</span><br><span class="line">| 算符 | *或/ | W进栈  | W进栈 | T出栈并计算 | W进栈       |</span><br><span class="line">| W    | +或- | W进栈  | W进栈 | T出栈并计算 | T出栈并计算 |</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">```c</span><br></pre></td></tr></table></figure>
-<h3><span id="32后缀表达式求值">3.2后缀表达式求值</span></h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+<p>说明：日常所见绝大多数运算都是运算顺序与符号的出现顺序不一定相同</p>
+<h3><span id="22后缀表达式">2.2后缀表达式</span></h3><p><strong>例：2 3 + 4 *82/-</strong></p>
+<p>说明：没有括号，运算顺序与符号出现的前后顺序一致</p>
+<h3><span id="23中后缀表达式转换">2.3中后缀表达式转换</span></h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line">```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## <span class="number">3.</span>用栈实现表达式求值</span><br><span class="line"></span><br><span class="line">### <span class="number">3.1</span>后缀表达式求值</span><br><span class="line"></span><br><span class="line">**运算方式：**构造一个数栈，</span><br><span class="line"></span><br><span class="line">```c</span><br></pre></td></tr></table></figure>
+<h3><span id="32中缀表达式求值">3.2中缀表达式求值</span></h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>当前</th>
+<th>运算符</th>
+<th>栈顶</th>
+<th>元素</th>
+<th>T</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>当前</td>
+<td></td>
+<td>空</td>
+<td>（</td>
+<td>+或-</td>
+<td>*或/</td>
+</tr>
+<tr>
+<td>获取</td>
+<td>（</td>
+<td>W进栈</td>
+<td>W进栈</td>
+<td>W进栈</td>
+<td>W进栈</td>
+</tr>
+<tr>
+<td>的运</td>
+<td>）</td>
+<td>Error</td>
+<td>T出栈</td>
+<td>T出栈并计算</td>
+<td>T出栈并计算</td>
+</tr>
+<tr>
+<td>算符</td>
+<td>*或/</td>
+<td>W进栈</td>
+<td>W进栈</td>
+<td>T出栈并计算</td>
+<td>W进栈</td>
+</tr>
+<tr>
+<td>W</td>
+<td>+或-</td>
+<td>W进栈</td>
+<td>W进栈</td>
+<td>T出栈并计算</td>
+<td>T出栈并计算</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>关键：</p>
+<ul>
+<li>保持运算符栈的栈顶运算符在运算符栈</li>
+<li>中具有最高优先级</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
 <h2><span id="4补充错误表达式的判断及处理">4.补充——错误表达式的判断及处理</span></h2>]]></content>
       <tags>
         <tag>数据结构与算法</tag>
