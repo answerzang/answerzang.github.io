@@ -672,4 +672,17 @@ Q(n,m)=
         <tag>数据结构与算法</tag>
       </tags>
   </entry>
+  <entry>
+    <title>排序1</title>
+    <url>/2024/10/10/%E6%8E%92%E5%BA%8F1/</url>
+    <content><![CDATA[<h1><span id="排序1">排序1</span></h1><p>注：这篇文章偏笔记性质，所以解释较少。同时，本文分时间复杂度，最好情况时间复杂度，最坏情况时间复杂度，空间复杂度及应用几个方面分析算法好坏。</p>
+<p>[TOC]</p>
+<h2><span id="1-插入排序">1 插入排序</span></h2><h3><span id="11-直接插入排序">1.1 直接插入排序</span></h3><p>直接插入排序是一种最简单的排序方法（思路简单），整个排序过程为先将第一个元素视为有序数列，然后从第二个元素开始插入，直到将最后一个元素插入前面的有序列中。其最好情况时间复杂度为O(n)，即数组已经顺序排好，最坏情况时间复杂度为O(n^2^)，逆序，平均为O(n^2^)，其优点是可以用来排打乱了少数数据，大部分数据仍然有序的数据组。其基本过程如下图：<img src="../imgs/%E6%8E%92%E5%BA%8F1/image-20241008200428256-17285765494311.png" alt></p>
+<p><strong>代码：</strong></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+<h3><span id="12-折半插入排序">1.2 折半插入排序</span></h3><h3><span id="13-shell排序">1.3 Shell排序</span></h3><h2><span id="2-选择排序">2 选择排序</span></h2><h3><span id="21-直接选择排序">2.1 直接选择排序</span></h3><h3><span id="22-树形选择排序">2.2 树形选择排序</span></h3>]]></content>
+      <tags>
+        <tag>数据结构与算法</tag>
+      </tags>
+  </entry>
 </search>
