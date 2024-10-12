@@ -309,7 +309,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-10-12 08:01:41" itemprop="dateModified" datetime="2024-10-12T08:01:41+08:00">2024-10-12</time>
+      <time title="修改时间：2024-10-12 09:05:28" itemprop="dateModified" datetime="2024-10-12T09:05:28+08:00">2024-10-12</time>
     </span>
 
   
@@ -323,6 +323,27 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>[TOC]</p>
+<!-- toc -->
+<ul>
+<li><a href="#1栈的实现">1.栈的实现</a><ul>
+<li><a href="#11基本函数">1.1基本函数</a></li>
+<li><a href="#12代码实现">1.2代码实现</a></li>
+</ul>
+</li>
+<li><a href="#2中缀以及后缀表达式">2.中缀以及后缀表达式</a><ul>
+<li><a href="#21中缀表达式">2.1中缀表达式</a></li>
+<li><a href="#22后缀表达式">2.2后缀表达式</a></li>
+</ul>
+</li>
+<li><a href="#3用栈实现表达式求值">3.用栈实现表达式求值</a><ul>
+<li><a href="#31后缀表达式求值">3.1后缀表达式求值</a></li>
+<li><a href="#32中缀表达式求值">3.2中缀表达式求值</a></li>
+</ul>
+</li>
+<li><a href="#4中后缀表达式转换">4.中后缀表达式转换</a></li>
+<li><a href="#5补充错误后缀表达式的判断及处理">5.补充——错误后缀表达式的判断及处理</a></li>
+</ul>
+<!-- tocstop -->
 <p>说明：这篇博客以代码为主</p>
           <!--noindex-->
             <div class="post-button">
@@ -393,7 +414,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-10-12 08:56:09" itemprop="dateModified" datetime="2024-10-12T08:56:09+08:00">2024-10-12</time>
+      <time title="修改时间：2024-10-12 09:04:22" itemprop="dateModified" datetime="2024-10-12T09:04:22+08:00">2024-10-12</time>
     </span>
 
   
@@ -406,8 +427,24 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="排序1"><a href="#排序1" class="headerlink" title="排序1"></a>排序1</h1><p>注：这篇文章偏笔记性质，所以解释较少。同时，本文分时间复杂度，最好情况时间复杂度，最坏情况时间复杂度，空间复杂度及应用几个方面分析算法好坏。</p>
+          <p>注：这篇文章偏笔记性质，所以解释较少。同时，本文分时间复杂度，最好情况时间复杂度，最坏情况时间复杂度，空间复杂度及应用几个方面分析算法好坏。</p>
 <p>[TOC]</p>
+<!-- toc -->
+<ul>
+<li><a href="#1-插入排序">1 插入排序</a><ul>
+<li><a href="#11-直接插入排序">1.1 直接插入排序</a></li>
+<li><a href="#12-折半插入排序">1.2 折半插入排序</a></li>
+<li><a href="#13-shell排序">1.3 Shell排序</a></li>
+</ul>
+</li>
+<li><a href="#2-选择排序">2 选择排序</a><ul>
+<li><a href="#21-直接选择排序">2.1 直接选择排序</a></li>
+<li><a href="#22-树形选择排序">2.2 树形选择排序</a></li>
+<li><a href="#32快速排序">3.2快速排序</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2024/10/10/%E6%8E%92%E5%BA%8F1/#more" rel="contents">
@@ -477,7 +514,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-10-11 19:22:27" itemprop="dateModified" datetime="2024-10-11T19:22:27+08:00">2024-10-11</time>
+      <time title="修改时间：2024-10-12 09:05:14" itemprop="dateModified" datetime="2024-10-12T09:05:14+08:00">2024-10-12</time>
     </span>
 
   
@@ -490,7 +527,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="分治思想"><a href="#分治思想" class="headerlink" title="分治思想"></a>分治思想</h1><p>分治思想即将复杂问题分解成一个个规模较小的子问题，最后得到可以直接求解的子问题，从而自底向上求解，两个重点：子问题规模更小，可以得到能直接求解的子问题。</p>
+          <p>分治思想即将复杂问题分解成一个个规模较小的子问题，最后得到可以直接求解的子问题，从而自底向上求解，两个重点：子问题规模更小，可以得到能直接求解的子问题。</p>
 <p><strong>题目：</strong>给定一个数n，将其分解成若干个正整数之和，以6为例，6=6，6=5+1，6=4+2，6=4+1+1，6=3+3，6=3+2+1，6=3+1+1+1，6=2+2+2，6=2+2+1+1，6=2+1+1+1+1，6=1+1+1+1+1+1，共11种，请设计函数，求数n分解方法有多少种；</p>
           <!--noindex-->
             <div class="post-button">
@@ -561,7 +598,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-10-11 19:22:08" itemprop="dateModified" datetime="2024-10-11T19:22:08+08:00">2024-10-11</time>
+      <time title="修改时间：2024-10-12 09:00:45" itemprop="dateModified" datetime="2024-10-12T09:00:45+08:00">2024-10-12</time>
     </span>
 
   
@@ -574,15 +611,177 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="KMP算法"><a href="#KMP算法" class="headerlink" title="KMP算法"></a>KMP算法</h1>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/10/09/KMP%E7%AE%97%E6%B3%95/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <span id="more"></span>
+<p>在介绍KMP算法前我们先介绍BP算法，暴力匹配算法，先上代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">BP</span><span class="params">(<span class="type">char</span>* str,<span class="type">char</span>* s)</span><span class="comment">//s为给定子串，str为带查找字符串，查找到则返回s在str中首次出现的位置，否则返回-1</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="built_in">strlen</span>(str)-<span class="built_in">strlen</span>(s);i++)&#123;	<span class="comment">//从str第一个字符开始其后字符依次与s匹配，注意边界</span></span><br><span class="line">        <span class="type">int</span> flag = <span class="number">1</span>;							<span class="comment">//判断条件</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;<span class="built_in">strlen</span>(s);j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(str[i+j]!=s[j])&#123;</span><br><span class="line">                flag = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">break</span>;							<span class="comment">//若出现不匹配字符，停止本次操作，进行下一次匹配</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(flag)</span><br><span class="line">            <span class="keyword">return</span> i+<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对其复杂度分析得到其复杂度为O(mn)（m，n分别为子串与查找串的长度）。</p>
+<p>接下来以查找串T=”aaabbaaaba”，子串P=”aaaba”为例分析其改进方法。</p>
+<p><img src="../imgs/KMP%E7%AE%97%E6%B3%95/image-20241009194912582-17285422622071.png" alt></p>
+<p>首先以我们的思维来讲，通过观察第一次匹配，我们一般会直接跳到最后一步，但这个算法却只能一步步进行匹配，我们可以从这里改进：①改变两次相邻匹配之间跳过的“<strong>步长</strong>”；②下一次匹配从子串第几个字符开始，即<strong>开始匹配位置</strong>。同时保证不出错。而KMP算法能帮我们解决这个问题。下面来详细讲讲这个算法：设s为子串，str为查找串</p>
+<p>我们通过构建next[]数组来确定步长及下一次匹配的开始位置，开始介绍next[]数组之前，我们先讲一下其功能及原理：当子串匹配到第i位时字串与查找串不再匹配（隐含条件：前i-1位都匹配，可以做化简算法的突破口），此时我们通过使用next数组能够得到我们下一次匹配跳len(s)-next[i]位，并且下一次匹配从s[next[i]]开始，虽然这里查找串是未知的，但子串是给定已知的，而前i-1位都匹配的条件并不会影响子串，所以我们可以通过子串来构建next数组。</p>
+<p>我们为了方便理解，先给出一个不准确的描述：先来一个next[]数组中next[i]记录的是由子串s的前i-1位字符所成字符串（记为si）的最长相同前缀后缀的长度，（si的前缀/后缀均是其真子串）举个例子s=”aadgaadc”:(注意！这里next[i]的值并不完全正确，仅为方便理解，后面会讲为什么)</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>i的值</th>
+<th>前缀</th>
+<th>后缀</th>
+<th>next[i]</th>
+<th>si</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>-</td>
+<td>-</td>
+<td>-1</td>
+<td>-</td>
+</tr>
+<tr>
+<td>1</td>
+<td>-</td>
+<td>-</td>
+<td>0</td>
+<td>a</td>
+</tr>
+<tr>
+<td>2</td>
+<td>a</td>
+<td>a</td>
+<td>1</td>
+<td>aa</td>
+</tr>
+<tr>
+<td>3</td>
+<td>a,aa</td>
+<td>d,ad</td>
+<td>0</td>
+<td>aad</td>
+</tr>
+<tr>
+<td>4</td>
+<td>a,aa,aad</td>
+<td>g,dg,adg</td>
+<td>0</td>
+<td>aadg</td>
+</tr>
+<tr>
+<td>5</td>
+<td>a,aa,aad,aadg</td>
+<td>a,ga,dga,adga</td>
+<td>1</td>
+<td>aadga</td>
+</tr>
+<tr>
+<td>6</td>
+<td>a,aa,aad,aadg,aadga</td>
+<td>a,aa,gaa,dgaa,adgaa</td>
+<td>2</td>
+<td>aadgaa</td>
+</tr>
+<tr>
+<td>7</td>
+<td>a,aa,aad,aadg,aadga,aadgaa</td>
+<td>d,ad,aad,gaad,dgaad,adgaad</td>
+<td>3</td>
+<td>aadgaad</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>现在我们再讲一遍其原理：子串第i位不匹配，但是其前i-1位子串都匹配，（拿上表i=7举例）查找串此时对应的位置就是aadgaad，我们就可以把它移到前后缀相匹配的位置</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>匹配串</th>
+<th>a</th>
+<th>a</th>
+<th>d</th>
+<th>g</th>
+<th>a</th>
+<th>a</th>
+<th>d</th>
+<th>a</th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>这次子串</td>
+<td>a</td>
+<td>a</td>
+<td>d</td>
+<td>g</td>
+<td>a</td>
+<td>a</td>
+<td>d</td>
+<td>(c)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>下次子串</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>a</td>
+<td>a</td>
+<td>d(相同，移动)</td>
+<td>g</td>
+<td>a</td>
+<td>a</td>
+<td>d</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>此时，我们可以发现，移动了i-next[i]（7-3=4）位，这是有普遍性的，为了这个普遍性，我们特地规定了next[0]=-1,否则无法移动，next[1]=0也是同样的道理，同时移动后从子串的next[i]位开始比较，于是我们可以把（假设）已经得到next数组之后的代码写出来：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">KMP</span><span class="params">(<span class="type">char</span> *str, <span class="type">char</span> *s)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//事实上，我们只需要两个变量，一个变量记录查找串当前比较位置，一个变量记录子串当前比较位置，比较结果相同则二者均自增，不同则查找出按当前位置不变，子串通过next数组来改变，再利用strlen(s)与该变量的大小比较判断是否完全匹配，若是，则返回第一次完全匹配的开始位置</span></span><br><span class="line">    <span class="type">int</span> *next = (<span class="type">int</span> *)<span class="built_in">malloc</span>(m * <span class="built_in">sizeof</span>(<span class="type">int</span>)); <span class="comment">// 动态分配next数组的空间</span></span><br><span class="line">    <span class="built_in">get_next</span>(s, next); <span class="comment">// 计算next数组</span></span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>; <span class="comment">// 初始化i和j，分别用于匹配串和子串的索引</span></span><br><span class="line">    <span class="comment">// 遍历匹配串S</span></span><br><span class="line">    <span class="keyword">while</span> (i &lt; <span class="built_in">strlen</span>(str)) &#123;</span><br><span class="line">        <span class="comment">// 如果j为-1或当前字符匹配，则继续匹配下一个字符</span></span><br><span class="line">        <span class="keyword">if</span> (j == <span class="number">-1</span> || str[i] == s[j]) &#123;</span><br><span class="line">            i++;</span><br><span class="line">            j++;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 如果字符不匹配，则根据PMT数组回退j的位置</span></span><br><span class="line">            j = next[j];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 如果j等于模式串的长度，则找到了匹配</span></span><br><span class="line">        <span class="keyword">if</span> (j == <span class="built_in">strlen</span>(S)) &#123;</span><br><span class="line">            <span class="keyword">return</span> i - j; <span class="comment">// 返回匹配的起始索引</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>; <span class="comment">// 如果没有找到匹配，则返回-1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在我们开始优化next数组：</p>
+<p>1.上文已经提到的next[0]=-1,next[1]=0或-1（如aaa，next数组全是-1）;</p>
+<p>2.有一种可能的情况：s[i]==s[next[i]]；在上面我们已经知道了s[i]与匹配串不匹配，那么下一次操作时我们会再次比较s[next[i]]与匹配串同一位置的字符，显然会匹配失败，为提高效率，我们应该避免，于是我们通过分析该过程来改进next数组：假设这种情况会发生，我们仅需要计算两次操作后总共移动多少位，从哪一位开始比较即可：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>移动几位</th>
+<th>从哪一位比较</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第一次</td>
+<td>i-next[i]</td>
+<td>next[i]（这一位不匹配）</td>
+</tr>
+<tr>
+<td>第二次</td>
+<td>next[i]-next[next[i]]</td>
+<td>next[next[i]]</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>两次综合，移动了i-next[i]+next[i]-next[next[i]] = next[next[i]]位，从第next[next[i]]位开始比较。</p>
+<p>于是，为了延续前面的规律，我们这样改进next数组：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(s[i]==s[next[i]])&#123;</span><br><span class="line">    next[i] = next[next[i]];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个方法将两步乃至多部化简成了一步，使效率更高。</p>
+<p><strong>代码</strong>如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">get_next</span><span class="params">(<span class="type">char</span> *s, <span class="type">int</span> *next)</span> </span>&#123;</span><br><span class="line">	<span class="type">int</span> i=<span class="number">0</span>,j=<span class="number">-1</span>;			<span class="comment">//i指向后缀结尾的后一位，j指向前缀结尾</span></span><br><span class="line">	next[<span class="number">0</span>] = <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">while</span>(i&lt;<span class="built_in">strlen</span>(s)<span class="number">-1</span>)&#123;	<span class="comment">//j记录最长相同前后缀的长度，要及时更新</span></span><br><span class="line">        <span class="keyword">while</span>(j&gt;=<span class="number">0</span> &amp;&amp; s[i]!=s[j])	<span class="comment">//当第i与j位不匹配时，j要向前找，而且一定</span></span><br><span class="line">            j = next[j];			<span class="comment">//要保证i前面的几位后缀要与开始的几位前缀匹配\，用j = next[j]可以快速利用前面的结果实现这个。终止条件里的j&gt;=0对应j=-1的情况，这\是由于next[0]=-1即一位都匹配不了，所以终止循环，向下走</span></span><br><span class="line">		i++;				</span><br><span class="line">        j++;</span><br><span class="line">        <span class="keyword">if</span>(s[i]==s[j])				<span class="comment">//如果出现相等的情况(上文提及)，这样操作</span></span><br><span class="line">            next[i] = next[j];		</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            next[i] = j;</span><br><span class="line">    &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个算法的时间复杂度是O(m+n),m,n分别为子串与查找串的长度。</p>
+<p>总之，主要的代码和思维就这些，代码可能有些晦涩难懂，建议自己写几个子串和查找串，然后根据代码手推几次，就理解了。</p>
+<p>24/10/10 补充</p>
+<p>这几天做了道题，关于KMP算法的，题目给出的并不是简单的字符串，而是一种复合体：第一位记载”字符数组”的原本内容，虽然我误打误撞搞出来了正确结果，但next数组求错了，所以我对这种情况专门写了一段代码（第一位是干扰项，不处理），如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">get_next</span><span class="params">(<span class="type">const</span> <span class="type">char</span> s[],<span class="type">int</span> next[])</span>&#123;</span><br><span class="line"><span class="comment">////这是正常情况，用于对比</span></span><br><span class="line"><span class="comment">//	int i=0,j=-1;</span></span><br><span class="line"><span class="comment">//	next[0] = -1;</span></span><br><span class="line"><span class="comment">//    while(i&lt;strlen(s)-1)&#123;</span></span><br><span class="line"><span class="comment">//        while(j&gt;=0 &amp;&amp; s[i]!=s[j])</span></span><br><span class="line"><span class="comment">//            j = next[j];</span></span><br><span class="line"><span class="comment">//		i++;</span></span><br><span class="line"><span class="comment">//        j++;</span></span><br><span class="line"><span class="comment">//        if(s[i]==s[j])</span></span><br><span class="line"><span class="comment">//            next[i] = next[j];</span></span><br><span class="line"><span class="comment">//        else</span></span><br><span class="line"><span class="comment">//            next[i] = j;</span></span><br><span class="line"><span class="comment">//    &#125;</span></span><br><span class="line">	<span class="type">int</span> i=<span class="number">1</span>,j=<span class="number">0</span>;<span class="comment">//原理是将next数组的每个值都+1，方便跳过第一个数据</span></span><br><span class="line">	next[<span class="number">0</span>] = <span class="number">0</span>;<span class="comment">//不搞也行</span></span><br><span class="line">	next[<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(i&lt;s[<span class="number">0</span>])&#123;</span><br><span class="line">        <span class="keyword">while</span>(j&gt;=<span class="number">1</span> &amp;&amp; s[i]!=s[j])</span><br><span class="line">            j = next[j];</span><br><span class="line">		i++;</span><br><span class="line">        j++;</span><br><span class="line">        <span class="keyword">if</span>(s[i]==s[j])</span><br><span class="line">            next[i] = next[j];</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            next[i] = j;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=s[<span class="number">0</span>];i++)</span><br><span class="line">        next[i]--;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -644,7 +843,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-10-11 19:22:48" itemprop="dateModified" datetime="2024-10-11T19:22:48+08:00">2024-10-11</time>
+      <time title="修改时间：2024-10-12 09:01:03" itemprop="dateModified" datetime="2024-10-12T09:01:03+08:00">2024-10-12</time>
     </span>
 
   
@@ -657,7 +856,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="数据结构与算法-最大子列"><a href="#数据结构与算法-最大子列" class="headerlink" title="数据结构与算法-最大子列"></a>数据结构与算法-最大子列</h1><p>原题：有一数列 A~1~,A~2~,A~3~…A~n~,其中可能有负数，假设其子列A~1~,……A~j~(i&lt;=j)，使得$\sum_{i=i}^{j}x_i$取到最大值，请设计函数求该最大值。</p>
+          <p>原题：有一数列 A~1~,A~2~,A~3~…A~n~,其中可能有负数，假设其子列A~1~,……A~j~(i&lt;=j)，使得$\sum_{i=i}^{j}x_i$取到最大值，请设计函数求该最大值。</p>
 <p>分析：首先我们很自然地想到使用穷举法来实现，从此出发，先将这种简单的思路实现。</p>
           <!--noindex-->
             <div class="post-button">

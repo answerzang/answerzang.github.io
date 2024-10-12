@@ -3,7 +3,7 @@
   <entry>
     <title>KMP算法</title>
     <url>/2024/10/09/KMP%E7%AE%97%E6%B3%95/</url>
-    <content><![CDATA[<h1><span id="kmp算法">KMP算法</span></h1><span id="more"></span>
+    <content><![CDATA[<span id="more"></span>
 <p>在介绍KMP算法前我们先介绍BP算法，暴力匹配算法，先上代码：</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">BP</span><span class="params">(<span class="type">char</span>* str,<span class="type">char</span>* s)</span><span class="comment">//s为给定子串，str为带查找字符串，查找到则返回s在str中首次出现的位置，否则返回-1</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="built_in">strlen</span>(str)-<span class="built_in">strlen</span>(s);i++)&#123;	<span class="comment">//从str第一个字符开始其后字符依次与s匹配，注意边界</span></span><br><span class="line">        <span class="type">int</span> flag = <span class="number">1</span>;							<span class="comment">//判断条件</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;<span class="built_in">strlen</span>(s);j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(str[i+j]!=s[j])&#123;</span><br><span class="line">                flag = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">break</span>;							<span class="comment">//若出现不匹配字符，停止本次操作，进行下一次匹配</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(flag)</span><br><span class="line">            <span class="keyword">return</span> i+<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>对其复杂度分析得到其复杂度为O(mn)（m，n分别为子串与查找串的长度）。</p>
@@ -613,7 +613,7 @@
   <entry>
     <title>数据结构与算法-最大子列</title>
     <url>/2024/09/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E6%9C%80%E5%A4%A7%E5%AD%90%E5%88%97/</url>
-    <content><![CDATA[<h1><span id="数据结构与算法-最大子列">数据结构与算法-最大子列</span></h1><p>原题：有一数列 A~1~,A~2~,A~3~…A~n~,其中可能有负数，假设其子列A~1~,……A~j~(i&lt;=j)，使得$\sum_{i=i}^{j}x_i$取到最大值，请设计函数求该最大值。</p>
+    <content><![CDATA[<p>原题：有一数列 A~1~,A~2~,A~3~…A~n~,其中可能有负数，假设其子列A~1~,……A~j~(i&lt;=j)，使得$\sum_{i=i}^{j}x_i$取到最大值，请设计函数求该最大值。</p>
 <p>分析：首先我们很自然地想到使用穷举法来实现，从此出发，先将这种简单的思路实现。</p>
 <span id="more"></span>
 <p><strong>代码一：</strong></p>
@@ -635,8 +635,24 @@
   <entry>
     <title>排序1</title>
     <url>/2024/10/10/%E6%8E%92%E5%BA%8F1/</url>
-    <content><![CDATA[<h1><span id="排序1">排序1</span></h1><p>注：这篇文章偏笔记性质，所以解释较少。同时，本文分时间复杂度，最好情况时间复杂度，最坏情况时间复杂度，空间复杂度及应用几个方面分析算法好坏。</p>
+    <content><![CDATA[<p>注：这篇文章偏笔记性质，所以解释较少。同时，本文分时间复杂度，最好情况时间复杂度，最坏情况时间复杂度，空间复杂度及应用几个方面分析算法好坏。</p>
 <p>[TOC]</p>
+<!-- toc -->
+<ul>
+<li><a href="#1-插入排序">1 插入排序</a><ul>
+<li><a href="#11-直接插入排序">1.1 直接插入排序</a></li>
+<li><a href="#12-折半插入排序">1.2 折半插入排序</a></li>
+<li><a href="#13-shell排序">1.3 Shell排序</a></li>
+</ul>
+</li>
+<li><a href="#2-选择排序">2 选择排序</a><ul>
+<li><a href="#21-直接选择排序">2.1 直接选择排序</a></li>
+<li><a href="#22-树形选择排序">2.2 树形选择排序</a></li>
+<li><a href="#32快速排序">3.2快速排序</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
 <span id="more"></span>
 <h2><span id="1-插入排序">1 插入排序</span></h2><h3><span id="11-直接插入排序">1.1 直接插入排序</span></h3><p>直接插入排序是一种最简单的排序方法（思路简单），整个排序过程为先将第一个元素视为有序数列，然后从第二个元素开始插入，直到将最后一个元素插入前面的有序列中。其最好情况时间复杂度为O(n)，即数组已经顺序排好，最坏情况时间复杂度为O(n^2^)，逆序，平均为O(n^2^)，其优点是可以用来排打乱了少数数据，大部分数据仍然有序的数据组。其基本过程如下图：<img src="../imgs/%E6%8E%92%E5%BA%8F1/image-20241008200428256-17285765494311.png" alt></p>
 <p><strong>代码：</strong></p>
@@ -654,7 +670,7 @@
   <entry>
     <title>分治思想</title>
     <url>/2024/10/09/%E5%88%86%E6%B2%BB%E6%80%9D%E6%83%B3/</url>
-    <content><![CDATA[<h1><span id="分治思想">分治思想</span></h1><p>分治思想即将复杂问题分解成一个个规模较小的子问题，最后得到可以直接求解的子问题，从而自底向上求解，两个重点：子问题规模更小，可以得到能直接求解的子问题。</p>
+    <content><![CDATA[<p>分治思想即将复杂问题分解成一个个规模较小的子问题，最后得到可以直接求解的子问题，从而自底向上求解，两个重点：子问题规模更小，可以得到能直接求解的子问题。</p>
 <p><strong>题目：</strong>给定一个数n，将其分解成若干个正整数之和，以6为例，6=6，6=5+1，6=4+2，6=4+1+1，6=3+3，6=3+2+1，6=3+1+1+1，6=2+2+2，6=2+2+1+1，6=2+1+1+1+1，6=1+1+1+1+1+1，共11种，请设计函数，求数n分解方法有多少种；</p>
 <span id="more"></span>
 <p><strong>思路：</strong>根据题目，自然地联想到用递归解决，递归的核心是将问题分解成规模更小的子问题而求解，先假设函数为Q(n)，现在我们思考Q(n)与Q(n-1)之间的关系，但经过探究，我们可以发现，这种关系难以寻找，于是我们加入变量m，函数Q(n,m)表示n分解成若干个不大于m的数之和方法种数，对函数Q(n,m)，其可以分解为Q(n,m-1)与n分解成不若干个包含m的数之和方法种数之和，注意到m与n都为定值，所以n分解成不若干个包含m的数之和方法种数之和等于将（n-m）分解成若干个不大于m的数之和方法种数，即Q(n-m,m)，<strong>于是得到Q(n,m)=Q(n,m-1)+Q(n-m,m)</strong>，此即为递推式，之后我们讨论终止条件与限定条件，如下，不赘述。（思考：若n分解成的加数不允许有重复，那么怎么写递推式？Q(n,m)=Q(n,m-1)+Q(n-m,m-1)）</p>
@@ -683,6 +699,27 @@ Q(n,m)=
     <title>栈实现表达式运算</title>
     <url>/2024/10/10/%E6%A0%88%E5%AE%9E%E7%8E%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%BF%90%E7%AE%97/</url>
     <content><![CDATA[<p>[TOC]</p>
+<!-- toc -->
+<ul>
+<li><a href="#1栈的实现">1.栈的实现</a><ul>
+<li><a href="#11基本函数">1.1基本函数</a></li>
+<li><a href="#12代码实现">1.2代码实现</a></li>
+</ul>
+</li>
+<li><a href="#2中缀以及后缀表达式">2.中缀以及后缀表达式</a><ul>
+<li><a href="#21中缀表达式">2.1中缀表达式</a></li>
+<li><a href="#22后缀表达式">2.2后缀表达式</a></li>
+</ul>
+</li>
+<li><a href="#3用栈实现表达式求值">3.用栈实现表达式求值</a><ul>
+<li><a href="#31后缀表达式求值">3.1后缀表达式求值</a></li>
+<li><a href="#32中缀表达式求值">3.2中缀表达式求值</a></li>
+</ul>
+</li>
+<li><a href="#4中后缀表达式转换">4.中后缀表达式转换</a></li>
+<li><a href="#5补充错误后缀表达式的判断及处理">5.补充——错误后缀表达式的判断及处理</a></li>
+</ul>
+<!-- tocstop -->
 <p>说明：这篇博客以代码为主</p>
 <span id="more"></span>
 <h2><span id="1栈的实现">1.栈的实现</span></h2><h3><span id="11基本函数">1.1基本函数</span></h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">int</span> ElemType;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Node</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	ElemType data;<span class="comment">//存储栈的元素值（1个） </span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Node</span> *<span class="title">next</span>;</span><span class="comment">//存储下一个元素（朝栈底方向）节点的地址 </span></span><br><span class="line">&#125;LinkStack;</span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">1.初始化 </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">LinkStack *<span class="title function_">InitStack</span><span class="params">()</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">2.销毁</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">DestroyStack</span><span class="params">(LinkStack *s)</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">3.判断栈是否为空</span></span><br><span class="line"><span class="comment">若为空，返回1；</span></span><br><span class="line"><span class="comment">否则，返回0 </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">StackEmpty</span><span class="params">(LinkStack *s)</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">4.进栈</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="type">void</span> *<span class="title function_">Push</span><span class="params">(LinkStack *s,ElemType e)</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">5.出栈 </span></span><br><span class="line"><span class="comment">若栈不空，进行相关操作，并返回1；</span></span><br><span class="line"><span class="comment">否则，提示，返回0 </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">Pop</span><span class="params">(LinkStack *s,ElemType *e)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">6.取栈顶元素 </span></span><br><span class="line"><span class="comment">若栈不空，进行相关操作，并返回1；</span></span><br><span class="line"><span class="comment">否则，提示，返回0 </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">GetTop</span><span class="params">(LinkStack *s,ElemType *e)</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">7.输出</span></span><br><span class="line"><span class="comment">从栈顶 至 栈底 全部输出</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">display</span><span class="params">(LinkStack *s)</span></span><br></pre></td></tr></table></figure>
