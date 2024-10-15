@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next1.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"answerzang.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.21.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="数据结构与算法大作业1：模拟银行 [TOC]   介绍： 背景介绍： 变量说明： 模拟过程说明：   程序说明： 基础程序： 题目">
+<meta property="og:type" content="article">
+<meta property="og:title" content="银行排队-优先级队列.md">
+<meta property="og:url" content="http://answerzang.github.io/2024/10/15/%E9%93%B6%E8%A1%8C%E6%8E%92%E9%98%9F-%E4%BC%98%E5%85%88%E7%BA%A7%E9%98%9F%E5%88%97-md/index.html">
+<meta property="og:site_name" content="金岩的博客">
+<meta property="og:description" content="数据结构与算法大作业1：模拟银行 [TOC]   介绍： 背景介绍： 变量说明： 模拟过程说明：   程序说明： 基础程序： 题目">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-10-15T12:05:58.000Z">
+<meta property="article:modified_time" content="2024-10-15T12:56:15.797Z">
+<meta property="article:author" content="臧金岩">
+<meta property="article:tag" content="数据结构与算法 大作业">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://answerzang.github.io/2024/10/15/%E9%93%B6%E8%A1%8C%E6%8E%92%E9%98%9F-%E4%BC%98%E5%85%88%E7%BA%A7%E9%98%9F%E5%88%97-md/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://answerzang.github.io/2024/10/15/%E9%93%B6%E8%A1%8C%E6%8E%92%E9%98%9F-%E4%BC%98%E5%85%88%E7%BA%A7%E9%98%9F%E5%88%97-md/","path":"2024/10/15/银行排队-优先级队列-md/","title":"银行排队-优先级队列.md"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>银行排队-优先级队列.md | 金岩的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">金岩的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">大学学习随记</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">8</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">介绍：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.1.</span> <span class="nav-text">背景介绍：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.2.</span> <span class="nav-text">变量说明：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.3.</span> <span class="nav-text">模拟过程说明：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">程序说明：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.1.</span> <span class="nav-text">基础程序：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">2.1.1.</span> <span class="nav-text">sim.h</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">2.1.2.</span> <span class="nav-text">apqueue.h</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">2.1.3.</span> <span class="nav-text">event.h</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">2.1.4.</span> <span class="nav-text">event.c</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.2.</span> <span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">2.2.1.</span> <span class="nav-text">1.1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">2.2.2.</span> <span class="nav-text">1.2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">2.2.3.</span> <span class="nav-text">2</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="臧金岩"
+      src="/images/head_portrait.jpg">
+  <p class="site-author-name" itemprop="name">臧金岩</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/answerzang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;answerzang" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://answerzang.github.io/2024/10/15/%E9%93%B6%E8%A1%8C%E6%8E%92%E9%98%9F-%E4%BC%98%E5%85%88%E7%BA%A7%E9%98%9F%E5%88%97-md/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head_portrait.jpg">
+      <meta itemprop="name" content="臧金岩">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="金岩的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="银行排队-优先级队列.md | 金岩的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          银行排队-优先级队列.md
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-10-15 20:05:58 / 修改时间：20:56:15" itemprop="dateCreated datePublished" datetime="2024-10-15T20:05:58+08:00">2024-10-15</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>数据结构与算法大作业1：模拟银行</p>
+<p>[TOC]</p>
+<!-- toc -->
+<ul>
+<li><a href="#介绍"><strong>介绍：</strong></a><ul>
+<li><a href="#背景介绍"><strong>背景介绍：</strong></a></li>
+<li><a href="#变量说明"><strong>变量说明：</strong></a></li>
+<li><a href="#模拟过程说明"><strong>模拟过程说明：</strong></a></li>
+</ul>
+</li>
+<li><a href="#程序说明"><strong>程序说明：</strong></a><ul>
+<li><a href="#基础程序"><strong>基础程序：</strong></a></li>
+<li><a href="#题目"><strong>题目</strong></a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+<span id="more"></span>
+<h2><span id="介绍"><strong>介绍：</strong></span></h2><h3><span id="背景介绍"><strong>背景介绍：</strong></span></h3><p>队列在计算机中的应用十分广泛，例如操作系统中的作业管理、进程调度、I/O请求处理等要用到队 列，排序算法中的基数排序，图的宽度优先遍历、缓冲区的循环使用等都用到队列，实时程序要处理一 些随机到达的离散事件也要用到队列。 下面介绍的事件驱动模拟是队列应用的典型例子之一。 </p>
+<p>我们利用程序来模拟研究银行中客户到达（Arrival）和离开（Departure）的情况。我们把客户到达 和离开银行这两个时刻发生的事情称为“事件”（Event），则整个模拟程序将按事件发生的先后顺序进行 处理，这种模拟称为事件驱动模拟。 假设在一个不少于两个（n≥2）出纳窗口的银行中，每个出纳窗口在某一时刻只能接待一位客户，在客 户较多时需在每个窗口顺序排队。对于刚进人银行的客户，如果某个窗口正空闲，客户可立即上前办理 业务；否则，他会根据队伍人数的多少和队伍前进的快慢来决定选择窗口。程序模拟的结果要得出每位 客户的平均等待时间和每位出纳员的忙度，以此来衡量服务的效率。</p>
+<h3><span id="变量说明"><strong>变量说明：</strong></span></h3><p>模拟程序要处理的数据有两类：一类是客户数据；另一类是出纳员数据。有关客户的情况体现在事件 中。</p>
+<p>事件描述应包括的数据如下。 (1) time: 事件发生的时间(客户到达/离开的时刻，以分钟为单位，从模拟开始运行起计算)。 (2) etype: 事件类型(到达/离开)。 (3) customerID: 客户编号。 (4) tellerID: 客户选择服务的窗口编号。 (5) waittime: 客户必须等待的时间。 (6) servicetime: 客户需要的服务时间。 对于一个到达事件来说，必须有time、etype和customerID这3项数据，后3项数在到达事件中不需 要。对于离开事件来说，这6项数据都是必需的。 </p>
+<p>服务效率与每个窗口的出纳员有关，出纳员数据如下。 (1) finishService: 窗口空闲时刻预告(即窗口当前的客户队伍什么时候可服务完毕) (2) totalCustomerCount: 该出纳员服务过的客户总数。 (3) totalCustomerWait: 该窗口客户总的等待时间。 (4) totalService: 该出纳员总的服务时间。 出纳员数据可用一个结构来描述，多个出纳员的数据组成一个结构数组。</p>
+<h3><span id="模拟过程说明"><strong>模拟过程说明：</strong></span></h3><p>用随机数发生器产生一个时间作为下一个客户的到达时间，则可生成下一个客户的到达事件。如果产 生的时间超过了银行的下班时间，则不生成下一个客户到达事件。所有的客户到达事件和客户离开事件 按事件生成的先后顺序进入队列。这个队列的队列元素是事件，称为事件队列。 这个队列的入队操作与一般队列一样在队尾插入，但出队操作却不是从队头删除，而是从队列中选取 事件发生时间最早，即time值最小的队列元素删除，这种队列是优先级队列，在这里 time就是优先级。 如果两个队列元素的优先级相同则删除时按它们在队列中的先后顺序进行。 首先介绍事件是如何驱动模拟的。模拟从银行上班时开始，设置一些系统初始条件之后，就给出第一 个事件firstEvent，将这个事件加入事件优先队列中，该事件是事件队列初态中的唯一队列元素。其数据 成员是0、Arrival、1、0、0、0，分别对应time、etype、 customerID、tellerID、waittime、 servicetime，即表示客户1在0时刻到达。后面3个数据对于到达事件来说是不用的，这里暂且置为0。 对于每个客户到达事件，模拟程序将自动生成该客户的离开事件和下一个客户的到达事件。首先访问 出纳员数据finishService，就可知当前排在哪个窗口(tellerID)可以最先获得服务；用窗口空闲时刻预告  finishService 减去客户到达时刻time，就可得到客户的等待时间 wailtime；用随机数发生器可产生该客 户需要服务的时间servicetime；finishService加上servicetime 就是客户的离开时刻。如此就可生成该客 户的离开事件。 在生成离开事件之前，还要对选中窗口的出纳员数据做相应的更新。窗口空闲时刻预告finishService 应做如下修改：如果窗口空闲时刻预告 finishService为0，表示现在无客户，当前到达的事件立即可获得 服务，应把该窗口空闲时刻预告置为当前客户的到达时刻time，这时，离开事件中的客户等待时间 waittime为0；否则，窗口空闲时刻预告应为 finishService 与客户需要的服务时间 servicetime之和（即 该客户的离开时间）。该窗口接待客户的总数、客户总等待时间和总的服务时间都要对应该客户的信息 进行相应地增加。 模拟程序从事件队列中用删除操作取一个客户事件。如果是到达事件，则生成一个该客户离开事件和 一个下一客户到达事件(如果下一客户到达时间超过银行下班时间，则不生成下一客户到达事件)，并将这 两个事件入队。如果是离开事件，则根据离开事件的数据对该窗口空闲时刻预告做如下修改：如果该窗 口再没有其他等待服务的客户，则 finishService 置为0，一旦事件队列为空，则模拟结束。尽管客户到 达时间不能超过银行的下班时间，但客户的离开时间可能在银行下班时间之后，所以模拟结束时可能超 出原定的模拟时间长度。模拟结束时将输出模拟的结果数据。</p>
+<h2><span id="程序说明"><strong>程序说明：</strong></span></h2><h3><span id="基础程序"><strong>基础程序：</strong></span></h3><p>程序一共有3个头文件与1个源文件，以下为代码展示</p>
+<h4><span id="simh"><strong>sim.h</strong></span></h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 以下均为 sim.h 内容 */</span></span><br><span class="line"><span class="meta">#<span class="keyword">ifndef</span> SIMULATION</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SIMULATION</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;event.h&quot;</span></span></span><br><span class="line"><span class="keyword">typedef</span> Event DataType;  </span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;apqueue.h&quot;</span></span></span><br><span class="line"><span class="comment">/* 出纳窗口信息 */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">tellerStats</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">int</span> finishService;     <span class="comment">/* 空闲时间预告 */</span></span><br><span class="line">    <span class="type">int</span> totalCustomerCount; <span class="comment">/* 服务过的客户总数 */</span>    <span class="type">int</span> totalCustomerWait; <span class="comment">/* 客户总的等待时间 */</span></span><br><span class="line">    <span class="type">int</span> totalService;       <span class="comment">/* 总的服务时间 */</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">tellerStats</span> <span class="title">TellerStats</span>;</span></span><br><span class="line"><span class="comment">/* 模拟结构数据 */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">simulation</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">int</span> simulationLength;       <span class="comment">/* 模拟时间长度 */</span></span><br><span class="line">    <span class="type">int</span> numTellers;             <span class="comment">/* 出纳窗口数 */</span></span><br><span class="line">    <span class="type">int</span> nextCustomer;           <span class="comment">/* 下一个客户编码 */</span></span><br><span class="line">    <span class="type">int</span> arrivalLow, arrivalHigh; <span class="comment">/* 下一个客户到达的时间区间 */</span></span><br><span class="line">    <span class="type">int</span> serviceLow, serviceHigh; <span class="comment">/* 客户需要服务的时间区间 */</span></span><br><span class="line">    TellerStats tstat[<span class="number">11</span>];       <span class="comment">/* 出纳窗口信息 */</span></span><br><span class="line">    PQueue pq;                   <span class="comment">/* 优先级队列 */</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">simulation</span> <span class="title">Simulation</span>;</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">InitSimulation</span><span class="params">(Simulation* s)</span>; <span class="comment">/* 事件驱动模拟的初始化 */</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">NextArrivalTime</span><span class="params">(Simulation* s)</span>;     <span class="comment">/* 计算下一客户到达时间，随机生成 */</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">Get_ServiceTime</span><span class="params">(Simulation*)</span>;       <span class="comment">/* 计算客户服务时间，随机生成 */</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">NextAvailableTeller</span><span class="params">(Simulation* s)</span>; <span class="comment">/* 计算下一个可供服务的出纳窗口号 */</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">RunSimulation</span><span class="params">(Simulation* s)</span>; <span class="comment">/* 运行事件模拟 */</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">PrintSimulationResults</span><span class="params">(Simulation* s)</span>; <span class="comment">/* 输出模拟结果 */</span></span><br><span class="line"><span class="comment">/* 事件驱动模拟的初始化 */</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">InitSimulation</span><span class="params">(Simulation* s)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i;</span><br><span class="line">    Event* firstevent = (Event*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Event));</span><br><span class="line">    <span class="comment">/* 初始化出纳窗口信息，注意这里限制最多10个窗口，并且编号是从1开始的 */</span></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt;= <span class="number">10</span>; i++)</span><br><span class="line">   &#123;</span><br><span class="line">        s-&gt;tstat[i].finishService = <span class="number">0</span>;</span><br><span class="line">        s-&gt;tstat[i].totalService = <span class="number">0</span>;</span><br><span class="line">        s-&gt;tstat[i].totalCustomerWait = <span class="number">0</span>;</span><br><span class="line">        s-&gt;tstat[i].totalCustomerCount = <span class="number">0</span>;</span><br><span class="line">   &#125;</span><br><span class="line">    s-&gt;nextCustomer = <span class="number">1</span>;</span><br><span class="line">    <span class="comment">/* 输入事件模拟相关数据 */</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Enter the simulation time in minutes: &quot;</span>);</span><br><span class="line">    scanf_s(<span class="string">&quot;%d&quot;</span>, &amp;s-&gt;simulationLength);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Enter the number of bank tellers: &quot;</span>);</span><br><span class="line">    scanf_s(<span class="string">&quot;%d&quot;</span>, &amp;s-&gt;numTellers); <span class="comment">/* 注意这里不能超过10个 */</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Enter the range of arrival times in minutes: &quot;</span>);</span><br><span class="line">    scanf_s(<span class="string">&quot;%d%d&quot;</span>, &amp;s-&gt;arrivalLow, &amp;s-&gt;arrivalHigh);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Enter the range of service times in minutes: &quot;</span>);</span><br><span class="line">    scanf_s(<span class="string">&quot;%d%d&quot;</span>, &amp;s-&gt;serviceLow, &amp;s-&gt;serviceHigh); </span><br><span class="line">    <span class="comment">/* 生成第一个到达事件并加入事件优先级队列 */</span></span><br><span class="line">    InitEvent(firstevent, <span class="number">0</span>, arrival, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">    InitPQueue(&amp;(s-&gt;pq));</span><br><span class="line">    PQInsert(&amp;(s-&gt;pq), *firstevent);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 计算下一客户到达时间，按照所给区间随机生成 */</span><span class="type">int</span> <span class="title function_">NextArrivalTime</span><span class="params">(Simulation* s)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> s-&gt;arrivalLow + rand() % (s-&gt;arrivalHigh - s-&gt;arrivalLow + <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 计算客户的服务时间，按照所给区间随机生成 */</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">Get_ServiceTime</span><span class="params">(Simulation* s)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> s-&gt;serviceLow + rand() % (s-&gt;serviceHigh - s-&gt;serviceLow + <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 计算下一个可供服务的出纳窗口号 */</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">NextAvailableTeller</span><span class="params">(Simulation* s)</span></span><br><span class="line">&#123; </span><br><span class="line">    <span class="type">int</span> minfinishindex = <span class="number">1</span>; <span class="comment">/* 初始化最快空闲窗口为第一个窗口 */</span></span><br><span class="line">    <span class="type">int</span> minfinish = s-&gt;tstat[<span class="number">1</span>].finishService; <span class="comment">/* 初始化最快空闲时间预告为第一个窗口的</span></span><br><span class="line"><span class="comment">空闲时间预告 */</span></span><br><span class="line">    <span class="type">int</span> num[<span class="number">1000</span>], m, i;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/* 遍历所有窗口，找到最小空闲时间预告以及对应的窗口编号，如果存在多个最小窗口则随机选择其中</span></span><br><span class="line"><span class="comment">一个 */</span></span><br><span class="line">    m = <span class="number">1</span>;</span><br><span class="line">    num[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">2</span>; i &lt;= s-&gt;numTellers; i++)</span><br><span class="line">        <span class="keyword">if</span> (s-&gt;tstat[i].finishService &lt; minfinish) &#123;</span><br><span class="line">            minfinish = s-&gt;tstat[i].finishService;</span><br><span class="line">            num[<span class="number">0</span>] = i;</span><br><span class="line">            m = <span class="number">1</span>;</span><br><span class="line">       &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (s-&gt;tstat[i].finishService == minfinish)</span><br><span class="line">                num[m++] = i;</span><br><span class="line">       &#125; </span><br><span class="line">    minfinishindex = num[rand() % m];</span><br><span class="line">    <span class="keyword">return</span> minfinishindex;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 运行事件驱动模拟 */</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">RunSimulation</span><span class="params">(Simulation* s)</span></span><br><span class="line">&#123;</span><br><span class="line">    Event* e = (Event*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Event));</span><br><span class="line">    Event* newevent = (Event*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Event));</span><br><span class="line">    <span class="type">int</span> nexttime, tellerID, servicetime, waittime;</span><br><span class="line">    <span class="comment">/* 遍历事件优先级队列，直到队列为空 */</span></span><br><span class="line">    <span class="keyword">while</span> (!PQEmpty(&amp;(s-&gt;pq)))</span><br><span class="line">   &#123;</span><br><span class="line">        <span class="comment">/* 获得下一个事件的优先级，此处指的是时间产生时间time */</span></span><br><span class="line">        *e = PQDelete(&amp;(s-&gt;pq));</span><br><span class="line">        <span class="keyword">if</span> (e-&gt;etype == arrival)&#123;</span><br><span class="line">            <span class="comment">/* 处理到达事件 */</span></span><br><span class="line">            nexttime = e-&gt;time + NextArrivalTime(s);</span><br><span class="line">            <span class="keyword">if</span> (nexttime &gt; s-&gt;simulationLength)</span><br><span class="line">                <span class="comment">/* 如果到达事件在下班时刻之后，则不处理到达事件 */</span>                <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="comment">/* 生成下一客户到达事件并加入事件优先级队列 */</span></span><br><span class="line">                s-&gt;nextCustomer++;</span><br><span class="line">                InitEvent(newevent, nexttime, arrival, s-&gt;nextCustomer, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">                PQInsert(&amp;(s-&gt;pq), *newevent);</span><br><span class="line">           &#125;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;Time: %2d\tarrival of customer %d\n&quot;</span>, e-&gt;time, e-</span><br><span class="line">&gt;customerID);</span><br><span class="line">            <span class="comment">/* 生成到达事件的离开事件 */</span></span><br><span class="line">            servicetime = Get_ServiceTime(s);</span><br><span class="line">            <span class="comment">/* 计算可供服务的出纳窗口 */</span></span><br><span class="line">            tellerID = NextAvailableTeller(s);</span><br><span class="line">            </span><br><span class="line">            <span class="comment">/* 如果选定的出纳窗口是空闲的，则更新完成时间预告为当前到达事件时间，以便后续更新完</span></span><br><span class="line"><span class="comment">成时间 */</span></span><br><span class="line">            <span class="keyword">if</span> (s-&gt;tstat[tellerID].finishService == <span class="number">0</span>)</span><br><span class="line">           &#123;</span><br><span class="line">                 s-&gt;tstat[tellerID].finishService = e-&gt;time;</span><br><span class="line">           &#125;</span><br><span class="line">            <span class="comment">/* 计算等待时间 */</span></span><br><span class="line">            waittime = s-&gt;tstat[tellerID].finishService - e-&gt;time;</span><br><span class="line">            <span class="comment">/* 按照当前到达事件信息修改选定出纳窗口信息 */</span></span><br><span class="line">            s-&gt;tstat[tellerID].totalCustomerWait += waittime;</span><br><span class="line">            s-&gt;tstat[tellerID].totalCustomerCount++;</span><br><span class="line">            s-&gt;tstat[tellerID].totalService += servicetime;</span><br><span class="line">            s-&gt;tstat[tellerID].finishService += servicetime;</span><br><span class="line">            <span class="comment">/* 将生成的离开事件加入优先级队列 */</span></span><br><span class="line">            InitEvent(newevent, s-&gt;tstat[tellerID].finishService,</span><br><span class="line">                departure, e-&gt;customerID, tellerID, waittime, servicetime);</span><br><span class="line">            PQInsert(&amp;(s-&gt;pq), *newevent);</span><br><span class="line">       &#125;</span><br><span class="line">        <span class="comment">/* 处理离开事件 */</span></span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">       &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;Time: %2d\tdeparture of customer %d\n&quot;</span>, e-&gt;time, e-</span><br><span class="line">&gt;customerID);</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;\tTeller %d\tWait %d\tService %d\n&quot;</span>, e-&gt;tellerID, e-</span><br><span class="line">&gt;waittime, e-&gt;servicetime);</span><br><span class="line">            tellerID =e-&gt;tellerID;</span><br><span class="line">            <span class="comment">/* 如果窗口在处理离开事件后空闲，则修改该出纳窗口的空闲时间预告 */</span></span><br><span class="line">            <span class="keyword">if</span> (e-&gt;time == s-&gt;tstat[tellerID].finishService)</span><br><span class="line">                s-&gt;tstat[tellerID].finishService = <span class="number">0</span>;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">    <span class="comment">/* 修改总的服务时间，注意可能受离开事件影响导致实际总的服务时间大于预定的服务时间 */</span></span><br><span class="line">    s-&gt;simulationLength = (e-&gt;time &lt;= s-&gt;simulationLength)</span><br><span class="line">        ? s-&gt;simulationLength : e-&gt;time;</span><br><span class="line">&#125;<span class="number">1.4</span> 模拟执行 </span><br><span class="line">下面代码是事件驱动的主程序。</span><br><span class="line"><span class="number">2.</span> 实验要求 </span><br><span class="line">基于课本P46给出的代码（如上所述），实现以下功能。</span><br><span class="line"><span class="comment">/* 输出模拟结果 */</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">PrintSimulationResults</span><span class="params">(Simulation* s)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> cumCustomers = <span class="number">0</span>, cumWait = <span class="number">0</span>, i;</span><br><span class="line">    <span class="type">int</span> avgCustWait, tellerWorkPercent;</span><br><span class="line">    <span class="type">float</span> tellerWork;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt;= s-&gt;numTellers; i++)</span><br><span class="line">   &#123;</span><br><span class="line">        cumCustomers += s-&gt;tstat[i].totalCustomerCount; </span><br><span class="line">        cumWait += s-&gt;tstat[i].totalCustomerWait;</span><br><span class="line">   &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\n******** Simulation Summary ********\n&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Simulation of %d minutes\n&quot;</span>, s-&gt;simulationLength);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\tNo. of Customers: %d\n&quot;</span>, cumCustomers);   </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\tAverage Customer Wait: &quot;</span>);</span><br><span class="line">    avgCustWait = (<span class="type">int</span>)((<span class="type">float</span>)cumWait / cumCustomers + <span class="number">0.5</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d minutes\n&quot;</span>, avgCustWait);</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt;= s-&gt;numTellers; i++)</span><br><span class="line">   &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;\tTeller #%d\tWorking &quot;</span>, i);</span><br><span class="line">        <span class="comment">/* 显示每个出纳窗口的服务时间占比 */</span></span><br><span class="line">        tellerWork = (<span class="type">float</span>)(s-&gt;tstat[i].totalService) / s-&gt;simulationLength;</span><br><span class="line">        tellerWorkPercent = (<span class="type">int</span>)(tellerWork * <span class="number">100.0</span> + <span class="number">0.5</span>);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, tellerWorkPercent);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span>  <span class="comment">/* SIMULATION */</span></span></span><br></pre></td></tr></table></figure>
+<h4><span id="apqueueh"><strong>apqueue.h</strong></span></h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 以下为apqueue.h内容，定义优先级队列 */</span></span><br><span class="line"><span class="meta">#<span class="keyword">ifndef</span> PRIORITYQUEUE</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> PRIORITYQUEUE</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="comment">/* 队列最大长度 */</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MaxPQSize 50</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">pQueue</span>&#123;</span></span><br><span class="line"> <span class="comment">/* 优先级队列数组和计数器 */</span></span><br><span class="line"> <span class="type">int</span> count;</span><br><span class="line"> DataType pqlist[MaxPQSize]; <span class="comment">//Event</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">pQueue</span> <span class="title">PQueue</span>;</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">InitPQueue</span><span class="params">(PQueue* pq)</span>;</span><br><span class="line"><span class="comment">/* 优先级队列修改操作 */</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">PQInsert</span><span class="params">(PQueue* pq, DataType item)</span>;</span><br><span class="line">DataType <span class="title function_">PQDelete</span><span class="params">(PQueue* pq)</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">ClearPQ</span><span class="params">(PQueue* pq)</span>;</span><br><span class="line"><span class="comment">/* 优先级队列检测函数 */</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">PQEmpty</span><span class="params">(PQueue* pq)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">PQFull</span><span class="params">(PQueue* pq)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">PQLength</span><span class="params">(PQueue* pq)</span>;</span><br><span class="line"><span class="comment">/* 初始化优先级队列计数 */</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">InitPQueue</span><span class="params">(PQueue* pq)</span></span><br><span class="line">&#123;</span><br><span class="line"> pq-&gt;count = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 将元素插入优先级队列 */</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">PQInsert</span><span class="params">(PQueue* pq, DataType item)</span></span><br><span class="line">&#123;</span><br><span class="line"> <span class="comment">/* 如果优先级队列的计数器达到最大限制，则终止程序 */</span></span><br><span class="line"> <span class="keyword">if</span> (pq-&gt;count == MaxPQSize)</span><br><span class="line"> &#123;</span><br><span class="line"> <span class="built_in">printf</span>(<span class="string">&quot;Priority queue overflow!\n&quot;</span>);</span><br><span class="line"> <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="comment">/* 将元素放在队列的后面并递增计数 */</span></span><br><span class="line"> pq-&gt;pqlist[pq-&gt;count] = item;</span><br><span class="line"> pq-&gt;count++;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 从优先级队列中删除一个元素并返回其值 */</span></span><br><span class="line">DataType <span class="title function_">PQDelete</span><span class="params">(PQueue* pq)</span></span><br><span class="line">&#123;</span><br><span class="line"> DataType min;</span><br><span class="line"> <span class="type">int</span> i, minindex = <span class="number">0</span>;</span><br><span class="line"> <span class="keyword">if</span> (pq-&gt;count &gt; <span class="number">0</span>)</span><br><span class="line"> &#123;</span><br><span class="line"> <span class="comment">/* 在优先级队列中查找最小值及其索引 */</span></span><br><span class="line"> min = pq-&gt;pqlist[<span class="number">0</span>];   <span class="comment">/* 假设pqlist[0]是最小值 */</span></span><br><span class="line"> <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt; pq-&gt;count; i++)</span><br><span class="line"> <span class="keyword">if</span> (CompareEvent(&amp;pq-&gt;pqlist[i], &amp;min))</span><br><span class="line"> &#123;</span><br><span class="line"> min = pq-&gt;pqlist[i];</span><br><span class="line"> minindex = i;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="comment">/* 将第二小元素移动到minindex并递减计数 */</span></span><br><span class="line"> pq-&gt;pqlist[minindex] = pq-&gt;pqlist[pq-&gt;count - <span class="number">1</span>]; </span><br><span class="line"> pq-&gt;count--;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="comment">/* qlist为空，终止程序 */</span></span><br><span class="line"> <span class="keyword">else</span></span><br><span class="line"> &#123;</span><br><span class="line"> <span class="built_in">printf</span>(<span class="string">&quot;Deleting from an empty priority queue!\n&quot;</span>);</span><br><span class="line"> <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="comment">/* 返回最小值 */</span></span><br><span class="line"> <span class="keyword">return</span> min;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 返回优先级队列元素个数 */</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">PQLength</span><span class="params">(PQueue* pq)</span></span><br><span class="line">&#123;</span><br><span class="line"> <span class="keyword">return</span> pq-&gt;count;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 测试优先级队列是否为空 */</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">PQEmpty</span><span class="params">(PQueue* pq)</span></span><br><span class="line">&#123;</span><br><span class="line"> <span class="keyword">return</span> pq-&gt;count == <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 测试优先级队列是否已满 */</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">PQFull</span><span class="params">(PQueue* pq)</span></span><br><span class="line">&#123;</span><br><span class="line"> <span class="keyword">return</span> pq-&gt;count == MaxPQSize;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 通过将计数重置为0来清除优先级队列 */</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">ClearPQ</span><span class="params">(PQueue* pq)</span></span><br><span class="line">&#123;</span><br><span class="line"> pq-&gt;count = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<h4><span id="eventh"><strong>event.h</strong></span></h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 以下均为 event.h 内容 */</span></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">eventType</span> &#123;</span> arrival, departure &#125;;</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">enum</span> <span class="title">eventType</span> <span class="title">EventType</span>;</span></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">isVip</span> &#123;</span> notVip, Vip &#125;;</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">enum</span> <span class="title">isVip</span> <span class="title">IsVip</span>;</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">event</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="type">int</span> time;</span><br><span class="line">	EventType etype;</span><br><span class="line">	<span class="type">int</span> customerID;</span><br><span class="line">	<span class="type">int</span> tellerID;</span><br><span class="line">	<span class="type">int</span> waittime;</span><br><span class="line">	<span class="type">int</span> servicetime;</span><br><span class="line">	IsVip id;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">event</span> <span class="title">Event</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 事件初始化函数 */</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">InitEvent</span><span class="params">(Event* e, <span class="type">int</span> t, EventType et, <span class="type">int</span> cn, <span class="type">int</span> tn, <span class="type">int</span> wt, <span class="type">int</span> st, IsVip iv)</span></span><br><span class="line">&#123;</span><br><span class="line">	e-&gt;time = t;</span><br><span class="line">	e-&gt;etype = et;</span><br><span class="line">	e-&gt;customerID = cn;</span><br><span class="line">	e-&gt;tellerID = tn;</span><br><span class="line">	e-&gt;waittime = wt;</span><br><span class="line">	e-&gt;servicetime = st;</span><br><span class="line">	e-&gt;id = iv;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 设置事件时间为事件优先级队列的优先级，如果事件时间相等则优先执行离开事件 */</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">CompareEvent</span><span class="params">(Event* e1, Event* e2)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (e1-&gt;time &lt; e2-&gt;time ||</span><br><span class="line">		(e1-&gt;time == e2-&gt;time &amp;&amp; e1-&gt;etype == departure))</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>; <span class="comment">// e1出队</span></span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (e1-&gt;time &gt; e2-&gt;time ||</span><br><span class="line">		(e1-&gt;time == e2-&gt;time &amp;&amp; e2-&gt;etype == departure))</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>; <span class="comment">// e2出队</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4><span id="eventc"><strong>event.c</strong></span></h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 以下均为 event.c 内容 */</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;sim.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;time.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/* 生命模拟结构的存储空间 */</span></span><br><span class="line">    Simulation* S = (Simulation*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Simulation));</span><br><span class="line">    srand(time(<span class="literal">NULL</span>));  <span class="comment">/* 设置随机数种子 */</span></span><br><span class="line">    InitSimulation(S);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 运行事件驱动模拟 */</span></span><br><span class="line">    RunSimulation(S);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 输出模拟结果 */</span></span><br><span class="line">    PrintSimulationResults(S);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3><span id="题目"><strong>题目</strong></span></h3><h4><span id="11"><strong>1.1</strong></span></h4><h4><span id="12"><strong>1.2</strong></span></h4><h4><span id="2"><strong>2</strong></span></h4>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E5%A4%A7%E4%BD%9C%E4%B8%9A/" rel="tag"><i class="fa fa-tag"></i> 数据结构与算法 大作业</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/10/10/BM%E7%AE%97%E6%B3%95/" rel="prev" title="BM算法">
+                  <i class="fa fa-angle-left"></i> BM算法
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">金岩</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
