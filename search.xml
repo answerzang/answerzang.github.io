@@ -1717,4 +1717,255 @@ k>=\frac{n}{2}log_2n</script><p>也就是说基于比较的排序，平均时间
         <tag>数据结构与算法</tag>
       </tags>
   </entry>
+  <entry>
+    <title>WSL安装配置</title>
+    <url>/2025/02/17/WSL%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<p>电脑版本：win11专业版，有hyper-V</p>
+<p>以管理员方式打开power shell 并运行：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux</span><br><span class="line">Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform</span><br></pre></td></tr></table></figure>
+<p>两条命令执行完之后都会有询问是否重启电脑的提示（重启才能使修改生效），电脑重启后打开Hyper-V、虚拟机平台和适用于Linux的Windows子系统（WSL）</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wsl --update</span><br><span class="line"># 将 WSL 默认版本设置为 WSL 2</span><br><span class="line">wsl --set-default-version 2</span><br></pre></td></tr></table></figure>
+<p>运行这两条代码，更新WSL并将其设置成2</p>
+<p>第一条代码跑起来可能非常慢，还有很大可能下载失败，可以去网上搜，下载<strong>wsl_update_x64.msi</strong>，下载电脑哪里都行，点击运行它，就可以把你的wsl更新到最新版</p>
+<p>再安装Ubuntu</p>
+<p>下面两条命令都行</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Invoke-WebRequest -Uri https://aka.ms/wslubuntu2004 -OutFile Ubuntu.appx -UseBasicParsing</span><br><span class="line"></span><br><span class="line">curl.exe -L -o ubuntu-2004.appx https://aka.ms/wslubuntu2004</span><br></pre></td></tr></table></figure>
+<p>安装之后，电梯Ubnutu图标，注册账号（不要跳），设置密码（不会显示），接着就进入了</p>
+<p>wsl常用指令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wsl -l -v 			#查看电脑中系统和状态</span><br><span class="line">wsl --shutdown 		#关闭系统</span><br><span class="line">wsl.exe --update 	#</span><br><span class="line">exit 				#退出</span><br><span class="line"></span><br><span class="line">wsl -t -d Ubuntu 		#或 wsl --shutdown</span><br><span class="line">wsl --unregister Ubuntu #删除系统，Ubuntu是系统名</span><br><span class="line">wsl --set-default Ubuntu1 # 或wsl -s Ubuntu1设置默认系统</span><br><span class="line"></span><br><span class="line">#将系统从C盘移到D盘</span><br><span class="line">wsl --export Ubuntu D:\WSL1\ubuntu.tar</span><br><span class="line">wsl --import &lt;导入Linux名称&gt; &lt;导入盘的路径&gt; &lt;导入tar包路径&gt; 版本(代表wsl2)</span><br><span class="line">#例wsl --import Ubuntu1 D:\WSL1 D:\WSL1\ubuntu.tar --version 2</span><br><span class="line"></span><br><span class="line">wsl -u username 					#使用特定账户进入ubuntu</span><br><span class="line">wsl --set-default-user username 	#设置ubuntu特定账户</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>wsl修改ubuntu默认账户：</p>
+<ol>
+<li><p>打开终端并创建新账户：</p>
+<p>bash复制</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wsl -u root</span><br><span class="line">sudo adduser username			<span class="comment">#添加新用户</span></span><br><span class="line">sudo usermod -aG sudo username	<span class="comment">#赋sudo权限</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编辑<code>/etc/wsl.conf</code>文件：</p>
+<p>bash复制</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo nano /etc/wsl.conf</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加以下内容：</p>
+<p>ini复制</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[user]</span></span><br><span class="line"><span class="attr">default</span>=username</span><br></pre></td></tr></table></figure>
+<p>将<code>username</code>替换为你的目标用户名。</p>
+</li>
+</ol>
+<p>​    4.重启wsl</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line">wsl --shutdown</span><br><span class="line">wsl</span><br></pre></td></tr></table></figure>
+<p>Linux常用指令</p>
+<p>当然可以！以下是一些在 WSL2 和 Linux 环境中常用的命令和操作，这些命令可以帮助你更高效地进行开发和文件管理。</p>
+<h3><span id="1-文件和目录操作"><strong>1. 文件和目录操作</strong></span></h3><ul>
+<li><p><strong>创建文件</strong>：</p>
+<p>bash复制</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">touch</span> filename.c</span><br></pre></td></tr></table></figure>
+<p>创建一个名为 <code>filename.c</code> 的新文件。</p>
+</li>
+<li><p><strong>创建目录</strong>：</p>
+<p>bash复制</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> directory_name</span><br></pre></td></tr></table></figure>
+<p>创建一个名为 <code>directory_name</code> 的新目录。</p>
+</li>
+<li><p><strong>查看文件列表</strong>：</p>
+<p>bash复制</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ls</span> -l</span><br></pre></td></tr></table></figure>
+<p>列出当前目录下的所有文件和目录，包括详细信息。</p>
+</li>
+<li><p><strong>删除文件</strong>：</p>
+<p>bash复制</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">rm</span> filename.c</span><br></pre></td></tr></table></figure>
+<p>删除名为 <code>filename.c</code> 的文件。</p>
+</li>
+<li><p><strong>删除目录</strong>：</p>
+<p>bash复制</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">rm</span> -r directory_name</span><br></pre></td></tr></table></figure>
+<p>删除名为 <code>directory_name</code> 的目录及其所有内容。</p>
+</li>
+<li><p><strong>复制文件</strong>：</p>
+<p>bash复制</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> filename.c destination.c</span><br></pre></td></tr></table></figure>
+<p>将 <code>filename.c</code> 复制为 <code>destination.c</code>。</p>
+</li>
+<li><p><strong>移动文件</strong>：</p>
+<p>bash复制</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mv</span> filename.c directory_name/</span><br></pre></td></tr></table></figure>
+<p>将 <code>filename.c</code> 移动到 <code>directory_name</code> 目录中。</p>
+</li>
+</ul>
+<h3><span id="2-文本编辑和查看"><strong>2. 文本编辑和查看</strong></span></h3><ul>
+<li><p><strong>查看文件内容</strong>：</p>
+<p>bash复制</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> filename.c</span><br></pre></td></tr></table></figure>
+<p>显示 <code>filename.c</code> 的内容。</p>
+</li>
+<li><p><strong>分页查看文件内容</strong>：</p>
+<p>bash复制</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">less filename.c</span><br></pre></td></tr></table></figure>
+<p>分页查看 <code>filename.c</code> 的内容，按 <code>q</code> 退出。</p>
+</li>
+<li><p><strong>编辑文件</strong>：</p>
+<p>bash复制</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nano filename.c</span><br></pre></td></tr></table></figure>
+<p>使用 <code>nano</code> 文本编辑器打开 <code>filename.c</code>。</p>
+<p>bash复制</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim filename.c</span><br></pre></td></tr></table></figure>
+<p>使用 <code>vim</code> 文本编辑器打开 <code>filename.c</code>。</p>
+</li>
+</ul>
+<h3><span id="3-文件搜索和过滤"><strong>3. 文件搜索和过滤</strong></span></h3><ul>
+<li><p><strong>搜索文件</strong>：</p>
+<p>bash复制</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">find /home/&lt;用户名&gt; -name <span class="string">&quot;filename.c&quot;</span></span><br></pre></td></tr></table></figure>
+<p>在 <code>/home/&lt;用户名&gt;</code> 目录下搜索名为 <code>filename.c</code> 的文件。</p>
+</li>
+<li><p><strong>搜索文本</strong>：</p>
+<p>bash复制</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">grep <span class="string">&quot;search_text&quot;</span> filename.c</span><br></pre></td></tr></table></figure>
+<p>在 <code>filename.c</code> 中搜索包含 <code>search_text</code> 的行。</p>
+</li>
+<li><p><strong>过滤输出</strong>：</p>
+<p>bash复制</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ls</span> -l | grep <span class="string">&quot;filename.c&quot;</span></span><br></pre></td></tr></table></figure>
+<p>列出包含 <code>filename.c</code> 的行。</p>
+</li>
+</ul>
+<h3><span id="4-程序编译和运行"><strong>4. 程序编译和运行</strong></span></h3><ul>
+<li><p><strong>编译 C 语言程序</strong>：</p>
+<p>bash复制</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gcc filename.c -o filename</span><br></pre></td></tr></table></figure>
+<p>编译 <code>filename.c</code>，生成可执行文件 <code>filename</code>。</p>
+</li>
+<li><p><strong>运行程序</strong>：</p>
+<p>bash复制</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./filename</span><br></pre></td></tr></table></figure>
+<p>运行生成的可执行文件 <code>filename</code>。</p>
+</li>
+<li><p><strong>清理编译文件</strong>：</p>
+<p>bash复制</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">rm</span> filename</span><br></pre></td></tr></table></figure>
+<p>删除生成的可执行文件 <code>filename</code>。</p>
+</li>
+</ul>
+<h3><span id="5-系统信息和网络"><strong>5. 系统信息和网络</strong></span></h3><ul>
+<li><p><strong>查看系统信息</strong>：</p>
+<p>bash复制</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">uname</span> -a</span><br></pre></td></tr></table></figure>
+<p>查看系统详细信息。</p>
+</li>
+<li><p><strong>查看磁盘使用情况</strong>：</p>
+<p>bash复制</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span> -h</span><br></pre></td></tr></table></figure>
+<p>查看磁盘使用情况。</p>
+</li>
+<li><p><strong>查看当前目录</strong>：</p>
+<p>bash复制</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">pwd</span></span><br></pre></td></tr></table></figure>
+<p>显示当前工作目录。</p>
+</li>
+<li><p><strong>查看网络连接</strong>：</p>
+<p>bash复制</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">netstat -i</span><br></pre></td></tr></table></figure>
+<p>查看网络接口状态。</p>
+</li>
+<li><p><strong>ping 命令</strong>：</p>
+<p>bash复制</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ping google.com</span><br></pre></td></tr></table></figure>
+<p>测试与 <code>google.com</code> 的网络连接。</p>
+</li>
+</ul>
+<h3><span id="6-权限管理"><strong>6. 权限管理</strong></span></h3><ul>
+<li><p><strong>查看文件权限</strong>：</p>
+<p>bash复制</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ls</span> -l filename.c</span><br></pre></td></tr></table></figure>
+<p>查看 <code>filename.c</code> 的权限。</p>
+</li>
+<li><p><strong>修改文件权限</strong>：</p>
+<p>bash复制</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">chmod</span> 755 filename.c</span><br></pre></td></tr></table></figure>
+<p>将 <code>filename.c</code> 的权限修改为 <code>755</code>。</p>
+</li>
+<li><p><strong>修改文件所有者</strong>：</p>
+<p>bash复制</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo <span class="built_in">chown</span> &lt;用户名&gt; filename.c</span><br></pre></td></tr></table></figure>
+<p>将 <code>filename.c</code> 的所有者修改为 <code>&lt;用户名&gt;</code>。</p>
+</li>
+</ul>
+<h3><span id="7-压缩和解压缩"><strong>7. 压缩和解压缩</strong></span></h3><ul>
+<li><p><strong>压缩文件</strong>：</p>
+<p>bash复制</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tar -cvf filename.tar filename.c</span><br></pre></td></tr></table></figure>
+<p>将 <code>filename.c</code> 压缩为 <code>filename.tar</code>。</p>
+</li>
+<li><p><strong>解压缩文件</strong>：</p>
+<p>bash复制</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tar -xvf filename.tar</span><br></pre></td></tr></table></figure>
+<p>解压缩 <code>filename.tar</code>。</p>
+</li>
+<li><p><strong>压缩为 gzip 格式</strong>：</p>
+<p>bash复制</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tar -czvf filename.tar.gz filename.c</span><br></pre></td></tr></table></figure>
+<p>将 <code>filename.c</code> 压缩为 <code>filename.tar.gz</code>。</p>
+</li>
+<li><p><strong>解压缩 gzip 文件</strong>：</p>
+<p>bash复制</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tar -xzvf filename.tar.gz</span><br></pre></td></tr></table></figure>
+<p>解压缩 <code>filename.tar.gz</code>。</p>
+</li>
+</ul>
+<h3><span id="8-其他常用命令"><strong>8. 其他常用命令</strong></span></h3><ul>
+<li><p><strong>清屏</strong>：</p>
+<p>bash复制</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">clear</span><br></pre></td></tr></table></figure>
+<p>清除终端屏幕。</p>
+</li>
+<li><p><strong>查看历史命令</strong>：</p>
+<p>bash复制</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">history</span></span><br></pre></td></tr></table></figure>
+<p>查看历史命令。</p>
+</li>
+<li><p><strong>退出终端</strong>：</p>
+<p>bash复制</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+<p>退出当前终端会话。</p>
+</li>
+<li><p><strong>后台运行程序</strong>：</p>
+<p>bash复制</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./filename &amp;</span><br></pre></td></tr></table></figure>
+<p>在后台运行 <code>filename</code>。</p>
+</li>
+<li><p><strong>查看进程</strong>：</p>
+<p>bash复制</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ps aux</span><br></pre></td></tr></table></figure>
+<p>查看当前运行的进程。</p>
+</li>
+<li><p><strong>杀死进程</strong>：</p>
+<p>bash复制</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">kill</span> &lt;PID&gt;</span><br></pre></td></tr></table></figure>
+<p>杀死指定 PID 的进程。</p>
+</li>
+</ul>
+<p>希望这些命令对你有帮助！如果有其他问题，欢迎随时提问。</p>
+]]></content>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>mysql1</title>
+    <url>/2025/02/03/mysql1/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>计算机系统笔记-1</title>
+    <url>/2025/02/17/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0-1/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>计算机系统笔记-2</title>
+    <url>/2025/02/17/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0-2/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>离散数学-集合</title>
+    <url>/2025/02/19/%E7%A6%BB%E6%95%A3%E6%95%B0%E5%AD%A6-%E9%9B%86%E5%90%88/</url>
+    <content><![CDATA[]]></content>
+  </entry>
 </search>
