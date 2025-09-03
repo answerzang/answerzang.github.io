@@ -1951,7 +1951,11 @@ k>=\frac{n}{2}log_2n</script><p>也就是说基于比较的排序，平均时间
   <entry>
     <title>mysql1</title>
     <url>/2025/02/03/mysql1/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<p>命名：小写字母下划线或者驼峰命名法</p>
+<p>表与对应程序名一致</p>
+<p>表命名 业务名加表</p>
+<p>列命名 表实体加属性</p>
+]]></content>
       <tags>
         <tag>mysql</tag>
       </tags>
@@ -1970,5 +1974,43 @@ k>=\frac{n}{2}log_2n</script><p>也就是说基于比较的排序，平均时间
     <title>离散数学-集合</title>
     <url>/2025/02/19/%E7%A6%BB%E6%95%A3%E6%95%B0%E5%AD%A6-%E9%9B%86%E5%90%88/</url>
     <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>Java笔记1</title>
+    <url>/2025/09/03/Java%E7%AC%94%E8%AE%B01/</url>
+    <content><![CDATA[<h4><span id="程序格式">程序格式</span></h4><p>class 关键字，标识类</p>
+<p>main方法： public static void main，程序入口</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HelloWorld</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;hello,world,a new travel begin now!&quot;</span>);	<span class="comment">//打印完后会换行</span></span><br><span class="line">        System.out.print(<span class="string">&quot;hello,world,a new travel begin now!&quot;</span>);	<span class="comment">//打印完后不会换行</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4><span id="关键字">关键字</span></h4><p><img src="../imgs/Java%E7%AC%94%E8%AE%B01/image-20250903191718305-17569048116792-17569048172624.png" alt="image-20250903191718305"></p>
+<p>Java中变量、方法、类等要素命名时使用的字符序列，称为标识符。</p>
+<p>变量起名规则和C++一样</p>
+<h4><span id="变量">变量</span></h4><p><strong>基本数据类型：</strong></p>
+<p>整型：byte \ short \ int \ long</p>
+<p>浮点型：float \ double</p>
+<p>字符型：char</p>
+<p>布尔型：boolean</p>
+<p><strong>引用数据类型：</strong></p>
+<p>类 class</p>
+<p>数组 array</p>
+<p>接口 interface</p>
+<p>枚举 enum</p>
+<p>注解 annotation</p>
+<p>记录 record</p>
+<p><strong>注意事项：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">variable</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span>&#123;</span><br><span class="line">        System.out.println(<span class="number">0.1</span>+<span class="number">0.2</span>); 	<span class="comment">//0.30000000000000004,二进制产生误差</span></span><br><span class="line">        System.out.println(<span class="number">0.3</span>+<span class="number">0.1</span>);	<span class="comment">//0.4</span></span><br><span class="line">        <span class="type">float</span> <span class="variable">ff1</span> <span class="operator">=</span> <span class="number">123123123f</span>;			<span class="comment">//超过了int型上限需要加后缀，否则不需要</span></span><br><span class="line">        <span class="type">float</span> <span class="variable">ff2</span> <span class="operator">=</span> ff1+<span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> age=<span class="number">20</span>;</span><br><span class="line">        <span class="type">double</span> weight=<span class="number">83</span>;</span><br><span class="line">        <span class="type">char</span> gender=<span class="string">&#x27;男&#x27;</span>;</span><br><span class="line">        <span class="type">boolean</span> <span class="variable">marry</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line">        String name= <span class="string">&quot;zjy&quot;</span>;</span><br><span class="line">        <span class="type">int</span> a,b,c;</span><br><span class="line">        <span class="type">long</span> <span class="variable">d</span> <span class="operator">=</span> <span class="number">12341256789L</span>;</span><br><span class="line">        System.out.println(ff1);				<span class="comment">//1.2312312E8</span></span><br><span class="line">        System.out.println(ff2);				<span class="comment">//1.2312312E8</span></span><br><span class="line">        System.out.println(ff1 == ff2);			<span class="comment">//true ，精度问题最后的3没保留</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><strong>强制类型转换</strong></p>
+<p><strong>转换格式</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">数据类型<span class="number">1</span> 变量名 = (数据类型<span class="number">1</span>)被强转数据值;  <span class="comment">//()中的数据类型必须&lt;=变量值的数据类型</span></span><br><span class="line"><span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> (<span class="type">int</span>)<span class="number">3.14</span>;<span class="comment">//损失精度</span></span><br><span class="line"></span><br><span class="line"><span class="type">double</span> <span class="variable">d</span> <span class="operator">=</span> <span class="number">1.2</span>;</span><br><span class="line"><span class="type">int</span> <span class="variable">num</span> <span class="operator">=</span> (<span class="type">int</span>)d;<span class="comment">//损失精度</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">200</span>;</span><br><span class="line"><span class="type">byte</span> <span class="variable">b</span> <span class="operator">=</span> (<span class="type">byte</span>)i;<span class="comment">//溢出</span></span><br></pre></td></tr></table></figure>
+<p>有可能损失精度</p>
+<p><strong>字符串String</strong></p>
+<ul>
+<li>字符串运算用+来表示字符拼接</li>
+<li>字符串不能用强制类型转换</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">System.out.println(<span class="string">&quot;&quot;</span> + <span class="number">1</span> + <span class="number">2</span>);<span class="comment">//12</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="variable">num</span> <span class="operator">=</span> <span class="number">10</span>;</span><br><span class="line"><span class="type">boolean</span> <span class="variable">b1</span> <span class="operator">=</span> <span class="literal">true</span>;</span><br><span class="line"><span class="type">String</span> <span class="variable">s1</span> <span class="operator">=</span> <span class="string">&quot;abc&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">String</span> <span class="variable">s2</span> <span class="operator">=</span> s1 + num + b1;</span><br><span class="line">System.out.println(s2);<span class="comment">//abc10true</span></span><br><span class="line"><span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> <span class="string">&quot;123&quot;</span>;</span><br><span class="line"><span class="type">int</span> <span class="variable">num</span> <span class="operator">=</span> (<span class="type">int</span>)str;<span class="comment">//错误</span></span><br><span class="line"><span class="type">int</span> <span class="variable">num</span> <span class="operator">=</span> Integer.parseInt(str);<span class="comment">//正确</span></span><br></pre></td></tr></table></figure>
+<h3><span id>#</span></h3>]]></content>
+      <tags>
+        <tag>Java</tag>
+      </tags>
   </entry>
 </search>
