@@ -1978,7 +1978,10 @@ k>=\frac{n}{2}log_2n</script><p>也就是说基于比较的排序，平均时间
   <entry>
     <title>Java笔记1</title>
     <url>/2025/09/03/Java%E7%AC%94%E8%AE%B01/</url>
-    <content><![CDATA[<h4><span id="程序格式">程序格式</span></h4><p>class 关键字，标识类</p>
+    <content><![CDATA[<!-- toc -->
+<!-- tocstop -->
+<span id="more"></span>
+<h4><span id="程序格式">程序格式</span></h4><p>class 关键字，标识类</p>
 <p>main方法： public static void main，程序入口</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HelloWorld</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;hello,world,a new travel begin now!&quot;</span>);	<span class="comment">//打印完后会换行</span></span><br><span class="line">        System.out.print(<span class="string">&quot;hello,world,a new travel begin now!&quot;</span>);	<span class="comment">//打印完后不会换行</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4><span id="关键字">关键字</span></h4><p><img src="../imgs/Java%E7%AC%94%E8%AE%B01/image-20250903191718305-17569048116792-17569048172624.png" alt="image-20250903191718305"></p>
@@ -2017,6 +2020,9 @@ k>=\frac{n}{2}log_2n</script><p>也就是说基于比较的排序，平均时间
     <title>Java笔记3</title>
     <url>/2025/09/17/Java%E7%AC%94%E8%AE%B03/</url>
     <content><![CDATA[<p>[toc]</p>
+<!-- toc -->
+<!-- tocstop -->
+<span id="more"></span>
 <h4><span id="数组">数组</span></h4><h5><span id="声明数组格式">声明数组格式：</span></h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//推荐</span></span><br><span class="line">元素的数据类型[] 一维数组的名称;</span><br><span class="line"></span><br><span class="line"><span class="comment">//不推荐</span></span><br><span class="line">元素的数据类型  一维数组名[];</span><br><span class="line"></span><br><span class="line"><span class="comment">//例</span></span><br><span class="line"><span class="type">int</span>[] arr;</span><br><span class="line"><span class="type">int</span> arr[];</span><br><span class="line"><span class="comment">//[]表示一维数组，[][]则表示二维数组</span></span><br></pre></td></tr></table></figure>
 <h5><span id="一维数组的初始化">一维数组的初始化：</span></h5><p>静态初始化：</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">数据类型[] 数组名 = <span class="keyword">new</span> 数据类型[]&#123;元素<span class="number">1</span>,元素<span class="number">2</span>,元素<span class="number">3</span>,...&#125;;</span><br><span class="line"></span><br><span class="line">数据类型[] 数组名;</span><br><span class="line">数组名 = <span class="keyword">new</span> 数据类型[]&#123;元素<span class="number">1</span>,元素<span class="number">2</span>,元素<span class="number">3</span>,...&#125;;</span><br><span class="line"></span><br><span class="line">数据类型[] 数组名 = &#123;元素<span class="number">1</span>,元素<span class="number">2</span>,元素<span class="number">3.</span>..&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span>[] arr = <span class="keyword">new</span> <span class="title class_">int</span>[]&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span>[] arr;</span><br><span class="line">arr = <span class="keyword">new</span> <span class="title class_">int</span>[]&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span>[] arr = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line">但是</span><br><span class="line"><span class="type">int</span>[] arr;</span><br><span class="line">arr = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line">是不正确的</span><br></pre></td></tr></table></figure>
@@ -2039,11 +2045,10 @@ k>=\frac{n}{2}log_2n</script><p>也就是说基于比较的排序，平均时间
   <entry>
     <title>vue+springboot学习1：Maven</title>
     <url>/2025/09/17/vue-springboot%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B01/</url>
-    <content><![CDATA[<p>Web基础：</p>
-<p>BS：浏览器/服务器架构模式<strong>例：浏览器</strong>  </p>
-<p> CS：客户端/服务器架构模式<strong>例：QQ</strong></p>
-<p>maven配置：</p>
-<p>1、下载：<a href="https://maven.apache.org/download.cgi这是下载地址，**下载以bin.zip**结束的压缩包，下载一般比较慢">https://maven.apache.org/download.cgi这是下载地址，**下载以bin.zip**结束的压缩包，下载一般比较慢</a></p>
+    <content><![CDATA[<!-- toc -->
+<!-- tocstop -->
+<span id="more"></span>
+<h4><span id="maven配置">maven配置：</span></h4><p>1、下载：<a href="https://maven.apache.org/download.cgi这是下载地址，**下载以bin.zip**结束的压缩包，下载一般比较慢">https://maven.apache.org/download.cgi这是下载地址，**下载以bin.zip**结束的压缩包，下载一般比较慢</a></p>
 <p>2、下载完解压到本地，我选择了3.8.9，解压到了<code>D:\programme\Maven\apache-maven-3.8.9</code></p>
 <p>3、下一步添加环境变量：在系统变量里添加：<img src="../imgs/vue-springboot%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B01/image-20250918013801328-175813395646913.png" alt="image-20250918013801328"></p>
 <p>然后在path里加入<code>%MAVEN_HOOME%\b</code>，一路确定保存配置</p>
@@ -2090,6 +2095,9 @@ k>=\frac{n}{2}log_2n</script><p>也就是说基于比较的排序，平均时间
     <title>Java笔记2</title>
     <url>/2025/09/17/Java%E7%AC%94%E8%AE%B02/</url>
     <content><![CDATA[<p>[toc]</p>
+<!-- toc -->
+<!-- tocstop -->
+<span id="more"></span> 
 <h4><span id="流程控制语句">流程控制语句</span></h4><p>程序设计的三种流程结构：</p>
 <ul>
 <li>顺序结构：自上而下执行，没有跳转和判断</li>
@@ -2147,5 +2155,10 @@ k>=\frac{n}{2}log_2n</script><p>也就是说基于比较的排序，平均时间
       <tags>
         <tag>Java</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>vue+springboot学习笔记1</title>
+    <url>/2025/09/18/vue-springboot%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B01-1/</url>
+    <content><![CDATA[]]></content>
   </entry>
 </search>
