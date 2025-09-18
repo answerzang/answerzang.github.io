@@ -1751,9 +1751,7 @@ k>=\frac{n}{2}log_2n</script><p>也就是说基于比较的排序，平均时间
 </ol>
 <p>​    4.重启wsl</p>
 <figure class="highlight ini"><table><tr><td class="code"><pre><span class="line">wsl --shutdown</span><br><span class="line">wsl</span><br></pre></td></tr></table></figure>
-<p>Linux常用指令</p>
-<p>当然可以！以下是一些在 WSL2 和 Linux 环境中常用的命令和操作，这些命令可以帮助你更高效地进行开发和文件管理。</p>
-<h3><span id="1-文件和目录操作"><strong>1. 文件和目录操作</strong></span></h3><ul>
+<h3><span id="linux常用指令">Linux常用指令</span></h3><h3><span id="1-文件和目录操作"><strong>1. 文件和目录操作</strong></span></h3><ul>
 <li><p><strong>创建文件</strong>：</p>
 <p>bash复制</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">touch</span> filename.c</span><br></pre></td></tr></table></figure>
@@ -1942,7 +1940,6 @@ k>=\frac{n}{2}log_2n</script><p>也就是说基于比较的排序，平均时间
 <p>杀死指定 PID 的进程。</p>
 </li>
 </ul>
-<p>希望这些命令对你有帮助！如果有其他问题，欢迎随时提问。</p>
 ]]></content>
       <tags>
         <tag>Linux</tag>
