@@ -2158,4 +2158,104 @@ k>=\frac{n}{2}log_2n</script><p>也就是说基于比较的排序，平均时间
     <url>/2025/09/18/vue-springboot%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B01-1/</url>
     <content><![CDATA[]]></content>
   </entry>
+  <entry>
+    <title>vue+springboot学习笔记2</title>
+    <url>/2025/09/19/vue-springboot%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02/</url>
+    <content><![CDATA[<!--toc-->
+<span id="more"></span>
+<h4><span id="学习笔记">学习笔记</span></h4><p>@Controller                请求页面和数据</p>
+<p>@RestController        请求数据</p>
+<p>两个注解</p>
+<p>HTTP状态码：</p>
+<p>1xx：信息，通信传输协议及信息</p>
+<p>2xx：成功，表示客户端的请求已成功接受</p>
+<p>3xx：重定向，表示客户端必须执行一些其他操作才能完成其请求</p>
+<p>4xx：客户端错误，此类错误状态码指向客户端</p>
+<p>5xx：服务器错误，服务器负责写这类错误状态码</p>
+<p><img src="../imgs/vue-springboot%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02/image-20250920161205011.png" alt="image-20250920161205011"></p>
+<p><img src="../imgs/vue-springboot%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02/image-20250920161255388.png" alt="image-20250920161255388"></p>
+<h4><span id="springdoc-openapi">Springdoc-OpenAPI</span></h4><p><code>OpenApi</code> 规范提供了很多注解，下面是一些常用的</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">注解</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">@Tag</td>
+<td style="text-align:left">用在controller类上，描述此controller的信息</td>
+</tr>
+<tr>
+<td style="text-align:left">@Operation</td>
+<td style="text-align:left">用在controller的方法里，描述此api的信息</td>
+</tr>
+<tr>
+<td style="text-align:left">@Parameter</td>
+<td style="text-align:left">用在controller方法里的参数上，描述参数信息</td>
+</tr>
+<tr>
+<td style="text-align:left">@Parameters</td>
+<td style="text-align:left">用在controller方法里的参数上</td>
+</tr>
+<tr>
+<td style="text-align:left">@Schema</td>
+<td style="text-align:left">用于Entity，以及Entity的属性上</td>
+</tr>
+<tr>
+<td style="text-align:left">@ApiResponse</td>
+<td style="text-align:left">用在controller方法的返回值上</td>
+</tr>
+<tr>
+<td style="text-align:left">@ApiResponses</td>
+<td style="text-align:left">用在controller方法的返回值上</td>
+</tr>
+<tr>
+<td style="text-align:left">@Hidden</td>
+<td style="text-align:left">用在各种地方，用于隐藏其api</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4><span id="端口占用问题">端口占用问题：</span></h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> org.example.helloworld.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">helloController</span> &#123;</span><br><span class="line">    <span class="comment">//http://localhost:8080/hello</span></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/hello&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">hello</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;hello world&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>初学者跑上面的测试时，网页跑不通，IDEA显示8080端口被占用：</p>
+<p><img src="../imgs/vue-springboot%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02/image-20250919024321705.png" alt="image-20250919024321705"></p>
+<p>搜了下网上的解决方案:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">netstat -ano | findstr 8080</span><br><span class="line"></span><br><span class="line">taskkill -PID &lt;pid&gt; -F</span><br></pre></td></tr></table></figure>
+<p><img src="../imgs/vue-springboot%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02/image-20250919024514765.png" alt="image-20250919024514765"></p>
+<p>但是解决不了，进而查看任务管理器，这东西好像关不掉，有点难办。</p>
+<p><img src="../imgs/vue-springboot%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02/image-20250919024657022.png" alt="image-20250919024657022"></p>
+<p>最后是修改了配置文件，在项目的application.properties文件里添加了一行<code>server.port=8081</code>，改了端口解决了。</p>
+]]></content>
+      <tags>
+        <tag>vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue+springboot学习笔记3</title>
+    <url>/2025/09/20/vue-springboot%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B03/</url>
+    <content><![CDATA[<h4><span id="idea配置swagger">IDEA配置swagger</span></h4><span id="more"></span>
+<p>最近vue+springboot的学习遇到了一些问题，主要原因是教程太老，视频教程里使用的swagger版本与我的springboot不对应，只能令搜教程，但是网上此类的教程很少，所以花费了颇多的时间才配好swagger，这里分享下过程。</p>
+<p>我使用的是SpringBoot 3.5.5 + Java21 + Maven 3.8.9</p>
+<p>由于Springfox Swagger2/3已停止更新，我使用了Springdoc-OpenAPI代替。</p>
+<p>首先新建一个Spring Initializr项目（我的项目名是helloworld），然后先编写个 Java类文件测试功能，</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> org.example.helloworld.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.ui.ModelMap;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMethod;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">helloController</span> &#123;</span><br><span class="line">    <span class="comment">//http://localhost:8080/hello</span></span><br><span class="line">    <span class="meta">@RequestMapping(value = &quot;/hello&quot;,method = RequestMethod.GET)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">hello</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;你好 世界&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>项目运行后再浏览器输入<code>http://localhost:8080/hello</code>，显示“你好世界”则表示功能正常，可以进行下一步。</p>
+<p>接下来在项目的org.example.helloworld里新建一个config文件夹，在这个文件夹里建一个Java类文件，我的Java类文件名是SwaggerConfig，内容如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> org.example.helloworld.config;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> io.swagger.v3.oas.models.OpenAPI;</span><br><span class="line"><span class="keyword">import</span> io.swagger.v3.oas.models.info.Info;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SwaggerConfig</span> &#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> OpenAPI <span class="title function_">myOpenAPI</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">OpenAPI</span>()</span><br><span class="line">                .info(<span class="keyword">new</span> <span class="title class_">Info</span>()</span><br><span class="line">                        .title(<span class="string">&quot;测试网站API&quot;</span>)</span><br><span class="line">                        .description(<span class="string">&quot;测试用&quot;</span>)</span><br><span class="line">                        .version(<span class="string">&quot;v1.0.0&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后加依赖，打开pom.xml文件，在依赖中加入</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">  &lt;dependencies&gt;</span><br><span class="line">......</span><br><span class="line"></span><br><span class="line">      &lt;dependency&gt;</span><br><span class="line">          &lt;groupId&gt;org.springdoc&lt;/groupId&gt;</span><br><span class="line">          &lt;artifactId&gt;springdoc-openapi-starter-webmvc-ui&lt;/artifactId&gt;</span><br><span class="line">          &lt;version&gt;<span class="number">2.5</span><span class="number">.0</span>&lt;/version&gt;</span><br><span class="line">      &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">  &lt;/dependencies&gt;</span><br></pre></td></tr></table></figure>
+<p>这时偏右上角的位置会出现一个 m 字符，点击即可下载相应的依赖。</p>
+<p><img src="../imgs/vue-springboot%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B03/image-20250920190914752.png" alt="image-20250920190914752"></p>
+<p>这样就成功了，运行之后，浏览器输入 <a href="http://localhost:8080">http://localhost:8080</a> 就会看到类似这样的画面：<img src="../imgs/vue-springboot%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B03/image-20250920191623451.png" alt="image-20250920191623451"></p>
+<p>这样swagger配置就完成了。</p>
+<h4><span id="参考">参考：</span></h4><p><a href="https://blog.csdn.net/shusheng0007/article/details/131304104?ops_request_misc=elastic_search_misc&amp;request_id=082ef190ffef2f4942db7cca6ee8bda3&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-131304104-null-null.142^v102^pc_search_result_base3&amp;utm_term=%E7%A7%92%E6%87%82SpringBoot%E4%B9%8B%E5%A6%82%E4%BD%95%E9%9B%86%E6%88%90SpringDoc%EF%BC%88%E5%85%A8%E7%BD%91%E7%9B%AE%E5%89%8D%E6%9C%80%E6%96%B0%E6%9C%80%E7%B3%BB%E7%BB%9F%E6%9C%80%E5%85%A8%E9%9D%A2%E7%9A%84springdoc%E6%95%99%E7%A8%8B%EF%BC%89&amp;spm=1018.2226.3001.4187">秒懂SpringBoot之如何集成SpringDoc（全网目前最新最系统最全面的springdoc教程）</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/1948752365122453540">SpringBoot项目集成Swagger指南</a></p>
+]]></content>
+      <tags>
+        <tag>vue</tag>
+      </tags>
+  </entry>
 </search>
